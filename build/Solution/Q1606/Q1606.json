@@ -1,0 +1,29 @@
+{
+    "ArrayDirection": 1,
+    "Filetype": "ChipGridInfo",
+    "ROIx0": 0,
+    "ROIx1": 500,
+    "ROIy0": 0,
+    "ROIy1": 327,
+    "WellGridInfoList": [
+        {
+            "cols": 2,
+            "dx": -79.400001525878906,
+            "dy": 0,
+            "index": 0,
+            "masktype": 4,
+            "rows": 8,
+            "shapetype": 4,
+            "xorg": 80,
+            "yorg": -124
+        }
+    ],
+    "Version": 1,
+    "多重荧光数量": 6,
+    "设备型号": "Q1606",
+    "完整名称": "Q1606机型解决方案",
+    "文件类型": "芯片类型定义文件",
+    "样本池数量": 16,
+    "样本池组数": 1,
+    "表名称": "Q1606"
+}

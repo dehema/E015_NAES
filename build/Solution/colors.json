@@ -1,0 +1,24 @@
+{
+    "colors": {
+        "aquamarine": "248, 72, 61",
+        "azure": "236, 35, 99",
+        "beige": "163, 20, 171",
+        "bisque": "111, 45, 178",
+        "black": "73, 73, 177",
+        "blanchedalmond": "51, 144, 238",
+        "blue": "29, 164, 238",
+        "blueviolet": "0, 186, 212",
+        "brown": "0, 150, 136",
+        "burlywood": "61, 178, 90",
+        "chartreuse": "132, 198, 87",
+        "chocolate": "200, 223, 83",
+        "coral": "252, 240, 89",
+        "cornflowerblue": "254, 197, 58",
+        "cornsilk": "255, 156, 47",
+        "crimson": "255, 92, 50",
+        "cyan": "122, 86, 74",
+        "darkblue": "158, 158, 158",
+        "darkcyan": "95, 124, 139",
+        "darkgoldenrod": "0, 0, 0"
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "createDate": 0,
+    "duration": 46,
+    "isPublish": true,
+    "processName": "新流程",
+    "stepCount": 3,
+    "stepsParamList": [
+        {
+            "adsorbPosition": 50,
+            "column": 2,
+            "heatStatus": 1,
+            "magnetSpeed": 3,
+            "magnetTime": 3,
+            "mixAmplitude": 50,
+            "mixPos": 20,
+            "mixSpeed": 200,
+            "mixTime": 3,
+            "stepIndex": 1,
+            "stepName": "name1",
+            "targetTemp": 25,
+            "volume": 500,
+            "waitTime": 20
+        },
+        {
+            "adsorbPosition": 50,
+            "column": 1,
+            "heatStatus": 0,
+            "magnetSpeed": 2,
+            "magnetTime": 5,
+            "mixAmplitude": 50,
+            "mixPos": 20,
+            "mixSpeed": 1000,
+            "mixTime": 5,
+            "stepIndex": 2,
+            "stepName": "name2",
+            "targetTemp": 25,
+            "volume": 500,
+            "waitTime": 0
+        },
+        {
+            "adsorbPosition": 50,
+            "column": 1,
+            "heatStatus": 0,
+            "magnetSpeed": 1,
+            "magnetTime": 5,
+            "mixAmplitude": 50,
+            "mixPos": 20,
+            "mixSpeed": 1000,
+            "mixTime": 5,
+            "stepIndex": 3,
+            "stepName": "name3",
+            "targetTemp": 1,
+            "volume": 500,
+            "waitTime": 0
+        }
+    ],
+    "volumeProteaseK": 111,
+    "volumeSample": 222
+}

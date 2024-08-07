@@ -1,0 +1,71 @@
+{
+    "actions": [
+        {
+            "actionID": "",
+            "actionVal": "",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 1
+                }
+            ],
+            "diagramType": 2,
+            "id": 0,
+            "posX": 97,
+            "posY": 59,
+            "tips": "起始节点"
+        },
+        {
+            "actionID": "",
+            "actionVal": "",
+            "arrows": [
+            ],
+            "diagramType": 3,
+            "id": 999,
+            "posX": 850,
+            "posY": 850,
+            "tips": "终止节点"
+        },
+        {
+            "actionID": "axeDoorOpen",
+            "actionVal": "",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 2
+                }
+            ],
+            "diagramType": 0,
+            "id": 1,
+            "posX": 389,
+            "posY": 262,
+            "tips": "打开舱门"
+        },
+        {
+            "actionID": "axeDoorClose",
+            "actionVal": "",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 999
+                }
+            ],
+            "diagramType": 0,
+            "id": 2,
+            "posX": 725,
+            "posY": 431,
+            "tips": "关闭舱门"
+        }
+    ],
+    "createDate": 1718097456,
+    "desc": "",
+    "diagramViewCenterX": "0",
+    "diagramViewCenterY": "0",
+    "diagramViewScaleX": 0,
+    "diagramViewScaleY": 0,
+    "id": "0",
+    "name": "开关舱门"
+}

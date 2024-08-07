@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{69C9F1EF-E258-4BE5-8077-189ADA828129}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>HGTNucleicAcidExtraction</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\build\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);DLL_EXPORT=__declspec(dllimport);DLL_CLAMPING</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\Sln_CommonLibrary;..\..\Sln_CommonLibrary\3rdparty\UIRobot\win32\include;$(QTDIR)\include;$(ACE_ROOT);$(BOOST_ROOT);..\SharedComponents</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Qt5Sqld.lib;HGTSoftKeyboardService.lib;Qt5Guid.lib;Qt5Cored.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;Qt5PrintSupportd.lib;HGTNucleicAcidExtractorService.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ACE_ROOT)\lib;$(SolutionDir)\build\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);DLL_EXPORT=__declspec(dllimport);DLL_CLAMPING</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\Sln_CommonLibrary;..\..\Sln_CommonLibrary\3rdparty\UIRobot\win32\include;$(QTDIR)\include;$(ACE_ROOT);$(BOOST_ROOT);..\SharedComponents</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(ACE_ROOT)\lib;$(SolutionDir)\build\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>HGTNucleicAcidExtractorService.lib;Qt5Sqld.lib;HGTSoftKeyboardService.lib;Qt5Guid.lib;Qt5Cored.lib;Qt5Widgetsd.lib;Qt5Networkd.lib;LogService.lib;ACEd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Qt5PrintSupportd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AXEMgr.cpp" />
+    <ClCompile Include="AXEProcessItem.cpp" />
+    <ClCompile Include="AXEProcessItem_Icon.cpp" />
+    <ClCompile Include="Common\HMessageBox.cpp" />
+    <ClCompile Include="Common\HTableView.cpp" />
+    <ClCompile Include="Common\HTableViewItemModel.cpp" />
+    <ClCompile Include="Common\PopDialog.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Common/BaseDialog.cpp" />
+    <ClCompile Include="Common/BaseUI.cpp" />
+    <ClCompile Include="Common/BaseView.cpp" />
+    <ClCompile Include="Common/BaseWidget.cpp" />
+    <ClCompile Include="Common/IBaseView.cpp" />
+    <ClCompile Include="Common/UIUtility.cpp" />
+    <ClCompile Include="Common/Utility.cpp" />
+    <ClCompile Include="Common/HLineEdit.cpp" />
+    <ClCompile Include="Common/BasePageContent.cpp" />
+    <ClCompile Include="PlayView.cpp" />
+    <ClCompile Include="ProcessParamsDialog.cpp" />
+    <ClCompile Include="ProcessView.cpp" />
+    <ClCompile Include="release\moc_BaseDialog.cpp" />
+    <ClCompile Include="release\moc_ConnectDatabase.cpp" />
+    <ClCompile Include="release\moc_HButtonIcon.cpp" />
+    <ClCompile Include="release\moc_HLineEdit.cpp" />
+    <ClCompile Include="release\moc_HMessageBox.cpp" />
+    <ClCompile Include="release\moc_HTableView.cpp" />
+    <ClCompile Include="release\moc_IFSoftKeyboardService.cpp" />
+    <ClCompile Include="release\moc_MainWindow.cpp" />
+    <ClCompile Include="release\moc_PlayView.cpp" />
+    <ClCompile Include="release\moc_ProcessView.cpp" />
+    <ClCompile Include="release\moc_SettingView.cpp" />
+    <ClCompile Include="release\moc_UVView.cpp" />
+    <ClCompile Include="SettingView.cpp" />
+    <ClCompile Include="UVView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AXEMgr.h" />
+    <ClInclude Include="AXEProcessItem.h" />
+    <ClInclude Include="AXEProcessItem_Icon.h" />
+    <ClInclude Include="Common\HButtonIcon.h" />
+    <ClInclude Include="Common\HMessageBox.h" />
+    <ClInclude Include="Common\HTableView.h" />
+    <ClInclude Include="Common\HTableViewItemModel.h" />
+    <ClInclude Include="Common\PopDialog.h" />
+    <ClInclude Include="Common\ImageWidget.h" />
+    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="Common/BaseDialog.h" />
+    <ClInclude Include="Common/BaseUI.h" />
+    <ClInclude Include="Common/BaseView.h" />
+    <ClInclude Include="Common/BaseWidget.h" />
+    <ClInclude Include="Common/IBaseView.h" />
+    <ClInclude Include="Common/Singleton.h" />
+    <ClInclude Include="Common/UIUtility.h" />
+    <ClInclude Include="Common/Utility.h" />
+    <ClInclude Include="Common/HLineEdit.h" />
+    <ClInclude Include="Common/BasePageContent.h" />
+    <ClInclude Include="PlayView.h" />
+    <ClInclude Include="ProcessParamsDialog.h" />
+    <ClInclude Include="ProcessView.h" />
+    <ClInclude Include="SettingView.h" />
+    <ClInclude Include="UVView.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

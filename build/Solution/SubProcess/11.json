@@ -1,0 +1,86 @@
+{
+    "actions": [
+        {
+            "actionID": "",
+            "actionVal": "",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 3
+                }
+            ],
+            "diagramType": 2,
+            "id": 0,
+            "posX": 80,
+            "posY": 35,
+            "tips": "起始节点"
+        },
+        {
+            "actionID": "",
+            "actionVal": "",
+            "arrows": [
+            ],
+            "diagramType": 3,
+            "id": 999,
+            "posX": 850,
+            "posY": 850,
+            "tips": "终止节点"
+        },
+        {
+            "actionID": "axeProcess",
+            "actionVal": "11231 ",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 999
+                }
+            ],
+            "diagramType": 0,
+            "id": 1,
+            "posX": 445,
+            "posY": 467,
+            "tips": "核酸提取流程"
+        },
+        {
+            "actionID": "axeProcess",
+            "actionVal": "",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 1
+                }
+            ],
+            "diagramType": 0,
+            "id": 2,
+            "posX": 309,
+            "posY": 413,
+            "tips": "核酸提取流程"
+        },
+        {
+            "actionID": "sampleBoxLock",
+            "actionVal": "0",
+            "arrows": [
+                {
+                    "conditionExp": "",
+                    "delay": 0,
+                    "targetID": 2
+                }
+            ],
+            "diagramType": 0,
+            "id": 3,
+            "posX": 215,
+            "posY": 229,
+            "tips": "样本仓电子锁"
+        }
+    ],
+    "createDate": 1719557123,
+    "desc": "",
+    "diagramViewCenterX": "0",
+    "diagramViewCenterY": "0",
+    "diagramViewScaleX": 0,
+    "diagramViewScaleY": 0,
+    "name": "11"
+}
