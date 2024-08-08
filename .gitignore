@@ -16,3 +16,12 @@ Sln_ApplicationModules/HGTNucleicAcidExtraction/Makefile.Release
 .vs
 Debug
 ipch
+HGTNucleicAcidExtraction.VC.VC.opendb
+build/HGTNucleicAcidExtractorService.pdb
+build/HGTNucleicAcidExtractorService.ilk
+build/HGTNucleicAcidExtractorService.exp
+build/HGTNucleicAcidExtraction.pdb
+build/HGTNucleicAcidExtraction.ilk
+build/HGTNucleicAcidExtraction.exe
+build/HGTNucleicAcidExtractorService.dll
+build/HGTNucleicAcidExtractorService.lib
