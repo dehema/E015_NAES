@@ -380,37 +380,6 @@ void UIUtility::setNewTableWidget(QTableWidget * _tableWidget)
 	_tableWidget->setObjectName("tableWidget_common");
 }
 
-QSpinBox* UIUtility::getNewSpinBox(int _min, int _max)
-{
-	QSpinBox* SpinBox = new QSpinBox();
-	SpinBox->setValue(0);
-	SpinBox->setRange(_min, _max);
-	SpinBox->setFixedSize(UI_Bt_Width, UI_Bt_Height);
-	SpinBox->setObjectName("SpinBox_common");
-	return SpinBox;
-}
-
-void UIUtility::setNewSpinBox(QSpinBox * _spinBox)
-{
-	_spinBox->setObjectName("SpinBox_common");
-}
-
-QDoubleSpinBox* UIUtility::getNewDoubleSpinBox(double _min, double _max)
-{
-	QDoubleSpinBox* doubleSpinBox = new QDoubleSpinBox();
-	doubleSpinBox->setValue(0);
-	doubleSpinBox->setRange(_min, _max);
-	doubleSpinBox->setDecimals(1);
-	doubleSpinBox->setFixedSize(UI_Bt_Width, UI_Bt_Height);
-	doubleSpinBox->setObjectName("doubleSpinBox_common");
-	return doubleSpinBox;
-}
-
-void UIUtility::setNewDoubleSpinBox(QDoubleSpinBox * _doubleSpinBox)
-{
-	_doubleSpinBox->setObjectName("doubleSpinBox_common");
-}
-
 QScrollArea* UIUtility::getNewScrollArea(QWidget * _parent)
 {
 	QScrollArea* scrollArea = new QScrollArea();

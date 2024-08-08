@@ -214,24 +214,6 @@ public:
 		UIUtility::ins().setNewTableWidget(_tableWidget);
 	}
 
-	QSpinBox* getNewSpinBox(int _min, int _max) {
-		return UIUtility::ins().getNewSpinBox(_min, _max);
-	}
-
-	void setNewSpinBox(QSpinBox * _spinBox)
-	{
-		UIUtility::ins().setNewSpinBox(_spinBox);
-	}
-
-	QDoubleSpinBox* getNewDoubleSpinBox(double _min, double _max) {
-		return UIUtility::ins().getNewDoubleSpinBox(_min, _max);
-	}
-
-	void setNewDoubleSpinBox(QDoubleSpinBox * _doubleSpinBox)
-	{
-		UIUtility::ins().setNewDoubleSpinBox(_doubleSpinBox);
-	}
-
 	void setNewTimeEdit(QTimeEdit * _timeEdit)
 	{
 		UIUtility::ins().setNewTimeEdit(_timeEdit);

@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\build\</OutDir>
+    <OutDir>$(SolutionDir)build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -158,6 +158,7 @@
     <ClCompile Include="AXEMgr.cpp" />
     <ClCompile Include="AXEProcessItem.cpp" />
     <ClCompile Include="AXEProcessItem_Icon.cpp" />
+    <ClCompile Include="ChooseItemListDialog.cpp" />
     <ClCompile Include="Common\HMessageBox.cpp" />
     <ClCompile Include="Common\HTableView.cpp" />
     <ClCompile Include="Common\HTableViewItemModel.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="ProcessParamsDialog.cpp" />
     <ClCompile Include="ProcessView.cpp" />
     <ClCompile Include="release\moc_BaseDialog.cpp" />
+    <ClCompile Include="release\moc_ChooseItemListDialog.cpp" />
     <ClCompile Include="release\moc_ConnectDatabase.cpp" />
     <ClCompile Include="release\moc_HButtonIcon.cpp" />
     <ClCompile Include="release\moc_HLineEdit.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="release\moc_IFSoftKeyboardService.cpp" />
     <ClCompile Include="release\moc_MainWindow.cpp" />
     <ClCompile Include="release\moc_PlayView.cpp" />
+    <ClCompile Include="release\moc_ProcessParamsDialog.cpp" />
     <ClCompile Include="release\moc_ProcessView.cpp" />
     <ClCompile Include="release\moc_SettingView.cpp" />
     <ClCompile Include="release\moc_UVView.cpp" />
@@ -195,6 +198,7 @@
     <ClInclude Include="AXEMgr.h" />
     <ClInclude Include="AXEProcessItem.h" />
     <ClInclude Include="AXEProcessItem_Icon.h" />
+    <ClInclude Include="ChooseItemListDialog.h" />
     <ClInclude Include="Common\HButtonIcon.h" />
     <ClInclude Include="Common\HMessageBox.h" />
     <ClInclude Include="Common\HTableView.h" />

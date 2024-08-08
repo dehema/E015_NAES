@@ -3,6 +3,7 @@
 #include "Common/BasePageContent.h"
 #include "AXEMgr.h"
 #include "ProcessParamsDialog.h"
+#include "ChooseItemListDialog.h"
 
 class ProcessView : public BasePageContent
 {
@@ -48,6 +49,9 @@ public:
 	void setWidgetTableItemVisible(int _row, bool _visible);
 	bool isLegalSelRowIndexProcess();
 	AXEProcessData getPublishProcessModel();
+	QString getMixBtStr(AXEStepData _data);
+	QString getMagnetBtStr(AXEStepData _data);
+	QString getWaitBtStr(AXEStepData _data);
 
 	void openProcess();
 	void newProcess();

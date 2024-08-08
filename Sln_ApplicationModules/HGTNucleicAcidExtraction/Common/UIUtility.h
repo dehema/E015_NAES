@@ -10,7 +10,6 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListView>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QPlainTextEdit>
@@ -122,14 +121,7 @@ public:
 	QTableWidget* getNewTableWidget();
 	void setNewTableWidget(QTableWidget* _tableWidget);
 
-	QSpinBox* getNewSpinBox(int _min, int _max);
-	void setNewSpinBox(QSpinBox* _spinBox);
-
-	QDoubleSpinBox* getNewDoubleSpinBox(double _min, double _max);
-	void setNewDoubleSpinBox(QDoubleSpinBox* _doubleSpinBox);
-
 	QScrollArea* getNewScrollArea(QWidget* _parent);
-
 
 	QPlainTextEdit* getNewPlainText();
 
@@ -142,7 +134,7 @@ public:
 	QSize getTextSize(const QString &text, int _fontSize);
 
 	void adjustBtTextSize(QPushButton* bt, int _defaultFontSize);
-	void adjustLbTextSize(QLabel * _lb);
+	void adjustLbTextSize(QLabel* _lb);
 	void adjustLbTextSize(QLabel* bt, int _defaultFontSize);
 
 	const QRegExpValidator *RegExpNumber = new QRegExpValidator(QRegExp("\\d+"));
