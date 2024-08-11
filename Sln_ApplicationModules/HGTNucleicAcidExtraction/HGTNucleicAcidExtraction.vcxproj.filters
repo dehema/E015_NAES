@@ -22,6 +22,12 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{b8044ce4-cc36-4012-aa08-98e228a985a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DeviceMaintain">
+      <UniqueIdentifier>{c125fb57-7252-491f-b178-53dcd8f3bf74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DeviceMaintain">
+      <UniqueIdentifier>{39b67d9c-e829-4b1b-bf24-84c572c46003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,27 +66,9 @@
     <ClCompile Include="Common\HTableViewItemModel.cpp">
       <Filter>Source Files\Base</Filter>
     </ClCompile>
-    <ClCompile Include="release\moc_HLineEdit.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_HTableView.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_IFSoftKeyboardService.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_BaseDialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_ConnectDatabase.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Common/HLineEdit.cpp">
       <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_MainWindow.cpp">
-      <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="Common/BasePageContent.cpp">
       <Filter>Source Files\Base</Filter>
@@ -97,21 +85,6 @@
     <ClCompile Include="SettingView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="release\moc_SettingView.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_UVView.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_PlayView.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_ProcessView.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_HButtonIcon.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="AXEMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,19 +97,109 @@
     <ClCompile Include="Common\HMessageBox.cpp">
       <Filter>Source Files\Base</Filter>
     </ClCompile>
-    <ClCompile Include="release\moc_HMessageBox.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProcessParamsDialog.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_ProcessParamsDialog.cpp">
-      <Filter>Header Files\Base</Filter>
     </ClCompile>
     <ClCompile Include="ChooseItemListDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DeviceMaintainDialog.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Base.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Ele.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Equip.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Process.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_RealTimeTemp.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Setting.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Status.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceMaintainPage_Axe_Temp.cpp">
+      <Filter>Source Files\DeviceMaintain</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\qcustomplot.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_HLineEdit.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_HMessageBox.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_HTableView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_IFSoftKeyboardService.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_MainWindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_PlayView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_ProcessParamsDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_ProcessView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_qcustomplot.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_SettingView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_UVView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_BaseDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
     <ClCompile Include="release\moc_ChooseItemListDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_ConnectDatabase.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Ele.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Equip.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Process.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_RealTimeTemp.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Setting.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Status.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DeviceMaintainPage_Axe_Temp.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_HButtonIcon.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -218,6 +281,39 @@
     </ClInclude>
     <ClInclude Include="ChooseItemListDialog.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\GlobalDefine.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainDialog.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Base.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Temp.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Ele.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Equip.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Process.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_RealTimeTemp.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Setting.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceMaintainPage_Axe_Status.h">
+      <Filter>Header Files\DeviceMaintain</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\qcustomplot.h">
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

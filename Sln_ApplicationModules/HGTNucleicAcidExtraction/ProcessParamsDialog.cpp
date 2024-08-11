@@ -7,6 +7,19 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 	setModal(true);
 	setSize(420, 400);
 
+	switch (_paramsType)
+	{
+	case ProcessParamsDialog::Mix:
+		setTitle(GetLang("1708420379"));
+		break;
+	case ProcessParamsDialog::Magnet:
+		setTitle(GetLang("1708430054"));
+		break;
+	case ProcessParamsDialog::Wait:
+		setTitle(GetLang("1708430055"));
+		break;
+	}
+
 	QGridLayout* layoutMain = getNewGridLayout(widgetBaseContent);
 	layoutMain->setContentsMargins(40, 0, 40, 0);
 	layoutMain->setHorizontalSpacing(10);

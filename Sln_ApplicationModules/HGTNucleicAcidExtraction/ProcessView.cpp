@@ -197,7 +197,6 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		btMix->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btMix, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Mix);
-			dialog->setTitle(GetLang("1708420379"));
 			dialog->exec();
 			btMix->setText(getMixBtStr(currProcessData.stepsList[_row]));
 		});
@@ -219,7 +218,6 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		btMagnet->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btMagnet, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Magnet);
-			dialog->setTitle(GetLang("1708430054"));
 			dialog->exec();
 			btMagnet->setText(getMagnetBtStr(currProcessData.stepsList[_row]));
 		});
@@ -241,7 +239,6 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		btWait->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btWait, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Wait);
-			dialog->setTitle(GetLang("1708430054"));
 			dialog->exec();
 			btWait->setText(getWaitBtStr(currProcessData.stepsList[_row]));
 		});
@@ -295,7 +292,9 @@ void ProcessView::openProcess()
 	if (res == -1)
 		return;
 	QString name = strList[res];
-	Log(name);
+	currProcessData = AXEMgr::ins().getProcessByName(name);
+	editProcessName->setText(name);
+	refreshTbProcess();
 }
 
 void ProcessView::newProcess()
@@ -441,6 +440,35 @@ QString ProcessView::getWaitBtStr(AXEStepData _data)
 	else
 		str += "-";
 	return str;
+}
+
+void ProcessView::showEvent(QShowEvent * event)
+{
+	if (tbProcess != nullptr)
+	{
+		QStringList headerProcessDetail;
+		headerProcessDetail
+			<< GetLang("1708419680")	//序号
+			<< GetLang("1708420088")	//孔位
+			<< GetLang("1708420155")	//名称
+			<< GetLang("1708420156")	//体系容量
+			<< GetLang("1708420379")	//混合
+										//<< GetLang("1708420091") + "(Sec)"	//混合时间
+										//<< GetLang("1708420093") + "(PRM)"	//混合速度
+										//<< GetLang("1708420334") + "(%)"	//混合振幅底部位置
+										//<< GetLang("1708420335") + "(%)"	//混合振幅顶部位置
+			<< GetLang("1708430054")	//吸磁
+										//<< GetLang("1708420092") + "(Sec)"	//吸磁时间
+										//<< GetLang("1708420332")	//吸磁速度
+										//<< GetLang("1708420336") + "(%)"	//吸磁位置
+			<< GetLang("1708430055")	//等待
+										//<< GetLang("1708420090") + "(Sec)"	//等待时间
+										//<< GetLang("1708420339")	//是否加热
+			;
+		tbModelProcess->setHorizontalHeaderLabels(headerProcessDetail);
+		tbProcess->setModel(tbModelProcess);
+		BasePageContent::showEvent(event);
+	}
 }
 
 void ProcessView::slot_onclickBt(int index)

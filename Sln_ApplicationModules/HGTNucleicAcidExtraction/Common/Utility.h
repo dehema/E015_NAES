@@ -30,12 +30,9 @@
 #define WIN_WIDTH 1024
 #define WIN_HEIGHT 570
 
-#define SUBWIN_WIDTH 1885
-#define SUBWIN_HEIGHT 985
-
 //内容页宽度
-#define ContentPage_WIDTH 1870
-#define ContentPage_HEIGHT 810
+#define ContentPage_WIDTH 1024
+#define ContentPage_HEIGHT 513
 
 //内边距
 #define Page_Dialog_Padding_Top 15
@@ -122,6 +119,15 @@ public:
 
 	static QDate stringToDate(QString str);
 	static QString dateToString(QDate _date);
+
+
+	//---------------核提仪---------------
+	AXEModuleStatus axeStatus;
+
+	//设备句柄
+	DeviceControlService deviceHandle;
+
+	QThread* axeThread;
 };
 
 //QSize Utility::ScreenSize = new QSize(1080, 1920);

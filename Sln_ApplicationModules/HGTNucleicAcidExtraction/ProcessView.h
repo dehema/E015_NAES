@@ -52,6 +52,7 @@ public:
 	QString getMixBtStr(AXEStepData _data);
 	QString getMagnetBtStr(AXEStepData _data);
 	QString getWaitBtStr(AXEStepData _data);
+	void showEvent(QShowEvent *event) override;
 
 	void openProcess();
 	void newProcess();

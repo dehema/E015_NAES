@@ -368,8 +368,12 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
 }
 
 /* ------------------------BaseDialog------------------------ */
-QWidget#widget_baseDialog_main {
+QWidget#BaseDialog_common{
     /* border:1px solid rgb(121, 121, 121); */
+}
+
+QWidget#widget_baseDialog_main {
+    border:1px solid rgb(121, 121, 121);
 }
 QWidget#widget_baseDialog_title {
     background-color:rgb(0, 140, 140);
@@ -381,7 +385,9 @@ QWidget#widget_baseDialog_content {
 }
 QWidget#widget_baseDialog_contentBg {
     background-color:rgb(255, 255, 255);
-    border:1px solid rgb(121, 121, 121);; 
+    border-left:1px solid rgb(121, 121, 121);
+    border-right:1px solid rgb(121, 121, 121); 
+    border-bottom:1px solid rgb(121, 121, 121); 
 }
 
 QLabel#label_title {

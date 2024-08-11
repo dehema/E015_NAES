@@ -73,6 +73,12 @@ public:
 	//主界面
 	QWidget* mainWindow;
 
+	QString comboxTableStyle;
+	QString editTableStyle;
+	QString btTableStyle;
+	QString dateTableStyle;
+	QString checkTableStyle;
+
 	//----------------------widget----------------------
 	QWidget* getNewWidgetCommon(QWidget* _parent = nullptr);
 	QFrame* getNewFrame(QWidget* _parent = nullptr);
@@ -133,7 +139,7 @@ public:
 	QSize getBtTextSize(QPushButton* bt, int _fontSize);
 	QSize getTextSize(const QString &text, int _fontSize);
 
-	void adjustBtTextSize(QPushButton* bt, int _defaultFontSize);
+	void adjustBtTextSize(QPushButton* bt, int _defaultFontSize = 14);
 	void adjustLbTextSize(QLabel* _lb);
 	void adjustLbTextSize(QLabel* bt, int _defaultFontSize);
 
@@ -151,9 +157,13 @@ public:
 	//移除下拉列表的无效选项
 	void removeComboBoxInvalidItem(QComboBox* _cb);
 
-	QString comboxTableStyle;
-	QString editTableStyle;
-	QString btTableStyle;
-	QString dateTableStyle;
-	QString checkTableStyle;
+	void adjustBtFontSize(QPushButton* bt) {
+		QFont font = bt->font();
+		int buttonWidth = bt->width();
+		int buttonHeight = bt->height();
+
+		int fontSize = qMin(buttonWidth / bt->text().length(), buttonHeight / 2);
+		font.setPointSize(fontSize);
+		bt->setFont(font);
+	}
 };

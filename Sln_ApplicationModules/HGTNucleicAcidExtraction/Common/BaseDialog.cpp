@@ -6,6 +6,7 @@ BaseDialog::BaseDialog(QWidget* parent) : QDialog(parent)
 
 	//this->setWindowModality(Qt::WindowModal);
 	//this->setFocus();
+	this->setObjectName("BaseDialog_common");
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
 	widgetBaseMain = new QWidget(this);
@@ -57,7 +58,7 @@ void BaseDialog::setSize(float _width, float _height)
 	baseDialogWidth = _width;
 	baseDialogHeight = _height;
 	resize();
-	setDialogCenter();
+	//setDialogCenter();
 }
 
 void BaseDialog::resize()
@@ -68,6 +69,7 @@ void BaseDialog::resize()
 	lbBaseTitle->setFixedSize(baseDialogWidth, widgetBaseTitleHeight);
 	widgetBaseContent->setFixedSize(baseDialogWidth - 2, baseDialogHeight - widgetBaseTitleHeight - 2);
 	widgetBaseContentBg->setFixedSize(baseDialogWidth, baseDialogHeight - widgetBaseTitleHeight);
+	QDialog::resize(baseDialogWidth, baseDialogHeight);
 }
 
 void BaseDialog::setDialogCenter()
