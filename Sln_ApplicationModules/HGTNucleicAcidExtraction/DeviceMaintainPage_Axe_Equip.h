@@ -4,6 +4,15 @@
 class DeviceMaintainPage_Axe_Equip :public DeviceMaintainPage_Axe_Base
 {
 	Q_OBJECT
+private:
+	enum BtType
+	{
+		//减少紫外线时间
+		SubtractUVTime,
+		//增加紫外线时间
+		AddUVTime,
+	};
+
 public:
 	DeviceMaintainPage_Axe_Equip(QWidget* _parent, DeviceControlService _handle);
 	~DeviceMaintainPage_Axe_Equip() {
@@ -26,6 +35,8 @@ private:
 	void setConnection();
 
 private:
+	QButtonGroup* btGroup;
+
 	QTabWidget *m_mainTab;
 	QWidget *m_stepMonitor;
 	QVBoxLayout *m_vblMain;
@@ -46,7 +57,7 @@ private:
 	QPushButton *m_btnUVStart;
 
 	HLineEdit* editUVTime;
-	QTime timeUV = QTime(0, 15);
+	QTime timeUV = QTime(0, 30);
 	QTimer* timerUV;
 
 	/* 紫外灯关闭 */
@@ -89,7 +100,7 @@ protected:
 		return lb;
 	}
 
-	QPushButton* getNewBtCommon(QString _langID) override
+	QPushButton* getNewBtCommon(QString _langID = "") override
 	{
 		QPushButton* bt = DeviceMaintainPage_Axe_Base::getNewBtCommon(_langID);
 		bt->setFixedWidth(150);
@@ -109,4 +120,7 @@ protected:
 		cb->setFixedWidth(150);
 		return cb;
 	}
+
+	private slots:
+	void slot_onclickBtGroup(int _index);
 };

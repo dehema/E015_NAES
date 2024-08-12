@@ -8,17 +8,21 @@ DeviceMaintainPage_Axe_Equip::DeviceMaintainPage_Axe_Equip(QWidget * _parent, De
 	DeviceMaintainPage_Axe_Base(_parent, _handle)
 {
 
+	btGroup = new QButtonGroup(this);
+	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBtGroup(int)));
+
 	QHBoxLayout *layoutMain = getNewHBoxLayout(this);
 	layoutMain->setAlignment(Qt::AlignCenter);
 	layoutMain->setSpacing(15);
 
 	QWidget* widgetLeft = getNewWidgetCommon();
 	widgetLeft->setFixedSize(370, height());
+	layoutMain->addWidget(widgetLeft);
 
-	QGridLayout *layoutLeft = getNewGridLayout(this);
+	QGridLayout *layoutLeft = getNewGridLayout(widgetLeft);
 	layoutLeft->setAlignment(Qt::AlignCenter);
 	layoutLeft->setHorizontalSpacing(20);
-	layoutLeft->setVerticalSpacing(15);
+	layoutLeft->setVerticalSpacing(25);
 
 	//×°ÔØ´Å°ôÌ×
 	m_btnLoadSleeve = getNewBtCommon("1708420297");
@@ -68,29 +72,51 @@ DeviceMaintainPage_Axe_Equip::DeviceMaintainPage_Axe_Equip(QWidget * _parent, De
 
 	QWidget* widgetRight = getNewWidgetCommon();
 	widgetRight->setFixedSize(370, height());
+	layoutMain->addWidget(widgetRight);
 
-	QGridLayout *layoutRight = getNewGridLayout(this);
+	QGridLayout *layoutRight = getNewGridLayout(widgetRight);
 	layoutRight->setAlignment(Qt::AlignCenter);
 	layoutRight->setHorizontalSpacing(20);
-	layoutRight->setVerticalSpacing(15);
+	layoutRight->setVerticalSpacing(25);
 
 	//×ÏÍâµÆ
 	m_btnUVStart = getNewBtCommon("1708420291");
 	layoutRight->addWidget(m_btnUVStart, 0, 0);
 
 	m_btnUVStop = getNewBtCommon("1708420292");
-	layoutRight->addWidget(m_btnUVStop, 1, 1);
+	layoutRight->addWidget(m_btnUVStop, 0, 1);
+
+	QWidget* widgetUVTime = getNewWidgetCommon(widgetRight);
+	widgetUVTime->setFixedSize(widgetRight->width(), 35);
+	layoutRight->addWidget(widgetUVTime, 1, 0, 1, 2, Qt::AlignCenter);
+
+	QHBoxLayout* layoutUVTime = getNewHBoxLayout(widgetUVTime);
+	layoutUVTime->setSpacing(15);
+	layoutUVTime->setAlignment(Qt::AlignCenter);
+
+	QPushButton* btSubtractUVTime = getNewBtCommon();
+	btSubtractUVTime->setText("-10Min");
+	btSubtractUVTime->setFixedWidth(90);
+	btGroup->addButton(btSubtractUVTime, BtType::SubtractUVTime);
+	layoutUVTime->addWidget(btSubtractUVTime);
 
 	editUVTime = getNewLineEdit();
 	editUVTime->setFixedWidth(120);
+	editUVTime->setAlignment(Qt::AlignCenter);
 	editUVTime->setEnabled(false);
-	layoutRight->addWidget(editUVTime, 2, 2);
+	layoutUVTime->addWidget(editUVTime);
 
+	QPushButton* btAddUVTime = getNewBtCommon();
+	btAddUVTime->setText("+10Min");
+	btAddUVTime->setFixedWidth(75);
+	btGroup->addButton(btAddUVTime, BtType::AddUVTime);
+	layoutUVTime->addWidget(btAddUVTime);
 
 	this->setConnection();
 
 	if (axeService != nullptr)
 		m_bOpen = true;
+	refreshEditUVTime();
 }
 
 void DeviceMaintainPage_Axe_Equip::setConnection()
@@ -273,5 +299,31 @@ void DeviceMaintainPage_Axe_Equip::slot_btnLightCloseClicked()
 	{
 		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
 		Log("QFmEquipDoor close flood light failed retCode = " + strErrorCode.toStdString());
+	}
+}
+
+void DeviceMaintainPage_Axe_Equip::slot_onclickBtGroup(int _index)
+{
+	switch (_index)
+	{
+	case DeviceMaintainPage_Axe_Equip::SubtractUVTime:
+	{
+		if (timeUV.hour() == 0 && timeUV.minute() < 10)
+		{
+			timeUV = QTime(0, 0);
+		}
+		else
+		{
+			timeUV = timeUV.addSecs(-600);
+		}
+		refreshEditUVTime();
+		break;
+	}
+	case DeviceMaintainPage_Axe_Equip::AddUVTime:
+	{
+		timeUV = timeUV.addSecs(600);
+		refreshEditUVTime();
+		break;
+	}
 	}
 }

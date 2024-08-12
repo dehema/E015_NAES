@@ -2,8 +2,9 @@
 
 DeviceMaintainPage_Axe_RealTimeTemp::DeviceMaintainPage_Axe_RealTimeTemp(QWidget * _parent, DeviceControlService _handle) : DeviceMaintainPage_Axe_Base(_parent, _handle)
 {
-	m_hShow = getNewHBoxLayout(widgetBaseContent);
-	m_hShow->setContentsMargins(20, 22, 20, 30);
+	m_hShow = getNewHBoxLayout(this);
+	m_hShow->setSpacing(10);
+	m_hShow->setContentsMargins(0, 0, 0, 0);
 
 	initPlot(0, 600, 0, 100);
 	initRealtimeShow();
@@ -27,17 +28,17 @@ DeviceMaintainPage_Axe_RealTimeTemp::DeviceMaintainPage_Axe_RealTimeTemp(QWidget
 
 void DeviceMaintainPage_Axe_RealTimeTemp::initPlot(double x_start, double x_end, double y_start, double y_end)
 {
-	customplot = new QCustomPlot();
-	customplot->setFixedSize(QSize(900, 660));
-
-	customplot->legend->setBorderPen(Qt::NoPen);
 
 	m_imageScrollArea = getNewScrollArea();
-	m_imageScrollArea->setFixedSize(QSize(920, 700));
+	m_imageScrollArea->setFixedSize(QSize(width() - 230, height() - 50));
 	m_imageScrollArea->setAlignment(Qt::AlignCenter);
 	m_imageScrollArea->setFrameShape(QFrame::NoFrame);
-	m_imageScrollArea->setWidget(customplot);
 	m_imageScrollArea->setBackgroundRole(QPalette::Shadow);
+
+	customplot = new QCustomPlot();
+	m_imageScrollArea->setWidget(customplot);
+	customplot->setFixedSize(QSize(m_imageScrollArea->width() - 20, m_imageScrollArea->height() - 20));
+	customplot->legend->setBorderPen(Qt::NoPen);
 	customplot->xAxis->setRange(x_start, x_end);
 	customplot->yAxis->setRange(y_start, y_end);
 
@@ -82,36 +83,37 @@ void DeviceMaintainPage_Axe_RealTimeTemp::initPlot(double x_start, double x_end,
 void DeviceMaintainPage_Axe_RealTimeTemp::initRealtimeShow()
 {
 	m_ckAutoGetTemp = getNewCheckBox("1708420231");
+	m_ckAutoGetTemp->setFixedWidth(160);
 	connect(m_ckAutoGetTemp, SIGNAL(stateChanged(int)), this, SLOT(slot_onStateChanged(int)));
 
 	m_frmSetting = getNewFrame();
-	m_frmSetting->setFixedSize(300, 700);
+	m_frmSetting->setFixedSize(220, height() - 50);
 
 	m_vShow = getNewVBoxLayout(m_frmSetting);
+	m_vShow->setContentsMargins(0, 0, 0, 0);
 	m_vShow->setAlignment(Qt::AlignCenter);
 
 	m_gbZoom = getNewGroupBox("1708420232");
-	m_gbZoom->setFixedSize(260, 180);
+	m_gbZoom->setFixedSize(m_frmSetting->width() - m_vShow->contentsMargins().left() * 2 - 10, 180);
 	QVBoxLayout *vZoom = getNewVBoxLayout(m_gbZoom);
 	vZoom->setAlignment(Qt::AlignCenter);
 
 	m_lbXStart = getNewLbCommon();
 	m_lbXStart->setText("X1");
-	m_lbXStart->setFixedWidth(45);
+	m_lbXStart->setFixedWidth(40);
 	m_lbXStart->setAlignment(Qt::AlignCenter);
 
 	m_edtXStart = getNewLineEdit();
-	m_edtXStart->setFixedWidth(70);
 
 	m_lbXEnd = getNewLbCommon();
 	m_lbXEnd->setText("X2");
-	m_lbXEnd->setFixedWidth(45);
+	m_lbXEnd->setFixedWidth(40);
 	m_lbXEnd->setAlignment(Qt::AlignCenter);
 
 	m_edtXEnd = getNewLineEdit();
-	m_edtXEnd->setFixedWidth(70);
 
 	QWidget *widTemp1 = getNewWidgetCommon();
+	widTemp1->setFixedWidth(m_gbZoom->width() - 2);
 	QHBoxLayout *m_hbTemp1 = getNewHBoxLayout(widTemp1);
 	m_hbTemp1->addWidget(m_lbXStart);
 	m_hbTemp1->addWidget(m_edtXStart);
@@ -120,21 +122,20 @@ void DeviceMaintainPage_Axe_RealTimeTemp::initRealtimeShow()
 
 	m_lbYStart = getNewLbCommon();
 	m_lbYStart->setText("Y1");
-	m_lbYStart->setFixedWidth(45);
+	m_lbYStart->setFixedWidth(40);
 	m_lbYStart->setAlignment(Qt::AlignCenter);
 
 	m_edtYStart = getNewLineEdit();
-	m_edtYStart->setFixedWidth(70);
 
 	m_lbYEnd = getNewLbCommon();
 	m_lbYEnd->setText("Y2");
-	m_lbYEnd->setFixedWidth(45);
+	m_lbYEnd->setFixedWidth(40);
 	m_lbYEnd->setAlignment(Qt::AlignCenter);
 
 	m_edtYEnd = getNewLineEdit();
-	m_edtYEnd->setFixedWidth(70);
 
 	QWidget *widTemp2 = getNewWidgetCommon();
+	widTemp2->setFixedWidth(m_gbZoom->width() - 2);
 	QHBoxLayout *m_hbTemp2 = getNewHBoxLayout(widTemp2);
 	m_hbTemp2->addWidget(m_lbYStart);
 	m_hbTemp2->addWidget(m_edtYStart);
@@ -149,28 +150,27 @@ void DeviceMaintainPage_Axe_RealTimeTemp::initRealtimeShow()
 	vZoom->addWidget(m_btnConfirm, 0, Qt::AlignCenter);
 
 	m_gbTShow = getNewGroupBox("1708420288");
-	m_gbTShow->setFixedSize(260, 180);
+	m_gbTShow->setFixedSize(m_frmSetting->width() - m_vShow->contentsMargins().left() * 2 - 10, 180);
 	QVBoxLayout *vTShow = getNewVBoxLayout(m_gbTShow);
 	vTShow->setAlignment(Qt::AlignCenter);
 	vTShow->setContentsMargins(0, 20, 0, 0);
 
 	m_lbT1 = getNewLbCommon();
 	m_lbT1->setText("T1");
-	m_lbT1->setFixedWidth(45);
+	m_lbT1->setFixedWidth(40);
 	m_lbT1->setAlignment(Qt::AlignCenter);
 
 	m_edtT1 = getNewLineEdit();
-	m_edtT1->setFixedWidth(70);
 
 	m_lbT2 = getNewLbCommon();
 	m_lbT2->setText("T2");
-	m_lbT2->setFixedWidth(45);
+	m_lbT2->setFixedWidth(40);
 	m_lbT2->setAlignment(Qt::AlignCenter);
 
 	m_edtT2 = getNewLineEdit();
-	m_edtT2->setFixedWidth(70);
 
 	QWidget *widTemp3 = getNewWidgetCommon();
+	widTemp3->setFixedWidth(m_gbTShow->width() - 2);
 	QHBoxLayout *m_hbTemp3 = getNewHBoxLayout(widTemp3);
 	m_hbTemp3->addWidget(m_lbT1);
 	m_hbTemp3->addWidget(m_edtT1);
@@ -179,21 +179,20 @@ void DeviceMaintainPage_Axe_RealTimeTemp::initRealtimeShow()
 
 	m_lbT3 = getNewLbCommon();
 	m_lbT3->setText("T3");
-	m_lbT3->setFixedWidth(45);
+	m_lbT3->setFixedWidth(40);
 	m_lbT3->setAlignment(Qt::AlignCenter);
 
 	m_edtT3 = getNewLineEdit();
-	m_edtT3->setFixedWidth(70);
 
 	m_lbT4 = getNewLbCommon();
 	m_lbT4->setText("T4");
-	m_lbT4->setFixedWidth(45);
+	m_lbT4->setFixedWidth(40);
 	m_lbT4->setAlignment(Qt::AlignCenter);
 
 	m_edtT4 = getNewLineEdit();
-	m_edtT4->setFixedWidth(70);
 
 	QWidget *widTemp4 = getNewWidgetCommon();
+	widTemp4->setFixedWidth(m_gbTShow->width() - 2);
 	QHBoxLayout *m_hbTemp4 = getNewHBoxLayout(widTemp4);
 	m_hbTemp4->addWidget(m_lbT3);
 	m_hbTemp4->addWidget(m_edtT3);

@@ -80,14 +80,14 @@ protected:
 	QPushButton* getNewBtCommon(QString _langID = nullptr) override
 	{
 		QPushButton* bt = DeviceMaintainPage_Axe_Base::getNewBtCommon(_langID);
-		bt->setFixedWidth(160);
+		bt->setFixedWidth(130);
 		return bt;
 	}
 
 	HLineEdit * getNewLineEdit() override
 	{
 		HLineEdit* edit = DeviceMaintainPage_Axe_Base::getNewLineEdit();
-		edit->setFixedWidth(100);
+		edit->setFixedWidth(55);
 		return edit;
 	}
 

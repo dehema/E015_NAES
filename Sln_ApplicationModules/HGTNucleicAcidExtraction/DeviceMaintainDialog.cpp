@@ -19,7 +19,7 @@ DeviceMaintainDialog::DeviceMaintainDialog(QWidget* _parent, DeviceControlServic
 
 	layoutMain = getNewHBoxLayout(widgetBaseContent);
 	layoutMain->setAlignment(Qt::AlignCenter);
-	layoutMain->setSpacing(5);
+	layoutMain->setSpacing(15);
 
 	//²Ëµ¥
 	widgetMenu = getNewWidgetCommon();
@@ -73,7 +73,7 @@ DeviceMaintainDialog::DeviceMaintainDialog(QWidget* _parent, DeviceControlServic
 
 	//ÄÚÈÝÒ³
 	widgetPage = getNewWidgetCommon();
-	widgetPage->setFixedSize(getBaseContentWidth() - widgetMenu->width() - 50, getBaseContentHeight());
+	widgetPage->setFixedSize(getBaseContentWidth() - widgetMenu->width() - 70, getBaseContentHeight());
 	layoutMain->addWidget(widgetPage);
 
 	bgMenu->buttons()[0]->click();

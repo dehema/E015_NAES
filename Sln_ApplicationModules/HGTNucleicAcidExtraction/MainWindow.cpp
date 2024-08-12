@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : BaseUI()
 	widgetPageParent->show();
 
 	btPlay->click();
+	initAxeService(Utility::ins().deviceHandle.axeService);
 }
 
 HButtonIcon* MainWindow::getBtMenu(QString _normalIcon, QString _hoverIcon)
@@ -141,4 +142,40 @@ void MainWindow::showPage(PageType _pageType)
 	//Log(widgetPageParent->size().height());
 	//Log(widgetPageParent->isVisible() ? "show" : "hide");
 	//Log(widgetPage->isVisible() ? "show" : "hide");
+}
+
+int MainWindow::getAxeComPort()
+{
+	int nComPort = 0;
+	QString configFile = QCoreApplication::applicationDirPath() + "/data/CommonParam.ini";
+	if (!QFile::exists(configFile))
+	{
+		Log("没有找到commonParam" + configFile);
+		return false;
+	}
+
+	QSettings *setting = new QSettings(configFile, QSettings::IniFormat);
+	setting->setIniCodec("UTF-8");
+	nComPort = setting->value("/CommonParam/AxePort", 1).toInt();
+	Log(QString::fromLocal8Bit("核酸提取仪端口") + QString::number(nComPort));
+	delete setting;
+	return nComPort;
+}
+
+bool MainWindow::initAxeService(IFAXEService *&axeService)
+{
+	int errorno = 0;
+
+	int nPort = getAxeComPort();
+	axeService = getAXEService(nullptr, nPort);
+
+	if (axeService == nullptr)
+	{
+		Log("initAxeService failed. errno=" + errorno);
+		return false;
+	}
+
+	axeService->start();
+	axeService->enable();
+	return true;
 }

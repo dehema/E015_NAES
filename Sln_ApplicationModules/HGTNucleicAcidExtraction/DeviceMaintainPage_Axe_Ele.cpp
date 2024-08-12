@@ -6,7 +6,8 @@ DeviceMaintainPage_Axe_Ele::DeviceMaintainPage_Axe_Ele(QWidget * _parent, Device
 	//创建QGridLayout布局
 	QGridLayout *layoutMain = getNewGridLayout(this);
 	layoutMain->setAlignment(Qt::AlignCenter);
-	layoutMain->setSpacing(10);
+	layoutMain->setHorizontalSpacing(20);
+	layoutMain->setVerticalSpacing(30);
 
 	//步进电机运行
 	m_btnStepMonitorRun = getNewBtCommon(GetLang("1708420281"));

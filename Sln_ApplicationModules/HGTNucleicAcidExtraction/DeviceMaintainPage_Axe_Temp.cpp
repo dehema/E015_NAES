@@ -16,6 +16,7 @@ DeviceMaintainPage_Axe_Temp::DeviceMaintainPage_Axe_Temp(QWidget * _parent, Devi
 
 	//µÚÒ»Ò³ÊÇÎÂ¿Ø°åµÄÃüÁîÒ³
 	QVBoxLayout *m_vblMain = getNewVBoxLayout(m_heatBoradCmd);
+	m_vblMain->setContentsMargins(20, 0, 0, 0);
 	m_vblMain->setAlignment(Qt::AlignCenter);
 	initAreas();
 

@@ -80,14 +80,6 @@ private:
 	QLabel *m_lbFixedZpos;
 	HLineEdit *m_edtFixedZpos;
 
-	/* 磁棒套速度查询 设置 */
-	//QPushButton *m_btnGetMagneticSleeveSpeed;
-	//QPushButton *m_btnSetMagneticSleeveSpeed;
-	//QLabel *m_lbSleeveOutSpeed;
-	//HLineEdit *m_edtSleeveOutSpeed;
-	//QLabel *m_lbSleeveInSpeed;
-	//HLineEdit *m_edtSleeveInSpeed;
-
 	/* 磁棒套位置查询 设置 */
 	QPushButton *m_btnGetMagneticSleevePos;
 	QPushButton *m_btnSetMagneticSleevePos;
@@ -128,16 +120,6 @@ private:
 	QLabel *m_lbGetHorPos6;
 	HLineEdit *m_edtGetHorPos6;
 
-	/* 装载位置查询 设置 */
-	//QPushButton *m_btnQueryLoadingPos;
-	//QPushButton *m_btnSetLoadingPos;
-	//QLabel *m_lbLoadingXpos;
-	//HLineEdit *m_edtLoadingXpos;
-	//QLabel *m_lbLoadingYpos;
-	//HLineEdit *m_edtLoadingYpos;
-	//QLabel *m_lbLoadingZpos;
-	//HLineEdit *m_edtLoadingZpos;
-
 	//-------------------------field-------------------------
 	const int axeNumber = 1;
 	IFAXEService *m_axe;
@@ -148,21 +130,21 @@ protected:
 	QLabel* getNewLbCommon(QString _langID = nullptr)override
 	{
 		QLabel* lb = DeviceMaintainPage_Axe_Base::getNewLbCommon(_langID);
-		lb->setMinimumWidth(110);
+		lb->setMinimumWidth(90);
 		return lb;
 	}
 
 	QPushButton* getNewBtCommon(QString _langID = nullptr) override
 	{
 		QPushButton* bt = DeviceMaintainPage_Axe_Base::getNewBtCommon(_langID);
-		bt->setFixedWidth(160);
+		bt->setFixedWidth(120);
 		return bt;
 	}
 
 	HLineEdit * getNewLineEdit() override
 	{
 		HLineEdit* edit = DeviceMaintainPage_Axe_Base::getNewLineEdit();
-		edit->setFixedWidth(100);
+		edit->setFixedWidth(70);
 		return edit;
 	}
 

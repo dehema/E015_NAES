@@ -8,7 +8,8 @@ DeviceMaintainPage_Axe_Setting::DeviceMaintainPage_Axe_Setting(QWidget * _parent
 	DeviceMaintainPage_Axe_Base(_parent, _handle)
 {
 	QVBoxLayout *m_vblMain = getNewVBoxLayout(this);
-	m_vblMain->setContentsMargins(100, 0, 20, 20);
+	//m_vblMain->setContentsMargins(15, 0, 0, 0);
+	m_vblMain->setSpacing(20);
 	m_vblMain->setAlignment(Qt::AlignCenter);
 	this->initAreas();
 
@@ -31,7 +32,7 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea1()
 	m_qfmArea1 = getNewWidgetCommon();
 	m_qfmArea1->setFixedSize(parentWidget()->width(), 50);
 	m_hblArea2 = getNewHBoxLayout(m_qfmArea1);
-	m_hblArea2->setSpacing(20);
+	m_hblArea2->setSpacing(15);
 
 	m_btnQueryDoorPos = getNewBtCommon("1708420323");
 	m_hblArea2->addWidget(m_btnQueryDoorPos);
@@ -62,7 +63,7 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea2()
 	m_qfmArea2 = getNewWidgetCommon();
 	m_qfmArea2->setFixedSize(parentWidget()->width(), 50);
 	m_hblArea3 = getNewHBoxLayout(m_qfmArea2);
-	m_hblArea3->setSpacing(20);
+	m_hblArea3->setSpacing(15);
 
 	m_btnSetFixedPos = getNewBtCommon("1708420306");
 	m_hblArea3->addWidget(m_btnSetFixedPos);
@@ -99,44 +100,12 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea2()
 	m_hblArea3->addStretch();
 }
 
-//void DeviceMaintainPage_Axe_Setting::initWidgetArea4()
-//{
-//	m_qfmArea4 = getNewWidgetCommon();
-//	m_qfmArea4->setFixedSize(parentWidget()->width(), 50);
-//	m_hblArea4 = getNewHBoxLayout(m_qfmArea4);
-//	m_hblArea4->setSpacing(20);
-//
-//	m_btnGetMagneticSleeveSpeed = getNewBtCommon("1708420301");
-//	m_hblArea4->addWidget(m_btnGetMagneticSleeveSpeed);
-//
-//	m_btnSetMagneticSleeveSpeed = getNewBtCommon("1708420300");
-//	m_hblArea4->addWidget(m_btnSetMagneticSleeveSpeed);
-//
-//	m_lbSleeveOutSpeed = getNewLbCommon("1708420302");
-//	m_lbSleeveOutSpeed->setAlignment(Qt::AlignCenter);
-//	m_hblArea4->addWidget(m_lbSleeveOutSpeed);
-//
-//	m_edtSleeveOutSpeed = getNewLineEdit();
-//	m_edtSleeveOutSpeed->setPlaceholderText(QString::fromLocal8Bit("(mm/s)"));
-//	m_hblArea4->addWidget(m_edtSleeveOutSpeed);
-//
-//	m_lbSleeveInSpeed = getNewLbCommon("1708420303");
-//	m_lbSleeveInSpeed->setAlignment(Qt::AlignCenter);
-//	m_hblArea4->addWidget(m_lbSleeveInSpeed);
-//
-//	m_edtSleeveInSpeed = getNewLineEdit();
-//	m_edtSleeveInSpeed->setPlaceholderText(QString::fromLocal8Bit("(mm/s)"));
-//	m_hblArea4->addWidget(m_edtSleeveInSpeed);
-//
-//	m_hblArea4->addStretch();
-//}
-
 void DeviceMaintainPage_Axe_Setting::initWidgetArea5()
 {
 	m_qfmArea5 = getNewWidgetCommon();
 	m_qfmArea5->setFixedSize(parentWidget()->width(), 50);
 	m_hblArea5 = getNewHBoxLayout(m_qfmArea5);
-	m_hblArea5->setSpacing(20);
+	m_hblArea5->setSpacing(15);
 
 
 	m_btnGetMagneticSleevePos = getNewBtCommon("1708420307");
@@ -178,7 +147,7 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea6()
 	m_qfmArea6 = getNewWidgetCommon();
 	m_qfmArea6->setFixedSize(parentWidget()->width(), 50);
 	m_hblArea6 = getNewHBoxLayout(m_qfmArea6);
-	m_hblArea6->setSpacing(20);
+	m_hblArea6->setSpacing(15);
 
 	m_btnGetMagneticBarPos = getNewBtCommon("1708420311");
 	m_hblArea6->addWidget(m_btnGetMagneticBarPos);
@@ -211,7 +180,7 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea7()
 	m_qfmArea7 = getNewWidgetCommon();
 	m_qfmArea7->setFixedSize(parentWidget()->width(), 50);
 	m_hblArea7 = getNewHBoxLayout(m_qfmArea7);
-	m_hblArea7->setSpacing(20);
+	m_hblArea7->setSpacing(15);
 
 	m_btnGetHorPos = getNewBtCommon("1708420315");
 	m_hblArea7->addWidget(m_btnGetHorPos);
@@ -245,36 +214,6 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea7()
 	m_hblArea7->addStretch();
 }
 
-//void DeviceMaintainPage_Axe_Setting::initWidgetArea8()
-//{
-//	m_qfmArea8 = getNewWidgetCommon();
-//	m_qfmArea8->setFixedSize(parentWidget()->width(), 50);
-//	m_hblArea8 = getNewHBoxLayout(m_qfmArea8);
-//	m_hblArea8->setSpacing(20);
-//
-//	m_btnQueryLoadingPos = getNewBtCommon("1708420320");
-//	m_hblArea8->addWidget(m_btnQueryLoadingPos);
-//
-//	m_lbLoadingXpos = getNewLbCommon("1708420321");
-//	m_lbLoadingXpos->setAlignment(Qt::AlignCenter);
-//	m_hblArea8->addWidget(m_lbLoadingXpos);
-//
-//	m_edtLoadingYpos = getNewLineEdit();
-//	m_edtLoadingYpos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-//	m_edtLoadingYpos->setFixedWidth(120);
-//	m_hblArea8->addWidget(m_edtLoadingYpos);
-//
-//	m_lbLoadingYpos = getNewLbCommon("1708420322");
-//	m_lbLoadingYpos->setAlignment(Qt::AlignCenter);
-//	m_hblArea8->addWidget(m_lbLoadingYpos);
-//
-//	m_edtLoadingXpos = getNewLineEdit();
-//	m_edtLoadingXpos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-//	m_hblArea8->addWidget(m_edtLoadingXpos);
-//
-//	m_hblArea8->addStretch();
-//}
-
 void DeviceMaintainPage_Axe_Setting::initAreas()
 {
 	this->initWidgetArea1();
@@ -296,8 +235,6 @@ void DeviceMaintainPage_Axe_Setting::setConnection()
 	connect(m_btnSetMagneticBarPos, SIGNAL(clicked()), this, SLOT(slot_btnSetBarPosClicked()));
 	connect(m_btnGetHorPos, SIGNAL(clicked()), this, SLOT(slot_btnGetHorPosClicked()));
 	connect(m_btnSetHorPos, SIGNAL(clicked()), this, SLOT(slot_btnSetHorPosClicked()));
-	//connect(m_btnGetMagneticSleeveSpeed, SIGNAL(clicked()), this, SLOT(slot_btnGetSleeveSpeedClicked()));
-	//connect(m_btnSetMagneticSleeveSpeed, SIGNAL(clicked()), this, SLOT(slot_btnSetSleeveSpeedClicked()));
 }
 
 void DeviceMaintainPage_Axe_Setting::slot_btnQueryDoorPosClicked()
@@ -385,48 +322,6 @@ void DeviceMaintainPage_Axe_Setting::slot_btnSetFixedPosClicked()
 		Log("DeviceMaintainPage_Axe_Setting SetFixedPos failed retCode = " + strErrorCode.toStdString());
 	}
 }
-
-//void DeviceMaintainPage_Axe_Setting::slot_btnGetSleeveSpeedClicked()
-//{
-//	if (axeService == nullptr)
-//		return;
-//
-//	int speed[2] = { -1 };
-//	int retCode = axeService->getMagneticSleeveSpeed(axeNumber, speed);
-//	if (retCode == 0)
-//	{
-//		m_edtSleeveOutSpeed->setText(QString::number(speed[0]));
-//		m_edtSleeveInSpeed->setText(QString::number(speed[1]));
-//	}
-//	else
-//	{
-//		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
-//		Log("DeviceMaintainPage_Axe_Setting GetSleeveSpeed retCode = " + strErrorCode.toStdString());
-//	}
-//}
-
-//void DeviceMaintainPage_Axe_Setting::slot_btnSetSleeveSpeedClicked()
-//{
-//	if (axeService == nullptr)
-//		return;
-//
-//	if (m_edtSleeveOutSpeed->text().isEmpty() || m_edtSleeveInSpeed->text().isEmpty())
-//	{
-//		HGT::warning(this, GetLang("1708420300"), GetLang("1708420284"), QMessageBox::Ok);
-//		return;
-//	}
-//
-//	int speed[2] = { -1 };
-//	speed[0] = m_edtSleeveOutSpeed->text().toInt();
-//	speed[1] = m_edtSleeveInSpeed->text().toInt();
-//
-//	int retCode = axeService->setMagneticSleeveSpeed(axeNumber, speed);
-//	if (retCode != 0)
-//	{
-//		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
-//		Log("DeviceMaintainPage_Axe_Setting SetSleeveSpeed retCode = " + strErrorCode.toStdString());
-//	}
-//}
 
 void DeviceMaintainPage_Axe_Setting::slot_btnGetSleevePosClicked()
 {

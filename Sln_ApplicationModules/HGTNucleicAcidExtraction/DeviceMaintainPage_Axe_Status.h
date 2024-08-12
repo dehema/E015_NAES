@@ -16,32 +16,12 @@ public:
 	void slot_recvAxeStatusData(int axeNumber, AXEModuleStatus status);
 
 private:
-	void initAreas();
-	void initWidgetArea1();
-	void initWidgetArea2();
-	void initWidgetArea4();
-	void initWidgetArea5();
-	void initWidgetArea8();
-	void initWidgetArea11();
 	void setConnection();
 
 private:
 	QTabWidget *m_mainTab;
 	QWidget *m_stepMonitor;
 	QVBoxLayout *m_vblMain;
-
-	QFrame *m_qfmArea1;
-	QFrame *m_qfmArea3;
-	QFrame *m_qfmArea5;
-	QFrame *m_qfmArea8;
-	QFrame *m_qfmArea11;
-
-	QHBoxLayout *m_hblArea1;
-	QHBoxLayout *m_hblArea2;
-	QHBoxLayout *m_hblArea4;
-	QHBoxLayout *m_hblArea5;
-	QHBoxLayout *m_hblArea8;
-	QHBoxLayout *m_hblArea11;
 
 	/* ´®¿Ú¶Ë¿ÚºÅ*/
 	QComboBox* m_cbComNumber;
@@ -121,7 +101,8 @@ protected:
 	QLabel* getNewLbCommon(QString _langID = nullptr)override
 	{
 		QLabel* lb = DeviceMaintainPage_Axe_Base::getNewLbCommon(_langID);
-		lb->setFixedWidth(70);
+		lb->setFixedWidth(90);
+		lb->setAlignment(Qt::AlignCenter);
 		return lb;
 	}
 
@@ -136,6 +117,7 @@ protected:
 	{
 		HLineEdit* edit = DeviceMaintainPage_Axe_Base::getNewLineEdit();
 		edit->setFixedWidth(100);
+		edit->setReadOnly(true);
 		return edit;
 	}
 

@@ -43,7 +43,7 @@ private:
 	QHBoxLayout *m_hblArea2;
 	QHBoxLayout *m_hblArea3;
 	QGridLayout *m_hblArea4;
-	QHBoxLayout *m_hblArea6;
+	QGridLayout *m_hblArea6;
 
 	/* ´®¿Ú¶Ë¿ÚºÅ*/
 	QComboBox* m_cbComNumber;
@@ -134,28 +134,29 @@ protected:
 	QLabel* getNewLbCommon(QString _langID = nullptr)override
 	{
 		QLabel* lb = DeviceMaintainPage_Axe_Base::getNewLbCommon(_langID);
-		lb->setFixedWidth(70);
+		lb->setFixedWidth(90);
+		lb->setAlignment(Qt::AlignCenter);
 		return lb;
 	}
 
 	QPushButton* getNewBtCommon(QString _langID = nullptr) override
 	{
 		QPushButton* bt = DeviceMaintainPage_Axe_Base::getNewBtCommon(_langID);
-		bt->setFixedWidth(160);
+		bt->setFixedWidth(135);
 		return bt;
 	}
 
 	HLineEdit * getNewLineEdit() override
 	{
 		HLineEdit* edit = DeviceMaintainPage_Axe_Base::getNewLineEdit();
-		edit->setFixedWidth(100);
+		edit->setFixedWidth(90);
 		return edit;
 	}
 
 	QComboBox * getNewComboxBox(QStringList _langIDs = {}) override
 	{
 		QComboBox* cb = DeviceMaintainPage_Axe_Base::getNewComboxBox(_langIDs);
-		cb->setFixedWidth(160);
+		cb->setFixedWidth(90);
 		return cb;
 	}
 };

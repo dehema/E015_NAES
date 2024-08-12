@@ -50,6 +50,9 @@ public:
 	//-----------------------function-----------------------
 	HButtonIcon* getBtMenu(QString _normalIcon, QString _hoverIcon);
 	void showPage(PageType _pageType);
+	int getAxeComPort();
+	bool initAxeService(IFAXEService *&axeService);
+
 	public slots:
 	void slot_onclickBt(int);
 };

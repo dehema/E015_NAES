@@ -71,188 +71,178 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea2()
 void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 {
 	m_qfmArea3 = getNewFrame();
-	m_qfmArea3->setFixedSize(900, 230);
+	m_qfmArea3->setFixedSize(parentWidget()->width() - 10, 180);
+
 	m_hblArea4 = getNewGridLayout(m_qfmArea3);
-	m_hblArea4->setAlignment(Qt::AlignHCenter | Qt::AlignHCenter);
+	m_hblArea4->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+	m_hblArea4->setHorizontalSpacing(10);
 	m_hblArea4->setVerticalSpacing(20);
+	m_hblArea4->setContentsMargins(12, 0, 12, 0);
 
 	m_btnMixedProcess = getNewBtCommon("1708420343");
-	m_btnMixedProcess->setFixedWidth(150);
-	m_hblArea4->addWidget(m_btnMixedProcess, 0, 0);
+	m_btnMixedProcess->setFixedWidth(190);
+	m_hblArea4->addWidget(m_btnMixedProcess, 0, 0, 1, 2, Qt::AlignLeft);
 
 	//流程ID
 	m_lbProcessID = getNewLbCommon("1708420330");
-	m_lbProcessID->setFixedWidth(120);
 	m_lbProcessID->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbProcessID, 1, 0);
+	m_hblArea4->addWidget(m_lbProcessID, 0, 2);
 
 	m_edtProcessID = getNewLineEdit();
-	m_edtProcessID->setFixedWidth(90);
+	m_edtProcessID->setText("1");
 	m_edtProcessID->setValidator(new QIntValidator(1, 99, this));
 	m_edtProcessID->setPlaceholderText(QString::fromLocal8Bit("1-99"));
-	m_hblArea4->addWidget(m_edtProcessID, 1, 1);
+	m_hblArea4->addWidget(m_edtProcessID, 0, 3);
 
 	//容积
 	m_lbVolume = getNewLbCommon("1708420333");
-	m_lbVolume->setFixedWidth(120);
 	m_lbVolume->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbVolume, 1, 2);
+	m_hblArea4->addWidget(m_lbVolume, 0, 4);
 
 	m_edtVolume = getNewLineEdit();
-	m_edtVolume->setFixedWidth(90);
+	m_edtVolume->setText("500");
 	m_edtVolume->setValidator(new QIntValidator(1, 1000, this));
 	m_edtVolume->setPlaceholderText(QString::fromLocal8Bit("1-1000"));
-	m_hblArea4->addWidget(m_edtVolume, 1, 3);
+	m_hblArea4->addWidget(m_edtVolume, 0, 5);
 
 	//列号
 	m_lbColumnNum = getNewLbCommon("1708420331");
-	m_lbColumnNum->setFixedWidth(120);
 	m_lbColumnNum->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbColumnNum, 1, 4);
+	m_hblArea4->addWidget(m_lbColumnNum, 0, 6);
 
 	m_edtColumnNum = getNewLineEdit();
-	m_edtColumnNum->setFixedWidth(90);
+	m_edtColumnNum->setText("1");
 	m_edtColumnNum->setValidator(new QIntValidator(1, 6, this));
 	m_edtColumnNum->setPlaceholderText(QString::fromLocal8Bit("1-6"));
-	m_hblArea4->addWidget(m_edtColumnNum, 1, 5);
+	m_hblArea4->addWidget(m_edtColumnNum, 0, 7);
 
 	//混合时间
 	m_lbMixedTime = getNewLbCommon("1708420091");
 	m_lbMixedTime->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbMixedTime, 1, 6);
+	m_hblArea4->addWidget(m_lbMixedTime, 1, 0);
 
 	m_edtMixedTime = getNewLineEdit();
-	m_edtMixedTime->setFixedWidth(90);
+	m_edtMixedTime->setText("10");
 	m_edtMixedTime->setPlaceholderText(QString::fromLocal8Bit("(s)"));
-	m_hblArea4->addWidget(m_edtMixedTime, 1, 7);
+	m_hblArea4->addWidget(m_edtMixedTime, 1, 1);
 
 	//混合速度
 	m_lbMixedSpeed = getNewLbCommon();
-	m_lbMixedSpeed->setFixedWidth(120);
 	m_lbMixedSpeed->setAlignment(Qt::AlignCenter);
 	m_lbMixedSpeed->setText(GetLang("1708420093") + "(PRM)");
-	m_hblArea4->addWidget(m_lbMixedSpeed, 2, 0);
+	m_hblArea4->addWidget(m_lbMixedSpeed, 1, 2);
 
 	m_edtMixedSpeed = getNewLineEdit();
-	m_edtMixedSpeed->setFixedWidth(90);
+	m_edtMixedSpeed->setText("1000");
 	m_edtMixedSpeed->setValidator(new QIntValidator(200, 3000, this));
 	m_edtMixedSpeed->setPlaceholderText(QString::fromLocal8Bit("200-3000"));
-	m_hblArea4->addWidget(m_edtMixedSpeed, 2, 1);
+	m_hblArea4->addWidget(m_edtMixedSpeed, 1, 3);
 
 	//混合底部位置
 	m_lbMixPosition = getNewLbCommon("1708420334");
-	m_lbMixPosition->setFixedWidth(120);
 	m_lbMixPosition->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbMixPosition, 2, 2);
+	m_hblArea4->addWidget(m_lbMixPosition, 1, 4);
 
 	m_edtMixPosition = getNewLineEdit();
-	m_edtMixPosition->setFixedWidth(90);
+	m_edtMixPosition->setText("10");
 	m_edtMixPosition->setValidator(new QIntValidator(0, 50, this));
 	m_edtMixPosition->setPlaceholderText(QString::fromLocal8Bit("0-50"));
-	m_hblArea4->addWidget(m_edtMixPosition, 2, 3);
+	m_hblArea4->addWidget(m_edtMixPosition, 1, 5);
 
 	//混合顶部位置
 	m_lbMixAmplitude = getNewLbCommon("1708420335");
-	m_lbMixAmplitude->setFixedWidth(120);
 	m_lbMixAmplitude->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbMixAmplitude, 2, 4);
+	m_hblArea4->addWidget(m_lbMixAmplitude, 1, 6);
 
 	m_edtMixAmplitude = getNewLineEdit();
-	m_edtMixAmplitude->setFixedWidth(90);
+	m_edtMixAmplitude->setText("10");
 	m_edtMixAmplitude->setValidator(new QIntValidator(0, 100, this));
 	m_edtMixAmplitude->setPlaceholderText(QString::fromLocal8Bit("0-100"));
-	m_hblArea4->addWidget(m_edtMixAmplitude, 2, 5);
+	m_hblArea4->addWidget(m_edtMixAmplitude, 1, 7);
 
 	//吸磁时间
 	m_lbAdsorbTime = getNewLbCommon("1708420092");
-	m_lbAdsorbTime->setFixedWidth(120);
 	m_lbAdsorbTime->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbAdsorbTime, 2, 6);
+	m_hblArea4->addWidget(m_lbAdsorbTime, 2, 0);
 
 	m_edtAdsorbTime = getNewLineEdit();
-	m_edtAdsorbTime->setFixedWidth(90);
+	m_edtAdsorbTime->setText("10");
 	m_edtAdsorbTime->setPlaceholderText(QString::fromLocal8Bit("(s)"));
-	m_hblArea4->addWidget(m_edtAdsorbTime, 2, 7);
+	m_hblArea4->addWidget(m_edtAdsorbTime, 2, 1);
 
 	//吸磁速度
 	m_lbAdsorbSpeed = getNewLbCommon("1708420332");
-	m_lbAdsorbSpeed->setFixedWidth(120);
 	m_lbAdsorbSpeed->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbAdsorbSpeed, 3, 0);
+	m_hblArea4->addWidget(m_lbAdsorbSpeed, 2, 2);
 
 	m_cbAdsorbSpeed = getNewComboxBox(AXEMgr::ins().magnetSpeedStr);
-	m_cbAdsorbSpeed->setFixedWidth(90);
 	m_cbAdsorbSpeed->setValidator(new QIntValidator(1, 10, this));
 	m_cbAdsorbSpeed->setCurrentIndex(0);
-	m_hblArea4->addWidget(m_cbAdsorbSpeed, 3, 1);
+	m_hblArea4->addWidget(m_cbAdsorbSpeed, 2, 3);
 
 	//等待时间
 	m_lbWaitTime = getNewLbCommon("1708420090");
-	m_lbWaitTime->setFixedWidth(120);
+	m_lbWaitTime->setText("10");
 	m_lbWaitTime->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbWaitTime, 3, 2);
+	m_hblArea4->addWidget(m_lbWaitTime, 2, 4);
 
 	m_edtWaitTime = getNewLineEdit();
-	m_edtWaitTime->setFixedWidth(90);
 	m_edtWaitTime->setPlaceholderText(QString::fromLocal8Bit("(s)"));
-	m_hblArea4->addWidget(m_edtWaitTime, 3, 3);
+	m_hblArea4->addWidget(m_edtWaitTime, 2, 5);
 
 	//吸磁位置
 	m_lbAdsorbPosition = getNewLbCommon("1708420336");
-	m_lbAdsorbPosition->setFixedWidth(120);
 	m_lbAdsorbPosition->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbAdsorbPosition, 3, 4);
+	m_hblArea4->addWidget(m_lbAdsorbPosition, 2, 6);
 
 	m_edtAdsorbPosition = getNewLineEdit();
-	m_edtAdsorbPosition->setFixedWidth(90);
+	m_edtAdsorbPosition->setText("10");
 	m_edtAdsorbPosition->setValidator(new QIntValidator(1, 100, this));
 	m_edtAdsorbPosition->setPlaceholderText(QString::fromLocal8Bit("1-100"));
-	m_hblArea4->addWidget(m_edtAdsorbPosition, 3, 5);
+	m_hblArea4->addWidget(m_edtAdsorbPosition, 2, 7);
 }
 
 void DeviceMaintainPage_Axe_Process::initWidgetArea6()
 {
 	m_qfmArea6 = getNewWidgetCommon();
-	m_qfmArea6->setFixedSize(parentWidget()->width(), 60);
-	m_hblArea6 = getNewHBoxLayout(m_qfmArea6);
+	m_qfmArea6->setFixedSize(parentWidget()->width(), 100);
+
+	m_hblArea6 = getNewGridLayout(m_qfmArea6);
 	m_hblArea6->setSpacing(20);
 
 	m_btnHeatProcess = getNewBtCommon("1708420344");
-	m_hblArea6->addWidget(m_btnHeatProcess);
+	m_btnHeatProcess->setFixedWidth(200);
+	m_hblArea6->addWidget(m_btnHeatProcess, 0, 0, 1, 2);
 
 	m_lbHeatProcessID = getNewLbCommon("1708420330");
-	m_hblArea6->addWidget(m_lbHeatProcessID);
+	m_hblArea6->addWidget(m_lbHeatProcessID, 0, 2);
 
 	m_edtHeatProcessID = getNewLineEdit();
-	m_edtHeatProcessID->setFixedWidth(80);
 	m_edtHeatProcessID->setValidator(new QIntValidator(1, 99, this));
 	m_edtHeatProcessID->setPlaceholderText(QString::fromLocal8Bit("1-99"));
-	m_hblArea6->addWidget(m_edtHeatProcessID);
+	m_hblArea6->addWidget(m_edtHeatProcessID, 0, 3);
 
 	m_lbGroupNum = getNewLbCommon("1708420340");
-	m_hblArea6->addWidget(m_lbGroupNum);
+	m_hblArea6->addWidget(m_lbGroupNum, 0, 4);
 
 	m_cbGroupNum = getNewComboxBox();
 	m_cbGroupNum->addItem("1,7" + GetLang("1708420299"));
 	m_cbGroupNum->addItem("6,12" + GetLang("1708420299"));
-	m_hblArea6->addWidget(m_cbGroupNum);
+	m_hblArea6->addWidget(m_cbGroupNum, 0, 5);
 
 	m_lbAimDegree = getNewLbCommon("1708420338");
-	m_hblArea6->addWidget(m_lbAimDegree);
+	m_hblArea6->addWidget(m_lbAimDegree, 1, 0);
 
 	m_edtAimDegree = getNewLineEdit();
-	m_edtAimDegree->setFixedWidth(80);
 	m_edtAimDegree->setValidator(new QIntValidator(25, 120, this));
 	m_edtAimDegree->setPlaceholderText(QString::fromLocal8Bit("25-120"));
-	m_hblArea6->addWidget(m_edtAimDegree);
+	m_hblArea6->addWidget(m_edtAimDegree, 1, 1);
 
 	m_lbIsHeat = getNewLbCommon("1708420339");
-	m_hblArea6->addWidget(m_lbIsHeat);
+	m_hblArea6->addWidget(m_lbIsHeat, 1, 2);
 
-	m_cbIsHeat = getNewComboxBox({ "1708420345","1708420346" });
-	m_hblArea6->addWidget(m_cbIsHeat);
-
-	m_hblArea6->addStretch();
+	m_cbIsHeat = getNewComboxBox({ "1708420213","1708420212" });
+	m_hblArea6->addWidget(m_cbIsHeat, 1, 3);
 }
 
 void DeviceMaintainPage_Axe_Process::setConnection()
