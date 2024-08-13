@@ -479,7 +479,7 @@ void UIUtility::setTableItemCenter(QStandardItemModel*& _model)
 }
 
 //设置文本行高
-void UIUtility::setTableRowHeight(QTableView*& _tb)
+void UIUtility::setTableRowHeight(HTableView*& _tb)
 {
 	for (int row = 0; row < _tb->model()->rowCount(); row++)
 	{

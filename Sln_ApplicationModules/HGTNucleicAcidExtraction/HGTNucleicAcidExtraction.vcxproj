@@ -158,6 +158,8 @@
     <ClCompile Include="AXEMgr.cpp" />
     <ClCompile Include="AXEProcessItem.cpp" />
     <ClCompile Include="AXEProcessItem_Icon.cpp" />
+    <ClCompile Include="AXERuningView.cpp" />
+    <ClCompile Include="AxeThread.cpp" />
     <ClCompile Include="ChooseItemListDialog.cpp" />
     <ClCompile Include="Common\HMessageBox.cpp" />
     <ClCompile Include="Common\HTableView.cpp" />
@@ -187,6 +189,8 @@
     <ClCompile Include="PlayView.cpp" />
     <ClCompile Include="ProcessParamsDialog.cpp" />
     <ClCompile Include="ProcessView.cpp" />
+    <ClCompile Include="release\moc_AXERuningView.cpp" />
+    <ClCompile Include="release\moc_AxeThread.cpp" />
     <ClCompile Include="release\moc_BaseDialog.cpp" />
     <ClCompile Include="release\moc_ChooseItemListDialog.cpp" />
     <ClCompile Include="release\moc_ConnectDatabase.cpp" />
@@ -217,6 +221,8 @@
     <ClInclude Include="AXEMgr.h" />
     <ClInclude Include="AXEProcessItem.h" />
     <ClInclude Include="AXEProcessItem_Icon.h" />
+    <ClInclude Include="AXERuningView.h" />
+    <ClInclude Include="AxeThread.h" />
     <ClInclude Include="ChooseItemListDialog.h" />
     <ClInclude Include="Common\GlobalDefine.h" />
     <ClInclude Include="Common\HButtonIcon.h" />

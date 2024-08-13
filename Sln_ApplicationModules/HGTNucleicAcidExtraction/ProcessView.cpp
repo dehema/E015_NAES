@@ -60,17 +60,8 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 		<< GetLang("1708420155")	//名称
 		<< GetLang("1708420156")	//体系容量
 		<< GetLang("1708420379")	//混合
-		//<< GetLang("1708420091") + "(Sec)"	//混合时间
-		//<< GetLang("1708420093") + "(PRM)"	//混合速度
-		//<< GetLang("1708420334") + "(%)"	//混合振幅底部位置
-		//<< GetLang("1708420335") + "(%)"	//混合振幅顶部位置
 		<< GetLang("1708430054")	//吸磁
-		//<< GetLang("1708420092") + "(Sec)"	//吸磁时间
-		//<< GetLang("1708420332")	//吸磁速度
-		//<< GetLang("1708420336") + "(%)"	//吸磁位置
 		<< GetLang("1708430055")	//等待
-		//<< GetLang("1708420090") + "(Sec)"	//等待时间
-		//<< GetLang("1708420339")	//是否加热
 		;
 	tbModelProcess->setHorizontalHeaderLabels(headerProcessDetail);
 	selectionModelProcess = new QItemSelectionModel(tbModelProcess);
@@ -81,16 +72,8 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	tbProcess->setModel(tbModelProcess);
 	tbProcess->setSelectionModel(selectionModelProcess);
 	layoutMain->addWidget(tbProcess, 0, Qt::AlignTop | Qt::AlignHCenter);
-	for (int _row = 0; _row < stepCountMax; _row++)
-	{
-		tbProcess->setRowHeight(_row, UI_TableView_RowHeight);
-	}
+	UIUtility::ins().setTableRowHeight(tbProcess);
 	processItemWidth = tbProcess->width() / headerProcessDetail.count();
-	for (int col = 0; col < headerProcessDetail.count(); col++)
-	{
-		tbProcess->setColumnWidth(col, processItemWidth);
-	}
-	tbProcess->setColumnWidth(2, processItemWidth + 8);
 
 	//data
 	fillWidgetTableItems();
@@ -198,7 +181,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		connect(btMix, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Mix);
 			dialog->exec();
-			btMix->setText(getMixBtStr(currProcessData.stepsList[_row]));
+			btMix->setText(AXEMgr::ins().getMixBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btMix;
 		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btMix);
@@ -207,7 +190,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	{
 		btMix = dynamic_cast<QPushButton*>(wMix);
 	}
-	btMix->setText(getMixBtStr(_data));
+	btMix->setText(AXEMgr::ins().getMixBtStr(currProcessData.stepsList[_row]));
 	//吸磁
 	QWidget* wMagnet = getWidgetTableItem(_row, ++col);
 	QPushButton* btMagnet;
@@ -219,7 +202,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		connect(btMagnet, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Magnet);
 			dialog->exec();
-			btMagnet->setText(getMagnetBtStr(currProcessData.stepsList[_row]));
+			btMagnet->setText(AXEMgr::ins().getMagnetBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btMagnet;
 		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btMagnet);
@@ -228,7 +211,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	{
 		btMagnet = dynamic_cast<QPushButton*>(wMagnet);
 	}
-	btMagnet->setText(getMagnetBtStr(_data));
+	btMagnet->setText(AXEMgr::ins().getMagnetBtStr(currProcessData.stepsList[_row]));
 	//等待
 	QWidget* wWait = getWidgetTableItem(_row, ++col);
 	QPushButton* btWait;
@@ -240,7 +223,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		connect(btWait, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Wait);
 			dialog->exec();
-			btWait->setText(getWaitBtStr(currProcessData.stepsList[_row]));
+			btWait->setText(AXEMgr::ins().getWaitBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btWait;
 		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btWait);
@@ -249,7 +232,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	{
 		btWait = dynamic_cast<QPushButton*>(wWait);
 	}
-	btWait->setText(getWaitBtStr(_data));
+	btWait->setText(AXEMgr::ins().getWaitBtStr(currProcessData.stepsList[_row]));
 }
 
 
@@ -292,9 +275,7 @@ void ProcessView::openProcess()
 	if (res == -1)
 		return;
 	QString name = strList[res];
-	currProcessData = AXEMgr::ins().getProcessByName(name);
-	editProcessName->setText(name);
-	refreshTbProcess();
+	loadProcess(name);
 }
 
 void ProcessView::newProcess()
@@ -411,35 +392,15 @@ AXEProcessData ProcessView::getPublishProcessModel()
 		stepData.volume = editVolume->text().toInt();
 		processData.stepsList.append(stepData);
 	}
-	processData.duration = processData.getEstimatedSec();
+	processData.duration = processData.getEstimatedTime();
 	return processData;
 }
 
-QString ProcessView::getMixBtStr(AXEStepData _data)
+void ProcessView::loadProcess(QString _processName)
 {
-	QString str = QString::number(_data.mixTime) + "s/";
-	str += QString::number(_data.mixSpeed) + "/";
-	str += QString::number(_data.mixPos) + "%/";
-	str += QString::number(_data.mixAmplitude) + "%";
-	return str;
-}
-
-QString ProcessView::getMagnetBtStr(AXEStepData _data)
-{
-	QString str = QString::number(_data.magnetTime) + "s/";
-	str += AXEMgr::ins().getMagnetSpeedStr(_data.magnetSpeed) + "/";
-	str += QString::number(_data.adsorbPosition) + "%";
-	return str;
-}
-
-QString ProcessView::getWaitBtStr(AXEStepData _data)
-{
-	QString str = QString::number(_data.waitTime) + "s/";
-	if (_data.heatStatus)
-		str += QString::number(_data.targetTemp) + QString::fromLocal8Bit("℃");
-	else
-		str += "-";
-	return str;
+	currProcessData = AXEMgr::ins().getProcessByName(_processName);
+	editProcessName->setText(_processName);
+	refreshTbProcess();
 }
 
 void ProcessView::showEvent(QShowEvent * event)

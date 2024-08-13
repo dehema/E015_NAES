@@ -53,6 +53,8 @@ DeviceMaintainPage_Axe_Ele::DeviceMaintainPage_Axe_Ele(QWidget * _parent, Device
 
 	m_edtMonitorDistance = getNewLineEdit();
 	m_edtMonitorDistance->setValidator(UIUtility::ins().RegExpNumber);
+	m_edtMonitorDistance->setValidator(new QIntValidator(1, 50, this));
+	m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("1-50"));
 	layoutMain->addWidget(m_edtMonitorDistance, 0, 7);
 
 	//步进电机停止
@@ -110,6 +112,8 @@ void DeviceMaintainPage_Axe_Ele::setConnection()
 	connect(m_btnStepMonitorStop, SIGNAL(clicked()), this, SLOT(slot_btnStepMonitorStopClicked()));
 	connect(m_btnStepMonitorZero, SIGNAL(clicked()), this, SLOT(slot_btnStepMonitorZeroClicked()));
 	connect(m_btnStepMonitorAbsRun, SIGNAL(clicked()), this, SLOT(slot_btnStepMonitorAbsposRunClicked()));
+	connect(m_cbMonitorNumber, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_cbMonitorNumberChanged(int)));
+	connect(m_cbMonitorAbsNumber, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_cbMonitorAbsNumberChanged(int)));
 }
 
 void DeviceMaintainPage_Axe_Ele::slot_btnStepMonitorRunClicked()
@@ -220,5 +224,71 @@ void DeviceMaintainPage_Axe_Ele::slot_btnStepMonitorAbsposRunClicked()
 	{
 		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
 		Log("DeviceMaintainPage_Axe_Ele StepMonitorAbsposRun retCode = " + strErrorCode.toStdString());
+	}
+}
+
+void DeviceMaintainPage_Axe_Ele::slot_cbMonitorNumberChanged(int index)
+{
+	switch (index)
+	{
+	case 0:
+		m_edtMonitorSpeed->setValidator(new QIntValidator(1, 30, this));
+		m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-30"));
+		m_edtMonitorDistance->setValidator(new QIntValidator(1, 50, this));
+		m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("1-50"));
+		break;
+	case 1:
+		m_edtMonitorSpeed->setValidator(new QIntValidator(1, 30, this));
+		m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-30"));
+		m_edtMonitorDistance->setValidator(new QIntValidator(1, 153, this));
+		m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("1-153"));
+		break;
+	case 2:
+		m_edtMonitorSpeed->setValidator(new QIntValidator(1, 30, this));
+		m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-30"));
+		m_edtMonitorDistance->setValidator(new QIntValidator(1, 40, this));
+		m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("1-40"));
+		break;
+	case 3:
+		m_edtMonitorSpeed->setValidator(new QIntValidator(1, 30, this));
+		m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-30"));
+		m_edtMonitorDistance->setValidator(new QIntValidator(1, 67, this));
+		m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("1-67"));
+		break;
+	case 4:
+		m_edtMonitorSpeed->setValidator(new QIntValidator(1, 3000, this));
+		m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-3000"));
+		m_edtMonitorDistance->setValidator(new QIntValidator(0, 0, this));
+		m_edtMonitorDistance->setPlaceholderText(QString::fromLocal8Bit("0"));
+		break;
+	default:
+		break;
+	}
+}
+
+void DeviceMaintainPage_Axe_Ele::slot_cbMonitorAbsNumberChanged(int index)
+{
+	m_edtMonitorAbsDistance->clear();
+
+	switch (index)
+	{
+	case 0:
+		m_edtMonitorAbsDistance->setValidator(new QIntValidator(-5, 300, this));
+		m_edtMonitorAbsDistance->setPlaceholderText(QString::fromLocal8Bit("-5-300"));
+		break;
+	case 1:
+		m_edtMonitorAbsDistance->setValidator(new QIntValidator(-15, 140, this));
+		m_edtMonitorAbsDistance->setPlaceholderText(QString::fromLocal8Bit("-15-140"));
+		break;
+	case 2:
+		m_edtMonitorAbsDistance->setValidator(new QIntValidator(-15, 62.0, this));
+		m_edtMonitorAbsDistance->setPlaceholderText(QString::fromLocal8Bit("-15-62.0"));
+		break;
+	case 3:;
+		m_edtMonitorAbsDistance->setValidator(new QIntValidator(-15, 60, this));
+		m_edtMonitorAbsDistance->setPlaceholderText(QString::fromLocal8Bit("-15-60"));
+		break;
+	default:
+		break;
 	}
 }

@@ -1,6 +1,5 @@
 #include "AXEMgr.h"
 
-
 AXEMgr::AXEMgr()
 {
 	configFolderPath = QCoreApplication::applicationDirPath() + "/Solution/AXE/ProcessInfo/";
@@ -204,4 +203,31 @@ QList<QString> AXEMgr::getAllProcessNames()
 		}
 	}
 	return strList;
+}
+
+QString AXEMgr::getMixBtStr(AXEStepData _data)
+{
+	QString str = QString::number(_data.mixTime) + "s/";
+	str += QString::number(_data.mixSpeed) + "/";
+	str += QString::number(_data.mixPos) + "%/";
+	str += QString::number(_data.mixAmplitude) + "%";
+	return str;
+
+}
+QString AXEMgr::getMagnetBtStr(AXEStepData _data)
+{
+	QString str = QString::number(_data.magnetTime) + "s/";
+	str += AXEMgr::ins().getMagnetSpeedStr(_data.magnetSpeed) + "/";
+	str += QString::number(_data.adsorbPosition) + "%";
+	return str;
+}
+
+QString AXEMgr::getWaitBtStr(AXEStepData _data)
+{
+	QString str = QString::number(_data.waitTime) + "s/";
+	if (_data.heatStatus)
+		str += QString::number(_data.targetTemp) + QString::fromLocal8Bit("¡æ");
+	else
+		str += "-";
+	return str;
 }

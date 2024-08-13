@@ -17,6 +17,8 @@ public:
 	void slot_btnStepMonitorAbsposRunClicked();
 	void slot_btnSetStepMonitorStatusClicked();
 	void slot_btnLockStepMonitorClicked();
+	void slot_cbMonitorNumberChanged(int);
+	void slot_cbMonitorAbsNumberChanged(int);
 
 private:
 	/* 步进电机运行 */

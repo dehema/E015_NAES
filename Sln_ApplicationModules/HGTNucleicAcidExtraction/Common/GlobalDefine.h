@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 //Éè±¸¾ä±ú
 struct DeviceControlService
 {

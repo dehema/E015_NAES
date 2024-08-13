@@ -166,7 +166,7 @@ struct AXEProcessData
 		return Utility::ins().secondToString(duration);
 	}
 	//获取预估时间
-	int getEstimatedSec(int currStepIndex = 0)
+	int getEstimatedTime(int currStepIndex = 0)
 	{
 		int duration = getDurationSec(currStepIndex);
 		int offset = 25 * (stepCount - currStepIndex);
@@ -179,7 +179,14 @@ class AXEMgr :public Singleton<AXEMgr>
 public:
 	AXEMgr();
 	~AXEMgr();
+	//---------------filed---------------
+	//吸磁速度
+	QList<QString> magnetSpeedStr = {};
+	QString configFolderPath;
+	//获取所有流程的名称
+	QList<QString> AXEMgr::getAllProcessNames();
 
+	//---------------function---------------
 	AXEProcessData getProcessByName(QString _processName);
 	QString getStepJsonStr(AXEStepData _stepData);
 	QJsonArray getStepJsonArray(QList<AXEStepData> _stepList);
@@ -190,11 +197,9 @@ public:
 	QString getMagnetSpeedStr(int _speed);
 	//读取所有流程文件
 	QList<AXEProcessData> getAllProcess();
-	//---------------filed---------------
-	//吸磁速度
-	QList<QString> magnetSpeedStr = {};
-	QString configFolderPath;
-	//获取所有流程的名称
-	QList<QString> AXEMgr::getAllProcessNames();
+
+	QString getMixBtStr(AXEStepData _data);
+	QString getMagnetBtStr(AXEStepData _data);
+	QString getWaitBtStr(AXEStepData _data);
 };
 

@@ -1,6 +1,6 @@
 #include "MainWindow.h"
-
 #include <QtGui/QPixmap>
+#include "AxeThread.h"
 
 MainWindow::MainWindow(QWidget *parent) : BaseUI()
 {
@@ -51,6 +51,11 @@ MainWindow::MainWindow(QWidget *parent) : BaseUI()
 
 	btPlay->click();
 	initAxeService(Utility::ins().deviceHandle.axeService);
+
+	//ºËÌáÏß³Ì
+	AxeThread* axeThread = new AxeThread();
+	Utility::ins().axeThread = axeThread;
+	axeThread->start();
 }
 
 HButtonIcon* MainWindow::getBtMenu(QString _normalIcon, QString _hoverIcon)
@@ -62,27 +67,6 @@ HButtonIcon* MainWindow::getBtMenu(QString _normalIcon, QString _hoverIcon)
 	bt->setIconSize(bt->size() - QSize(5, 5));
 	return bt;
 }
-
-void MainWindow::slot_onclickBt(int _index)
-{
-	BtType _btType = (BtType)_index;
-	switch (_btType)
-	{
-	case BtType::Play:
-		showPage(PageType::PagePlay);
-		break;
-	case BtType::Process:
-		showPage(PageType::PageProcess);
-		break;
-	case BtType::UV:
-		showPage(PageType::PageUV);
-		break;
-	case BtType::Setting:
-		showPage(PageType::PageSetting);
-		break;
-	}
-}
-
 
 void MainWindow::showPage(PageType _pageType)
 {
@@ -102,7 +86,11 @@ void MainWindow::showPage(PageType _pageType)
 	{
 		btPlay->showHoverIcon();
 		if (playView == nullptr)
+		{
 			playView = new PlayView(widgetPageParent);
+			connect(playView, SIGNAL(signal_previewProcess(QString)), this, SLOT(slot_previewProcess(QString)));
+			connect(playView, SIGNAL(signal_runProcess(QString)), this, SLOT(slot_runProcess(QString)));
+		}
 		widgetPage = playView;
 		break;
 	}
@@ -110,7 +98,9 @@ void MainWindow::showPage(PageType _pageType)
 	{
 		btProcess->showHoverIcon();
 		if (processView == nullptr)
+		{
 			processView = new ProcessView(widgetPageParent);
+		}
 		widgetPage = processView;
 		break;
 	}
@@ -179,3 +169,41 @@ bool MainWindow::initAxeService(IFAXEService *&axeService)
 	axeService->enable();
 	return true;
 }
+
+void MainWindow::slot_onclickBt(int _index)
+{
+	BtType _btType = (BtType)_index;
+	switch (_btType)
+	{
+	case BtType::Play:
+		showPage(PageType::PagePlay);
+		break;
+	case BtType::Process:
+		showPage(PageType::PageProcess);
+		break;
+	case BtType::UV:
+		showPage(PageType::PageUV);
+		break;
+	case BtType::Setting:
+		showPage(PageType::PageSetting);
+		break;
+	}
+}
+
+void MainWindow::slot_previewProcess(QString _processName)
+{
+	btProcess->click();
+	processView->loadProcess(_processName);
+}
+
+void MainWindow::slot_runProcess(QString _processName)
+{
+	widgetPage->hide();
+	AXEProcessData processData = AXEMgr::ins().getProcessByName(_processName);
+	axeRuningView = new AXERuningView(widgetPageParent, processData);
+	axeRuningView->move(0, 0);
+	axeRuningView->setFixedSize(widgetPageParent->width(), widgetPageParent->height());
+	axeRuningView->show();
+	widgetPage = axeRuningView;
+}
+

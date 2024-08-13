@@ -2,6 +2,7 @@
 #include "Common/BasePageContent.h"
 #include "AXEMgr.h"
 #include "AXEProcessItem.h"
+#include "AxeRuningView.h"
 
 class PlayView : public BasePageContent
 {
@@ -40,6 +41,8 @@ public:
 	QButtonGroup* btGroup;
 	QButtonGroup* processIconGroup;
 	int gridSpacing;
+	//选择的流程
+	AXEProcessData selProcessData;
 	//--------------------function--------------------
 	//初始化网格模式
 	void showGridProcess();
@@ -49,5 +52,8 @@ public:
 	public slots:
 	void slot_onclickBt(int);
 	void slot_onclickProcessIcon(int);
+signals:
+	void signal_previewProcess(QString _name);
+	void signal_runProcess(QString _name);
 };
 

@@ -42,6 +42,8 @@ public:
 	//-----------------------field-----------------------
 	PageType currPageType = PageType::PageSetting;
 	QButtonGroup* bgMenu;
+	//运行界面
+	AXERuningView* axeRuningView;
 	PlayView* playView;
 	ProcessView* processView;
 	UVView* uvView;
@@ -55,5 +57,7 @@ public:
 
 	public slots:
 	void slot_onclickBt(int);
+	void slot_previewProcess(QString);
+	void slot_runProcess(QString);
 };
 

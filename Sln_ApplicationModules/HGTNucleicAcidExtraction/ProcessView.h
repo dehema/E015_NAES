@@ -49,9 +49,7 @@ public:
 	void setWidgetTableItemVisible(int _row, bool _visible);
 	bool isLegalSelRowIndexProcess();
 	AXEProcessData getPublishProcessModel();
-	QString getMixBtStr(AXEStepData _data);
-	QString getMagnetBtStr(AXEStepData _data);
-	QString getWaitBtStr(AXEStepData _data);
+	void loadProcess(QString _processName);
 	void showEvent(QShowEvent *event) override;
 
 	void openProcess();

@@ -2,6 +2,7 @@
 
 PlayView::PlayView(QWidget * parent) :BasePageContent(parent)
 {
+	selProcessData.processName = "";
 	btGroup = new QButtonGroup(this);
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
 
@@ -123,7 +124,7 @@ void PlayView::showTbProcess()
 		tmProcess->setHorizontalHeaderLabels(headertbAxeProcess);
 		tmProcess->setColumnCount(headertbAxeProcess.count());
 		tbProcess->setModel(tmProcess);
-		UIUtility::ins().setTableRowHeight((QTableView*&)tbProcess);
+		UIUtility::ins().setTableRowHeight(tbProcess);
 
 	}
 	tmProcess->removeRows(0, tmProcess->rowCount());
@@ -135,12 +136,12 @@ void PlayView::showTbProcess()
 		//名称
 		tmProcess->setData(tmProcess->index(i, 0), processData.processName);
 		//预计时长
-		tmProcess->setData(tmProcess->index(i, 1), processData.getEstimatedSec());
+		tmProcess->setData(tmProcess->index(i, 1), processData.getEstimatedTime());
 		//创建时间
 		tmProcess->setData(tmProcess->index(i, 2), QDateTime::fromSecsSinceEpoch(processData.createDate).toString("yyyy-MM-dd hh:mm:ss"));
 	}
 	tbProcess->setModel(tmProcess);
-	UIUtility::ins().setTableRowHeight((QTableView*&)tbProcess);
+	UIUtility::ins().setTableRowHeight(tbProcess);
 
 	widgetGrid->hide();
 	tbProcess->show();
@@ -153,9 +154,25 @@ void PlayView::slot_onclickBt(int _index)
 	switch (_index)
 	{
 	case PlayView::Launch:
+	{
+		if (selProcessData.processName.isEmpty())
+		{
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708430058"), QMessageBox::Yes);
+			return;
+		}
+		emit signal_runProcess(selProcessData.processName);
 		break;
+	}
 	case PlayView::Preview:
+	{
+		if (selProcessData.processName.isEmpty())
+		{
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708430058"), QMessageBox::Yes);
+			return;
+		}
+		emit signal_previewProcess(selProcessData.processName);
 		break;
+	}
 	case PlayView::GridMode:
 	{
 		showGridProcess();
@@ -175,6 +192,5 @@ void PlayView::slot_onclickProcessIcon(int _index)
 	{
 		item->icon->showNormalIcon();
 	}
-	AXEProcessData processData = processList[_index];
-	Log(processData.processName);
+	selProcessData = processList[_index];
 }

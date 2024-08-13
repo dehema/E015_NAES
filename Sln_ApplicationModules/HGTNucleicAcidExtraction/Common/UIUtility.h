@@ -148,7 +148,7 @@ public:
 	const QRegExpValidator *RegExpChinese = new QRegExpValidator(QRegExp("^[\u4E00-\u9FA5]+$"));
 
 	void setTableItemCenter(QStandardItemModel*& _tb);
-	void setTableRowHeight(QTableView*& _tb);
+	void setTableRowHeight(HTableView*& _tb);
 	void setTableColWidth(QTableView*& _tb, int _width);
 
 	//ªÒ»°∆¡ƒªæÿ’Û
