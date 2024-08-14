@@ -212,13 +212,13 @@ void DeviceMaintainPage_Axe_Equip::slot_btnStartUVClicked()
 	if (axeService == nullptr)
 		return;
 
-	int retCode = axeService->startUV(axeNumber);
-	if (retCode != 0)
-	{
-		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
-		Log("DeviceMaintainPage_Axe_Equip start uv failed retCode = " + strErrorCode.toStdString());
-		return;
-	}
+	//int retCode = axeService->startUV(axeNumber);
+	//if (retCode != 0)
+	//{
+	//	QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
+	//	Log("DeviceMaintainPage_Axe_Equip start uv failed retCode = " + strErrorCode.toStdString());
+	//	return;
+	//}
 	if (timerUV != nullptr&&timerUV->isActive())
 		timerUV->stop();
 	timerUV = new QTimer(this);
@@ -247,7 +247,8 @@ void DeviceMaintainPage_Axe_Equip::slot_btnStopUVClicked()
 
 	if (timerUV != nullptr&&timerUV->isActive())
 		timerUV->stop();
-	editUVTime->clear();
+	timeUV = QTime(0, 30);
+	editUVTime->setText(timeUV.toString("hh:mm:ss"));
 }
 
 void DeviceMaintainPage_Axe_Equip::slot_btnOpenDoorClicked()
@@ -308,6 +309,8 @@ void DeviceMaintainPage_Axe_Equip::slot_onclickBtGroup(int _index)
 	{
 	case DeviceMaintainPage_Axe_Equip::SubtractUVTime:
 	{
+		if (timerUV != nullptr&&timerUV->isActive())
+			return;
 		if (timeUV.hour() == 0 && timeUV.minute() < 10)
 		{
 			timeUV = QTime(0, 0);
@@ -321,6 +324,8 @@ void DeviceMaintainPage_Axe_Equip::slot_onclickBtGroup(int _index)
 	}
 	case DeviceMaintainPage_Axe_Equip::AddUVTime:
 	{
+		if (timerUV != nullptr&&timerUV->isActive())
+			return;
 		timeUV = timeUV.addSecs(600);
 		refreshEditUVTime();
 		break;

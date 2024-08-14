@@ -37,8 +37,6 @@ public:
 	int selRowIndexProcess;
 	//所有表格组件
 	QList<QList<QWidget*>> widgetTableItems;
-	//表格格子宽度
-	int processItemWidth;
 	//当前选中流程
 	AXEProcessData currProcessData;
 	//--------------------function--------------------

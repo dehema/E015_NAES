@@ -34,7 +34,7 @@ DeviceMaintainPage_Axe_Ele::DeviceMaintainPage_Axe_Ele(QWidget * _parent, Device
 
 	//创建HLineEdit组件
 	m_edtMonitorSpeed = getNewLineEdit();
-	m_edtMonitorSpeed->setText("1");
+	m_edtMonitorSpeed->setText("20");
 	m_edtMonitorSpeed->setValidator(new QIntValidator(1, 30, this));
 	m_edtMonitorSpeed->setPlaceholderText(QString::fromLocal8Bit("1-30"));
 	connect(m_edtMonitorSpeed, &HLineEdit::textChanged, this, [=](QString _text) {

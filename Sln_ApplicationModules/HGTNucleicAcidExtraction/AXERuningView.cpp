@@ -1,13 +1,14 @@
 #include "AXERuningView.h"
 
 
-AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageContent(parent), currProcessData(_data)
+AXERuningView::AXERuningView(QWidget *parent) :BasePageContent(parent)
 {
 	axeThread = dynamic_cast<AxeThread*>(Utility::ins().axeThread);
-	setStyleSheet("background-color:white;");
 
 	btGroup = new QButtonGroup();
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
+	connect(axeThread, SIGNAL(signal_onAxeStepLaunch(AXEStepData)), this, SLOT(slot_onAxeStepLaunch(AXEStepData)));
+	connect(axeThread, SIGNAL(signal_onAxeProcessFinish(AXEProcessData)), this, SLOT(slot_onAxeProcessFinish(AXEProcessData)));
 
 	//UI
 	layoutMain = getNewVBoxLayout(this);
@@ -22,17 +23,15 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	QHBoxLayout* layoutProcessName = getNewHBoxLayout(widgetProcessName);
 	layoutProcessName->setContentsMargins(Page_Dialog_Padding_Left, 0, Page_Dialog_Padding_Right, 0);
 	layoutProcessName->setAlignment(Qt::AlignCenter);
-	layoutProcessName->setSpacing(20);
+	layoutProcessName->setSpacing(10);
 
 	//流程名称
 	QLabel* l1 = getNewLbCommon();
 	l1->setText(GetLang("1708420086") + ":");
-	l1->setFixedWidth(120);
 	layoutProcessName->addWidget(l1);
 
 	editProcessName = getNewLineEdit();
 	editProcessName->setFixedWidth(450);
-	editProcessName->setText(currProcessData.processName);
 	editProcessName->setEnabled(false);
 	layoutProcessName->addWidget(editProcessName);
 
@@ -41,11 +40,9 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	//剩余时间
 	QLabel* l2 = getNewLbCommon();
 	l2->setText(GetLang("1708420153") + ":");
-	l2->setFixedWidth(120);
 	layoutProcessName->addWidget(l2);
 
 	lbRemainTime = getNewLbCommon();
-	lbRemainTime->setText(Utility::ins().secondToMinute(currProcessData.getEstimatedTime()));
 	lbRemainTime->setFixedWidth(120);
 	layoutProcessName->addWidget(lbRemainTime);
 
@@ -56,11 +53,16 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	lbStatus = getNewLbCommon();
 	layoutProcessName->addWidget(lbStatus);
 
+	//QPushButton* btClose = getNewBtCommon("1708420233");
+	//btGroup->addButton(btClose, BtType::Close);
+	//layoutProcessName->addWidget(btClose);
+
 	//表格
 	tbStep = getNewTableView();
 	tbStep->setEnabled(false);
-	tbModelProcess = new QStandardItemModel(this);
+	tbModelProcess = new HTableViewItemModel(this);
 	tbModelProcess->setRowCount(10);
+	tbModelProcess->setColumnCount(7);
 	QStringList headerProcessDetail;
 	headerProcessDetail
 		<< GetLang("1708419680")	//序号
@@ -78,30 +80,6 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	tbStep->verticalScrollBar()->hide();
 	layoutMain->addWidget(tbStep, 0, Qt::AlignTop | Qt::AlignHCenter);
 
-	//表格数据
-	for (int _row = 0; _row < currProcessData.stepsList.length(); _row++)
-	{
-		AXEStepData data = currProcessData.stepsList[_row];
-		QList<QStandardItem*> items;
-		//编号
-		items << new QStandardItem(QString::number(data.stepIndex));
-		//孔位
-		items << new QStandardItem(QString::number(data.column));
-		//名称
-		items << new QStandardItem(data.stepName);
-		//体系容量
-		items << new QStandardItem(QString::number(data.volume) + QString::fromLocal8Bit("μL"));
-		//混合时间
-		items << new QStandardItem(AXEMgr::ins().getMixBtStr(data));
-		//吸磁时间
-		items << new QStandardItem(AXEMgr::ins().getMagnetBtStr(data));
-		//等待时间
-		items << new QStandardItem(AXEMgr::ins().getWaitBtStr(data));
-		tbModelProcess->appendRow(items);
-	}
-	tbStep->setModel(tbModelProcess);
-	UIUtility::ins().setTableRowHeight(tbStep);
-
 	QWidget* widgetTemperature = getNewWidgetCommon();
 	widgetTemperature->setFixedSize(width() - Page_Dialog_Padding_Left * 2, 40);
 	layoutMain->addWidget(widgetTemperature);
@@ -117,7 +95,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	layoutTemperature->addWidget(lbt1);
 
 	editT1 = getNewLineEdit();
-	editT1->setFixedWidth(45);
+	editT1->setFixedWidth(70);
 	editT1->setEnabled(false);
 	editT1->setText("0");
 	layoutTemperature->addWidget(editT1);
@@ -125,14 +103,15 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	QLabel* lboc1 = getNewLbCommon();
 	lboc1->setText(QString::fromLocal8Bit("℃"));
 	layoutTemperature->addWidget(lboc1);
-	layoutTemperature->addStretch();
+	layoutTemperature->addSpacing(30);
+
 	//2
 	QLabel* lbt2 = getNewLbCommon();
 	lbt2->setText("T2");
 	layoutTemperature->addWidget(lbt2);
 
 	editT2 = getNewLineEdit();
-	editT2->setFixedWidth(45);
+	editT2->setFixedWidth(70);
 	editT2->setEnabled(false);
 	editT2->setText("0");
 	layoutTemperature->addWidget(editT2);
@@ -140,7 +119,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	QLabel* lboc2 = getNewLbCommon();
 	lboc2->setText(QString::fromLocal8Bit("℃"));
 	layoutTemperature->addWidget(lboc2);
-	layoutTemperature->addStretch();
+	layoutTemperature->addSpacing(30);
 
 	//3
 	QLabel* lbt3 = getNewLbCommon();
@@ -148,7 +127,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	layoutTemperature->addWidget(lbt3);
 
 	editT3 = getNewLineEdit();
-	editT3->setFixedWidth(45);
+	editT3->setFixedWidth(70);
 	editT3->setEnabled(false);
 	editT3->setText("0");
 	layoutTemperature->addWidget(editT3);
@@ -156,7 +135,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	QLabel* lboc3 = getNewLbCommon();
 	lboc3->setText(QString::fromLocal8Bit("℃"));
 	layoutTemperature->addWidget(lboc3);
-	layoutTemperature->addStretch();
+	layoutTemperature->addSpacing(30);
 
 	//4
 	QLabel* lbt4 = getNewLbCommon();
@@ -164,7 +143,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	layoutTemperature->addWidget(lbt4);
 
 	editT4 = getNewLineEdit();
-	editT4->setFixedWidth(45);
+	editT4->setFixedWidth(70);
 	editT4->setEnabled(false);
 	editT4->setText("0");
 	layoutTemperature->addWidget(editT4);
@@ -172,6 +151,7 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	QLabel* lboc4 = getNewLbCommon();
 	lboc4->setText(QString::fromLocal8Bit("℃"));
 	layoutTemperature->addWidget(lboc4);
+	layoutTemperature->addStretch();
 
 	//继续
 	btContinue = getNewBtCommon("1708420347");
@@ -184,7 +164,9 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 	btGroup->addButton(btPause, (int)BtType::Pause);
 	layoutTemperature->addWidget(btPause);
 
-	//复位
+	layoutTemperature->addSpacing(15);
+
+	//停止
 	btReset = getNewBtCommon("1708420348");
 	btGroup->addButton(btReset, (int)BtType::Reset);
 	layoutTemperature->addWidget(btReset);
@@ -194,8 +176,6 @@ AXERuningView::AXERuningView(QWidget *parent, AXEProcessData _data) :BasePageCon
 		connect(&temperatureTimer, &QTimer::timeout, this, [=]() {refreshTemperature(); });
 		temperatureTimer.start(1000);
 	}
-
-	launchProcess();
 }
 
 void AXERuningView::launchTimeCountDown()
@@ -237,11 +217,13 @@ void AXERuningView::launchPause()
 {
 	axeThread->setStatus(AXEDeviceStatus::AXEDeviceStatusPause);
 	launchTimer.stop();
+	refreshStatus();
 }
 
 void AXERuningView::launchReset()
 {
 	axeThread->reset();
+	refreshStatus();
 }
 
 void AXERuningView::slot_onclickBt(int index)
@@ -257,11 +239,44 @@ void AXERuningView::slot_onclickBt(int index)
 	case BtType::Reset:
 		launchReset();
 		break;
+	case BtType::Close:
+		emit signal_closeRuningView();
+		break;
 	}
 }
 
-void AXERuningView::launchProcess()
+void AXERuningView::launchProcess(AXEProcessData _data)
 {
+	//data
+	currProcessData = _data;
+	//UI
+	editProcessName->setText(currProcessData.processName);
+	lbRemainTime->setText(Utility::ins().secondToMinute(currProcessData.getEstimatedTime()));
+	//表格数据
+	tbModelProcess->removeRows(0, tbModelProcess->rowCount());
+	for (int _row = 0; _row < currProcessData.stepsList.length(); _row++)
+	{
+		AXEStepData data = currProcessData.stepsList[_row];
+		QList<QStandardItem*> items;
+		//编号
+		items << new QStandardItem(QString::number(data.stepIndex));
+		//孔位
+		items << new QStandardItem(QString::number(data.column));
+		//名称
+		items << new QStandardItem(data.stepName);
+		//体系容量
+		items << new QStandardItem(QString::number(data.volume) + QString::fromLocal8Bit("μL"));
+		//混合时间
+		items << new QStandardItem(AXEMgr::ins().getMixBtStr(data));
+		//吸磁时间
+		items << new QStandardItem(AXEMgr::ins().getMagnetBtStr(data));
+		//等待时间
+		items << new QStandardItem(AXEMgr::ins().getWaitBtStr(data));
+		tbModelProcess->appendRow(items);
+	}
+	tbStep->setModel(tbModelProcess);
+	UIUtility::ins().setTableRowHeight(tbStep);
+
 	tbStep->selectRow(0);
 	//运行
 	axeThread->launchAxeProcess(currProcessData);
@@ -287,10 +302,11 @@ void AXERuningView::slot_onAxeStepLaunch(AXEStepData _stepData)
 
 void AXERuningView::slot_onAxeProcessFinish(AXEProcessData _processData)
 {
-	refreshStatus();
 	launchTimer.stop();
 	remainingTime = 0;
 	launchTimeCountDown();
+	HGT::information(this, GetLang("1708419621"), GetLang("1708430059"), QMessageBox::Ok);
+	emit signal_closeRuningView();
 }
 
 //设置状态  0:正在等待 1:正在进行

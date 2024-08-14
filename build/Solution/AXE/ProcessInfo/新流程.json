@@ -1,25 +1,25 @@
 {
     "createDate": 0,
-    "duration": 46,
+    "duration": 100,
     "isPublish": true,
     "processName": "新流程",
     "stepCount": 3,
     "stepsParamList": [
         {
             "adsorbPosition": 50,
-            "column": 2,
+            "column": 6,
             "heatStatus": 1,
             "magnetSpeed": 3,
-            "magnetTime": 3,
+            "magnetTime": 0,
             "mixAmplitude": 50,
             "mixPos": 20,
             "mixSpeed": 200,
-            "mixTime": 3,
+            "mixTime": 0,
             "stepIndex": 1,
             "stepName": "name1",
             "targetTemp": 25,
             "volume": 500,
-            "waitTime": 20
+            "waitTime": 5
         },
         {
             "adsorbPosition": 50,
@@ -54,6 +54,6 @@
             "waitTime": 0
         }
     ],
-    "volumeProteaseK": 111,
-    "volumeSample": 222
+    "volumeProteaseK": 0,
+    "volumeSample": 0
 }

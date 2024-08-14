@@ -180,26 +180,26 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 	m_cbAdsorbSpeed->setCurrentIndex(0);
 	m_hblArea4->addWidget(m_cbAdsorbSpeed, 2, 3);
 
-	//等待时间
-	m_lbWaitTime = getNewLbCommon("1708420090");
-	m_lbWaitTime->setText("10");
-	m_lbWaitTime->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbWaitTime, 2, 4);
-
-	m_edtWaitTime = getNewLineEdit();
-	m_edtWaitTime->setPlaceholderText(QString::fromLocal8Bit("(s)"));
-	m_hblArea4->addWidget(m_edtWaitTime, 2, 5);
-
 	//吸磁位置
 	m_lbAdsorbPosition = getNewLbCommon("1708420336");
 	m_lbAdsorbPosition->setAlignment(Qt::AlignCenter);
-	m_hblArea4->addWidget(m_lbAdsorbPosition, 2, 6);
+	m_hblArea4->addWidget(m_lbAdsorbPosition, 2, 4);
 
 	m_edtAdsorbPosition = getNewLineEdit();
 	m_edtAdsorbPosition->setText("10");
-	m_edtAdsorbPosition->setValidator(new QIntValidator(1, 100, this));
-	m_edtAdsorbPosition->setPlaceholderText(QString::fromLocal8Bit("1-100"));
-	m_hblArea4->addWidget(m_edtAdsorbPosition, 2, 7);
+	m_edtAdsorbPosition->setValidator(new QIntValidator(0, 100, this));
+	m_edtAdsorbPosition->setPlaceholderText(QString::fromLocal8Bit("0-100"));
+	m_hblArea4->addWidget(m_edtAdsorbPosition, 2, 5);
+
+	//等待时间
+	m_lbWaitTime = getNewLbCommon("1708420090");
+	m_lbWaitTime->setAlignment(Qt::AlignCenter);
+	m_hblArea4->addWidget(m_lbWaitTime, 2, 6);
+
+	m_edtWaitTime = getNewLineEdit();
+	m_edtWaitTime->setText("10");
+	m_edtWaitTime->setPlaceholderText(QString::fromLocal8Bit("(s)"));
+	m_hblArea4->addWidget(m_edtWaitTime, 2, 7);
 }
 
 void DeviceMaintainPage_Axe_Process::initWidgetArea6()

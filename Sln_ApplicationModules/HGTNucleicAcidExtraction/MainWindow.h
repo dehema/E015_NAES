@@ -49,15 +49,17 @@ public:
 	UVView* uvView;
 	SettingView* settingView;
 
+	AxeThread* axeThread;
 	//-----------------------function-----------------------
 	HButtonIcon* getBtMenu(QString _normalIcon, QString _hoverIcon);
 	void showPage(PageType _pageType);
 	int getAxeComPort();
 	bool initAxeService(IFAXEService *&axeService);
 
-	public slots:
+	private slots:
 	void slot_onclickBt(int);
 	void slot_previewProcess(QString);
 	void slot_runProcess(QString);
+	void slot_onAxeProcessFinish();
 };
 

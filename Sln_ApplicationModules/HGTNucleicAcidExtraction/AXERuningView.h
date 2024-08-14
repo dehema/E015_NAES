@@ -12,10 +12,11 @@ private:
 		Continue,
 		Pause,
 		Reset,
+		Close,
 	};
 
 public:
-	AXERuningView(QWidget *parent, AXEProcessData _data);
+	AXERuningView(QWidget *parent);
 	~AXERuningView() {};
 
 	//--------------------UI--------------------
@@ -27,7 +28,7 @@ public:
 
 	//表格
 	HTableView* tbStep;
-	QStandardItemModel* tbModelProcess;
+	HTableViewItemModel* tbModelProcess;
 
 	//温度
 	HLineEdit* editT1;
@@ -64,15 +65,18 @@ public:
 	void launchPause();
 	//停止
 	void launchReset();
-	void launchProcess();
+	void launchProcess(AXEProcessData _data);
 	//刷新状态
 	void refreshStatus();
 
-	public slots:
+	private slots:
 	void slot_onclickBt(int);
 	//核酸步骤完成
 	void slot_onAxeStepLaunch(AXEStepData _stepData);
 	//核酸流程完成
 	void slot_onAxeProcessFinish(AXEProcessData _processData);
+
+signals:
+	void signal_closeRuningView();
 };
 

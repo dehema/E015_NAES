@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : BaseUI()
 	initAxeService(Utility::ins().deviceHandle.axeService);
 
 	//ºËÌáÏß³Ì
-	AxeThread* axeThread = new AxeThread();
+	axeThread = new AxeThread();
 	Utility::ins().axeThread = axeThread;
 	axeThread->start();
 }
@@ -85,13 +85,20 @@ void MainWindow::showPage(PageType _pageType)
 	case PageType::PagePlay:
 	{
 		btPlay->showHoverIcon();
-		if (playView == nullptr)
+		if (axeThread != nullptr&& axeThread->isLaunch())
 		{
-			playView = new PlayView(widgetPageParent);
-			connect(playView, SIGNAL(signal_previewProcess(QString)), this, SLOT(slot_previewProcess(QString)));
-			connect(playView, SIGNAL(signal_runProcess(QString)), this, SLOT(slot_runProcess(QString)));
+			widgetPage = axeRuningView;
 		}
-		widgetPage = playView;
+		else
+		{
+			if (playView == nullptr)
+			{
+				playView = new PlayView(widgetPageParent);
+				connect(playView, SIGNAL(signal_previewProcess(QString)), this, SLOT(slot_previewProcess(QString)));
+				connect(playView, SIGNAL(signal_runProcess(QString)), this, SLOT(slot_runProcess(QString)));
+			}
+			widgetPage = playView;
+		}
 		break;
 	}
 	case PageType::PageProcess:
@@ -200,10 +207,21 @@ void MainWindow::slot_runProcess(QString _processName)
 {
 	widgetPage->hide();
 	AXEProcessData processData = AXEMgr::ins().getProcessByName(_processName);
-	axeRuningView = new AXERuningView(widgetPageParent, processData);
-	axeRuningView->move(0, 0);
-	axeRuningView->setFixedSize(widgetPageParent->width(), widgetPageParent->height());
+	if (axeRuningView == nullptr)
+	{
+		axeRuningView = new AXERuningView(widgetPageParent);
+		axeRuningView->move(0, 0);
+		axeRuningView->setFixedSize(widgetPageParent->width(), widgetPageParent->height());
+		connect(axeRuningView, SIGNAL(signal_closeRuningView()), this, SLOT(slot_onAxeProcessFinish()));
+	}
 	axeRuningView->show();
+	axeRuningView->launchProcess(processData);
 	widgetPage = axeRuningView;
 }
 
+void MainWindow::slot_onAxeProcessFinish()
+{
+	axeRuningView->hide();
+	widgetPage = playView;
+	playView->show();
+}

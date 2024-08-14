@@ -45,7 +45,6 @@ PlayView::PlayView(QWidget * parent) :BasePageContent(parent)
 	layoutOperate->addWidget(btListModel);
 
 	//data
-	showGridProcess();
 }
 
 void PlayView::showGridProcess()
@@ -92,8 +91,14 @@ void PlayView::showGridProcess()
 		processItemList.append(item);
 		processIconGroup->addButton(item->icon, processIconGroup->buttons().count());
 		gridProcess->addWidget(item, i / 5, i % 5);
+		//选中
+		if (processData.processName == selProcessData.processName)
+		{
+			item->icon->click();
+			item->icon->showHoverIcon();
+		}
 	}
-	int rowCount = gridProcess->rowCount();
+	int rowCount = qCeil(processList.count() / 5.0f);
 	int gridHeight = gridProcess->contentsMargins().top() + gridProcess->contentsMargins().bottom() +
 		rowCount*itemSize + (rowCount - 1)*gridProcess->verticalSpacing();
 	gridHeight = qMax(gridHeight, 0);
@@ -118,6 +123,7 @@ void PlayView::showTbProcess()
 		tmProcess = new HTableViewItemModel(this);
 		QStringList headertbAxeProcess; headertbAxeProcess
 			<< GetLang("1708420155")			//名称
+			<< GetLang("1708420083")			//步骤数量
 			<< GetLang("1708420084") + "(Min)"	//预计时长
 			<< GetLang("1708419632")			//创建时间
 			;
@@ -135,10 +141,12 @@ void PlayView::showTbProcess()
 		AXEProcessData processData = processList[i];
 		//名称
 		tmProcess->setData(tmProcess->index(i, 0), processData.processName);
+		//步骤数量
+		tmProcess->setData(tmProcess->index(i, 1), QString::number(processData.stepCount));
 		//预计时长
-		tmProcess->setData(tmProcess->index(i, 1), processData.getEstimatedTime());
+		tmProcess->setData(tmProcess->index(i, 2), qCeil(processData.getEstimatedTime() / 60));
 		//创建时间
-		tmProcess->setData(tmProcess->index(i, 2), QDateTime::fromSecsSinceEpoch(processData.createDate).toString("yyyy-MM-dd hh:mm:ss"));
+		tmProcess->setData(tmProcess->index(i, 3), QDateTime::fromSecsSinceEpoch(processData.createDate).toString("yyyy-MM-dd hh:mm:ss"));
 	}
 	tbProcess->setModel(tmProcess);
 	UIUtility::ins().setTableRowHeight(tbProcess);
@@ -147,6 +155,19 @@ void PlayView::showTbProcess()
 	tbProcess->show();
 	btGridMode->show();
 	btListModel->hide();
+}
+
+void PlayView::showEvent(QShowEvent * event)
+{
+	BasePageContent::showEvent(event);
+	if (tbProcess != nullptr&& tbProcess->isVisible())
+	{
+		showTbProcess();
+	}
+	else
+	{
+		showGridProcess();
+	}
 }
 
 void PlayView::slot_onclickBt(int _index)

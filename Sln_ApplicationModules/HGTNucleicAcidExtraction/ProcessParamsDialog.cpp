@@ -78,7 +78,8 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 	else if (paramsType == AXEParamsType::Magnet)
 	{
 		//吸磁时间
-		QLabel* lbMagnetTime = getNewLbCommon("1708420092");
+		QLabel* lbMagnetTime = getNewLbCommon();
+		lbMagnetTime->setText(GetLang("1708420092") + "(Sec)");
 		layoutMain->addWidget(lbMagnetTime, row, 0);
 
 		editMagnetTime = getNewLineEdit();
@@ -102,7 +103,7 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editAdsorbPosition = getNewLineEdit();
 		editAdsorbPosition->setText(QString::number((stepData.adsorbPosition)));
-		editAdsorbPosition->setPlaceholderText("1-100%");
+		editAdsorbPosition->setPlaceholderText("0-100%");
 		editAdsorbPosition->setMaxLength(3);
 		editAdsorbPosition->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editAdsorbPosition, row++, 1);
@@ -110,7 +111,8 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 	else if (paramsType == AXEParamsType::Wait)
 	{
 		//等待时间
-		QLabel* lbWaitTime = getNewLbCommon("1708420092");
+		QLabel* lbWaitTime = getNewLbCommon();
+		lbWaitTime->setText(GetLang("1708420090") + "(Sec)");
 		layoutMain->addWidget(lbWaitTime, row, 0);
 
 		editWaitTime = getNewLineEdit();
@@ -119,7 +121,7 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 		layoutMain->addWidget(editWaitTime, row++, 1);
 
 		//是否加热
-		QLabel* lbMixTime = getNewLbCommon("1708420332");
+		QLabel* lbMixTime = getNewLbCommon("1708420339");
 		layoutMain->addWidget(lbMixTime, row, 0);
 
 		cbWaitHeatStatus = getNewComboxBox({ "1708420165","1708420164" });
@@ -204,9 +206,9 @@ bool ProcessParamsDialog::checkProcessParams()
 	{
 		//吸磁位置
 		int dsorbPosition = editAdsorbPosition->text().toInt();
-		if (dsorbPosition < 1 || dsorbPosition > 100)
+		if (dsorbPosition < 0 || dsorbPosition > 100)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420415").arg(1).arg(100), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708420415").arg(0).arg(100), QMessageBox::Yes);
 			return false;
 		}
 	}

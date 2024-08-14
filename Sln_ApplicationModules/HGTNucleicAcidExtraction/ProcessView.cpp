@@ -12,7 +12,7 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	layoutMain->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
 	QWidget* widgetName = getNewWidgetCommon(this);
-	widgetName->setFixedSize(getContentWidth(), 35);
+	widgetName->setFixedSize(getContentWidth() - 2 * Page_Dialog_Padding_Left, 35);
 	layoutMain->addWidget(widgetName);
 
 	QHBoxLayout* layoutName = getNewHBoxLayout(widgetName);
@@ -20,12 +20,13 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 
 	editProcessName = getNewLineEdit();
 	layoutName->addWidget(editProcessName);
+	layoutName->addStretch();
 
 	QPushButton* btOpenProcess = getNewBtCommon("1708419679");
 	btGroup->addButton(btOpenProcess, BtType::OpenProcess);
 	layoutName->addWidget(btOpenProcess);
 
-	editProcessName->setFixedWidth(getContentWidth() - btOpenProcess->width() - layoutName->spacing() - Page_Dialog_Padding_Left * 2);
+	editProcessName->setFixedWidth(widgetName->width() - btOpenProcess->width() - 15);
 
 	QWidget* widgetOperate = getNewWidgetCommon(this);
 	widgetOperate->setFixedSize(getContentWidth(), 35);
@@ -71,9 +72,17 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	tbProcess->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	tbProcess->setModel(tbModelProcess);
 	tbProcess->setSelectionModel(selectionModelProcess);
+	tbProcess->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 	layoutMain->addWidget(tbProcess, 0, Qt::AlignTop | Qt::AlignHCenter);
 	UIUtility::ins().setTableRowHeight(tbProcess);
-	processItemWidth = tbProcess->width() / headerProcessDetail.count();
+	int columnWidth = tbProcess->width() / headerProcessDetail.count();
+	tbProcess->setColumnWidth(0, columnWidth - 40);
+	tbProcess->setColumnWidth(1, columnWidth - 40);
+	tbProcess->setColumnWidth(2, columnWidth);
+	tbProcess->setColumnWidth(3, columnWidth - 40);
+	tbProcess->setColumnWidth(4, columnWidth + 40);
+	tbProcess->setColumnWidth(5, columnWidth + 40);
+	tbProcess->setColumnWidth(6, columnWidth + 40);
 
 	//data
 	fillWidgetTableItems();
@@ -121,7 +130,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	if (w0 == nullptr)
 	{
 		cbSlotID = getNewComboxBox();
-		cbSlotID->setFixedSize(processItemWidth, UI_TableView_RowHeight);
+		cbSlotID->setFixedSize(tbProcess->columnWidth(col + 1), UI_TableView_RowHeight);
 		QListView *ListView = new QListView;
 		cbSlotID->setView(ListView);
 		cbSlotID->setStyleSheet(UIUtility::ins().comboxTableStyle);
@@ -141,7 +150,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	{
 		editStepName = getNewLineEdit();
 		editStepName->setMaxLength(30);
-		editStepName->setFixedSize(processItemWidth - 2, UI_TableView_RowHeight);
+		editStepName->setFixedSize(tbProcess->columnWidth(col + 1) - 2, UI_TableView_RowHeight);
 		editStepName->setStyleSheet(UIUtility::ins().editTableStyle);
 		widgetTableItems[_row][col] = editStepName;
 		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), editStepName);
@@ -158,7 +167,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	{
 		editDosage = getNewLineEdit();
 		editDosage->setAlignment(Qt::AlignCenter);
-		editDosage->setFixedSize(processItemWidth, UI_TableView_RowHeight);
+		editDosage->setFixedSize(tbProcess->columnWidth(col + 1), UI_TableView_RowHeight);
 		editDosage->setStyleSheet(UIUtility::ins().editTableStyle);
 		editDosage->setPlaceholderText("1-1000");
 		editDosage->setValidator(UIUtility::ins().RegExpNumber);
@@ -176,7 +185,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	if (wMix == nullptr)
 	{
 		btMix = getNewBtCommon();
-		btMix->setFixedSize(processItemWidth - 2, UI_TableView_RowHeight);
+		btMix->setFixedSize(tbProcess->columnWidth(col + 1) - 2, UI_TableView_RowHeight);
 		btMix->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btMix, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Mix);
@@ -197,7 +206,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	if (wMagnet == nullptr)
 	{
 		btMagnet = getNewBtCommon();
-		btMagnet->setFixedSize(processItemWidth - 2, UI_TableView_RowHeight);
+		btMagnet->setFixedSize(tbProcess->columnWidth(col + 1) - 2, UI_TableView_RowHeight);
 		btMagnet->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btMagnet, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Magnet);
@@ -218,7 +227,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	if (wWait == nullptr)
 	{
 		btWait = getNewBtCommon();
-		btWait->setFixedSize(processItemWidth - 2, UI_TableView_RowHeight);
+		btWait->setFixedSize(tbProcess->columnWidth(col + 1) - 2, UI_TableView_RowHeight);
 		btWait->setStyleSheet(UIUtility::ins().btTableStyle);
 		connect(btWait, &QPushButton::clicked, this, [=]() {
 			ProcessParamsDialog* dialog = new ProcessParamsDialog(this, currProcessData.stepsList[_row], ProcessParamsDialog::AXEParamsType::Wait);

@@ -36,7 +36,7 @@ DeviceMaintainPage_Axe_Temp::DeviceMaintainPage_Axe_Temp(QWidget * _parent, Devi
 	if (axeService != nullptr)
 	{
 		m_bOpen = true;
-		connect(axeService, SIGNAL(signal_sendCurTempToUI(int, HeatBoardData)), this, SLOT(slot_recvCurTempData(int, HeatBoardData)));
+		//connect(axeService, SIGNAL(signal_sendCurTempToUI(int, HeatBoardData)), this, SLOT(slot_recvCurTempData(int, HeatBoardData)));
 	}
 }
 

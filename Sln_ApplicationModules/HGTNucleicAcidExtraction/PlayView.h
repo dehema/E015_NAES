@@ -48,8 +48,10 @@ public:
 	void showGridProcess();
 	//初始化列表模式
 	void showTbProcess();
+protected:
+	void showEvent(QShowEvent *event) override;
 
-	public slots:
+	private slots:
 	void slot_onclickBt(int);
 	void slot_onclickProcessIcon(int);
 signals:
