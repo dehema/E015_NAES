@@ -329,3 +329,17 @@ void AXERuningView::refreshStatus()
 	btContinue->setVisible(status == AXEDeviceStatus::AXEDeviceStatusPause);
 	btReset->setVisible(status == AXEDeviceStatus::AXEDeviceStatusExecuting || status == AXEDeviceStatus::AXEDeviceStatusPause);
 }
+
+void AXERuningView::showEvent(QShowEvent *event)
+{
+	if (!temperatureTimer.isActive())
+		temperatureTimer.start(1000);
+	BasePageContent::showEvent(event);
+}
+
+void AXERuningView::hideEvent(QHideEvent *event)
+{
+	if (temperatureTimer.isActive())
+		temperatureTimer.stop();
+	BasePageContent::hideEvent(event);
+}

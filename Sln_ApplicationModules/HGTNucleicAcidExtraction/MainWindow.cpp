@@ -221,7 +221,9 @@ void MainWindow::slot_runProcess(QString _processName)
 
 void MainWindow::slot_onAxeProcessFinish()
 {
-	axeRuningView->hide();
+	widgetPage->hide();
+	btPlay->click();
+	btPlay->showHoverIcon();
 	widgetPage = playView;
 	playView->show();
 }

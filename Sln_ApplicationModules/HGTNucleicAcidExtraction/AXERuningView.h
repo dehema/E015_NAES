@@ -69,6 +69,10 @@ public:
 	//刷新状态
 	void refreshStatus();
 
+protected:
+	void showEvent(QShowEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
+
 	private slots:
 	void slot_onclickBt(int);
 	//核酸步骤完成
