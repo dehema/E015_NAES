@@ -54,6 +54,7 @@ protected:
 	private slots:
 	void slot_onclickBt(int);
 	void slot_onclickProcessIcon(int);
+	void slot_onTbProcessSelectRow(const QModelIndex &current, const QModelIndex &previous);
 signals:
 	void signal_previewProcess(QString _name);
 	void signal_runProcess(QString _name);

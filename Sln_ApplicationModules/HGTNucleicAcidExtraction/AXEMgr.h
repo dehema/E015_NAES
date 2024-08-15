@@ -185,6 +185,7 @@ public:
 	QString configFolderPath;
 	//获取所有流程的名称
 	QList<QString> AXEMgr::getAllProcessNames();
+	AXEParamsLimit axeParamsLimit;
 
 	//---------------function---------------
 	AXEProcessData getProcessByName(QString _processName);

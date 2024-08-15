@@ -31,33 +31,15 @@ private:
 	void initAreas();
 	void initWidgetArea1();
 	void initWidgetArea2();
-	//void initWidgetArea4();
+	void initWidgetArea3();
+	void initWidgetArea4();
 	void initWidgetArea5();
-	void initWidgetArea6();
-	void initWidgetArea7();
-	//void initWidgetArea8();
 	void setConnection();
 
 private:
 	QTabWidget *m_mainTab;
 	QWidget *m_stepMonitor;
 	QVBoxLayout *m_vblMain;
-
-	QWidget *m_qfmArea1;
-	QWidget *m_qfmArea2;
-	QWidget *m_qfmArea3;
-	QWidget *m_qfmArea5;
-	QWidget *m_qfmArea6;
-	QWidget *m_qfmArea7;
-	QWidget *m_qfmArea8;
-
-	QHBoxLayout *m_hblArea2;
-	QHBoxLayout *m_hblArea3;
-	QHBoxLayout *m_hblArea4;
-	QHBoxLayout *m_hblArea5;
-	QHBoxLayout *m_hblArea6;
-	QHBoxLayout *m_hblArea7;
-	QHBoxLayout *m_hblArea8;
 
 	/* ´®¿Ú¶Ë¿ÚºÅ*/
 	QComboBox* m_cbComNumber;
@@ -131,6 +113,7 @@ protected:
 	{
 		QLabel* lb = DeviceMaintainPage_Axe_Base::getNewLbCommon(_langID);
 		lb->setMinimumWidth(90);
+		lb->setAlignment(Qt::AlignCenter);
 		return lb;
 	}
 

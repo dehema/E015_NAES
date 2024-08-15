@@ -131,7 +131,9 @@ void PlayView::showTbProcess()
 		tmProcess->setColumnCount(headertbAxeProcess.count());
 		tbProcess->setModel(tmProcess);
 		UIUtility::ins().setTableRowHeight(tbProcess);
-
+		QItemSelectionModel* selectionModelProcess = new QItemSelectionModel(tmProcess);
+		tbProcess->setSelectionModel(selectionModelProcess);
+		connect(selectionModelProcess, SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(slot_onTbProcessSelectRow(QModelIndex, QModelIndex)));
 	}
 	tmProcess->removeRows(0, tmProcess->rowCount());
 	processList = AXEMgr().ins().getAllProcess();
@@ -214,4 +216,11 @@ void PlayView::slot_onclickProcessIcon(int _index)
 		item->icon->showNormalIcon();
 	}
 	selProcessData = processList[_index];
+}
+
+
+void PlayView::slot_onTbProcessSelectRow(const QModelIndex &current, const QModelIndex &previous)
+{
+	int index = current.row();
+	selProcessData = processList[index];
 }

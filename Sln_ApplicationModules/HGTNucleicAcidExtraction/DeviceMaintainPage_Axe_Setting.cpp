@@ -7,18 +7,11 @@ const string g_InitMsg = "the axe service is not init, please init first";
 DeviceMaintainPage_Axe_Setting::DeviceMaintainPage_Axe_Setting(QWidget * _parent, DeviceControlService _handle) :
 	DeviceMaintainPage_Axe_Base(_parent, _handle)
 {
-	QVBoxLayout *m_vblMain = getNewVBoxLayout(this);
+	m_vblMain = getNewVBoxLayout(this);
 	//m_vblMain->setContentsMargins(15, 0, 0, 0);
 	m_vblMain->setSpacing(20);
 	m_vblMain->setAlignment(Qt::AlignCenter);
 	this->initAreas();
-
-	m_vblMain->addWidget(m_qfmArea1);
-	m_vblMain->addWidget(m_qfmArea5);
-	m_vblMain->addWidget(m_qfmArea3);
-	m_vblMain->addWidget(m_qfmArea6);
-	m_vblMain->addWidget(m_qfmArea7);
-	m_vblMain->addWidget(m_qfmArea8);
 
 	this->setFixedSize(parentWidget()->width(), parentWidget()->height());
 	this->setConnection();
@@ -29,157 +22,158 @@ DeviceMaintainPage_Axe_Setting::DeviceMaintainPage_Axe_Setting(QWidget * _parent
 
 void DeviceMaintainPage_Axe_Setting::initWidgetArea1()
 {
-	m_qfmArea1 = getNewWidgetCommon();
+	QWidget* m_qfmArea1 = getNewWidgetCommon();
 	m_qfmArea1->setFixedSize(parentWidget()->width(), 50);
-	m_hblArea2 = getNewHBoxLayout(m_qfmArea1);
-	m_hblArea2->setSpacing(15);
+	m_vblMain->addWidget(m_qfmArea1);
+
+	QHBoxLayout* m_hblArea1 = getNewHBoxLayout(m_qfmArea1);
+	m_hblArea1->setSpacing(15);
 
 	m_btnQueryDoorPos = getNewBtCommon("1708420323");
-	m_hblArea2->addWidget(m_btnQueryDoorPos);
+	m_hblArea1->addWidget(m_btnQueryDoorPos);
 
 	m_btnSetDoorPos = getNewBtCommon("1708420326");
-	m_hblArea2->addWidget(m_btnSetDoorPos);
+	m_hblArea1->addWidget(m_btnSetDoorPos);
 
 	m_lbSetBZero = getNewLbCommon("1708420324");
-	m_lbSetBZero->setAlignment(Qt::AlignCenter);
-	m_hblArea2->addWidget(m_lbSetBZero);
+	m_hblArea1->addWidget(m_lbSetBZero);
 	m_edtSetBZero = getNewLineEdit();
 	m_edtSetBZero->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea2->addWidget(m_edtSetBZero);
+	m_hblArea1->addWidget(m_edtSetBZero);
 
 	m_lbSetAZero = getNewLbCommon("1708420325");
-	m_lbSetAZero->setAlignment(Qt::AlignCenter);
-	m_hblArea2->addWidget(m_lbSetAZero);
+	m_hblArea1->addWidget(m_lbSetAZero);
 
 	m_edtSetAzero = getNewLineEdit();
 	m_edtSetAzero->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea2->addWidget(m_edtSetAzero);
+	m_hblArea1->addWidget(m_edtSetAzero);
 
-	m_hblArea2->addStretch();
+	m_hblArea1->addStretch();
 }
 
 void DeviceMaintainPage_Axe_Setting::initWidgetArea2()
 {
-	m_qfmArea2 = getNewWidgetCommon();
+	QWidget* m_qfmArea2 = getNewWidgetCommon();
 	m_qfmArea2->setFixedSize(parentWidget()->width(), 50);
-	m_hblArea3 = getNewHBoxLayout(m_qfmArea2);
-	m_hblArea3->setSpacing(15);
+	m_vblMain->addWidget(m_qfmArea2);
+
+	QHBoxLayout* m_hblArea2 = getNewHBoxLayout(m_qfmArea2);
+	m_hblArea2->setSpacing(15);
 
 	m_btnSetFixedPos = getNewBtCommon("1708420306");
-	m_hblArea3->addWidget(m_btnSetFixedPos);
+	m_hblArea2->addWidget(m_btnSetFixedPos);
 
 	m_btnQueryFixedPos = getNewBtCommon("1708420327");
-	m_hblArea3->addWidget(m_btnQueryFixedPos);
+	m_hblArea2->addWidget(m_btnQueryFixedPos);
 
 	m_lbFixedXpos = getNewLbCommon();
 	m_lbFixedXpos->setText("X" + GetLang("1708420305"));
-	m_hblArea3->addWidget(m_lbFixedXpos);
+	m_hblArea2->addWidget(m_lbFixedXpos);
 
 	m_edtFixedXpos = getNewLineEdit();
 	m_edtFixedXpos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea3->addWidget(m_edtFixedXpos);
+	m_hblArea2->addWidget(m_edtFixedXpos);
 
 	m_lbFixedYpos = getNewLbCommon();
 	m_lbFixedYpos->setText("Y" + GetLang("1708420305"));
-	m_lbFixedYpos->setAlignment(Qt::AlignCenter);
-	m_hblArea3->addWidget(m_lbFixedYpos);
+	m_hblArea2->addWidget(m_lbFixedYpos);
 
 	m_edtFixedYpos = getNewLineEdit();
 	m_edtFixedYpos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea3->addWidget(m_edtFixedYpos);
+	m_hblArea2->addWidget(m_edtFixedYpos);
 
 	m_lbFixedZpos = getNewLbCommon();
 	m_lbFixedZpos->setText("Z" + GetLang("1708420305"));
-	m_lbFixedZpos->setAlignment(Qt::AlignCenter);
-	m_hblArea3->addWidget(m_lbFixedZpos);
+	m_hblArea2->addWidget(m_lbFixedZpos);
 
 	m_edtFixedZpos = getNewLineEdit();
 	m_edtFixedZpos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea3->addWidget(m_edtFixedZpos);
+	m_hblArea2->addWidget(m_edtFixedZpos);
+
+	m_hblArea2->addStretch();
+}
+
+void DeviceMaintainPage_Axe_Setting::initWidgetArea3()
+{
+	QWidget* m_qfmArea3 = getNewWidgetCommon();
+	m_qfmArea3->setFixedSize(parentWidget()->width(), 50);
+	m_vblMain->addWidget(m_qfmArea3);
+
+	QHBoxLayout* m_hblArea3 = getNewHBoxLayout(m_qfmArea3);
+	m_hblArea3->setSpacing(15);
+
+
+	m_btnGetMagneticSleevePos = getNewBtCommon("1708420307");
+	m_hblArea3->addWidget(m_btnGetMagneticSleevePos);
+
+	m_btnSetMagneticSleevePos = getNewBtCommon("1708420310");
+	m_hblArea3->addWidget(m_btnSetMagneticSleevePos);
+
+	m_lbSleeveTopPos = getNewLbCommon("1708420308");
+	m_hblArea3->addWidget(m_lbSleeveTopPos);
+
+	m_edtSleeveTopPos = getNewLineEdit();
+	m_edtSleeveTopPos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
+	m_hblArea3->addWidget(m_edtSleeveTopPos);
+
+
+	m_lbKitBoxPos = getNewLbCommon("1708420304");
+	m_hblArea3->addWidget(m_lbKitBoxPos);
+
+	m_edtKitBoxPos = getNewLineEdit();
+	m_edtKitBoxPos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
+	m_hblArea3->addWidget(m_edtKitBoxPos);
+
+	m_lbKitBoxBottom = getNewLbCommon("1708420309");
+	m_hblArea3->addWidget(m_lbKitBoxBottom);
+
+	m_edtBitBoxBottom = getNewLineEdit();
+	m_edtBitBoxBottom->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
+	m_hblArea3->addWidget(m_edtBitBoxBottom);
 
 	m_hblArea3->addStretch();
 }
 
-void DeviceMaintainPage_Axe_Setting::initWidgetArea5()
+void DeviceMaintainPage_Axe_Setting::initWidgetArea4()
 {
-	m_qfmArea5 = getNewWidgetCommon();
-	m_qfmArea5->setFixedSize(parentWidget()->width(), 50);
-	m_hblArea5 = getNewHBoxLayout(m_qfmArea5);
-	m_hblArea5->setSpacing(15);
+	QWidget* m_qfmArea4 = getNewWidgetCommon();
+	m_qfmArea4->setFixedSize(parentWidget()->width(), 50);
+	m_vblMain->addWidget(m_qfmArea4);
 
-
-	m_btnGetMagneticSleevePos = getNewBtCommon("1708420307");
-	m_hblArea5->addWidget(m_btnGetMagneticSleevePos);
-
-	m_btnSetMagneticSleevePos = getNewBtCommon("1708420310");
-	m_hblArea5->addWidget(m_btnSetMagneticSleevePos);
-
-	m_lbSleeveTopPos = getNewLbCommon("1708420308");
-	m_lbSleeveTopPos->setAlignment(Qt::AlignCenter);
-	m_hblArea5->addWidget(m_lbSleeveTopPos);
-
-	m_edtSleeveTopPos = getNewLineEdit();
-	m_edtSleeveTopPos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea5->addWidget(m_edtSleeveTopPos);
-
-
-	m_lbKitBoxPos = getNewLbCommon("1708420304");
-	m_lbKitBoxPos->setAlignment(Qt::AlignCenter);
-	m_hblArea5->addWidget(m_lbKitBoxPos);
-
-	m_edtKitBoxPos = getNewLineEdit();
-	m_edtKitBoxPos->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea5->addWidget(m_edtKitBoxPos);
-
-	m_lbKitBoxBottom = getNewLbCommon("1708420309");
-	m_lbKitBoxBottom->setAlignment(Qt::AlignCenter);
-	m_hblArea5->addWidget(m_lbKitBoxBottom);
-
-	m_edtBitBoxBottom = getNewLineEdit();
-	m_edtBitBoxBottom->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea5->addWidget(m_edtBitBoxBottom);
-
-	m_hblArea5->addStretch();
-}
-
-void DeviceMaintainPage_Axe_Setting::initWidgetArea6()
-{
-	m_qfmArea6 = getNewWidgetCommon();
-	m_qfmArea6->setFixedSize(parentWidget()->width(), 50);
-	m_hblArea6 = getNewHBoxLayout(m_qfmArea6);
-	m_hblArea6->setSpacing(15);
+	QHBoxLayout* m_hblArea4 = getNewHBoxLayout(m_qfmArea4);
+	m_hblArea4->setSpacing(15);
 
 	m_btnGetMagneticBarPos = getNewBtCommon("1708420311");
-	m_hblArea6->addWidget(m_btnGetMagneticBarPos);
+	m_hblArea4->addWidget(m_btnGetMagneticBarPos);
 
 	m_btnSetMagneticBarPos = getNewBtCommon("1708420314");
-	m_hblArea6->addWidget(m_btnSetMagneticBarPos);
+	m_hblArea4->addWidget(m_btnSetMagneticBarPos);
 
 	m_lbGetBarAfterZero = getNewLbCommon("1708420312");
-	m_lbGetBarAfterZero->setAlignment(Qt::AlignCenter);
-	m_hblArea6->addWidget(m_lbGetBarAfterZero);
+	m_hblArea4->addWidget(m_lbGetBarAfterZero);
 
 	m_edtGetBarAfterZero = getNewLineEdit();
 	m_edtGetBarAfterZero->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea6->addWidget(m_edtGetBarAfterZero);
+	m_hblArea4->addWidget(m_edtGetBarAfterZero);
 
 
 	m_lbGetBarBeforeZero = getNewLbCommon("1708420313");
-	m_lbGetBarBeforeZero->setAlignment(Qt::AlignCenter);
-	m_hblArea6->addWidget(m_lbGetBarBeforeZero);
+	m_hblArea4->addWidget(m_lbGetBarBeforeZero);
 
 	m_edtGetBarBeforeZero = getNewLineEdit();
 	m_edtGetBarBeforeZero->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
-	m_hblArea6->addWidget(m_edtGetBarBeforeZero);
+	m_hblArea4->addWidget(m_edtGetBarBeforeZero);
 
-	m_hblArea6->addStretch();
+	m_hblArea4->addStretch();
 }
 
-void DeviceMaintainPage_Axe_Setting::initWidgetArea7()
+void DeviceMaintainPage_Axe_Setting::initWidgetArea5()
 {
-	m_qfmArea7 = getNewWidgetCommon();
-	m_qfmArea7->setFixedSize(parentWidget()->width(), 50);
-	m_hblArea7 = getNewHBoxLayout(m_qfmArea7);
+	QWidget* m_qfmArea5 = getNewWidgetCommon();
+	m_qfmArea5->setFixedSize(parentWidget()->width(), 50);
+	m_vblMain->addWidget(m_qfmArea5);
+
+	QHBoxLayout* m_hblArea7 = getNewHBoxLayout(m_qfmArea5);
 	m_hblArea7->setSpacing(15);
 
 	m_btnGetHorPos = getNewBtCommon("1708420315");
@@ -189,14 +183,12 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea7()
 	m_hblArea7->addWidget(m_btnSetHorPos);
 
 	m_lbGetHorPos1 = getNewLbCommon("1708420317");
-	m_lbGetHorPos1->setAlignment(Qt::AlignCenter);
 	m_hblArea7->addWidget(m_lbGetHorPos1);
 	m_edtGetHorPos1 = getNewLineEdit();
 	m_edtGetHorPos1->setPlaceholderText(QString::fromLocal8Bit("(mm)"));
 	m_hblArea7->addWidget(m_edtGetHorPos1);
 
 	m_lbGetHorPos2 = getNewLbCommon("1708420318");
-	m_lbGetHorPos2->setAlignment(Qt::AlignCenter);
 	m_hblArea7->addWidget(m_lbGetHorPos2);
 
 	m_edtGetHorPos2 = getNewLineEdit();
@@ -204,7 +196,6 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea7()
 	m_hblArea7->addWidget(m_edtGetHorPos2);
 
 	m_lbGetHorPos3 = getNewLbCommon("1708420319");
-	m_lbGetHorPos3->setAlignment(Qt::AlignCenter);
 	m_hblArea7->addWidget(m_lbGetHorPos3);
 
 	m_edtGetHorPos3 = getNewLineEdit();
@@ -218,11 +209,9 @@ void DeviceMaintainPage_Axe_Setting::initAreas()
 {
 	this->initWidgetArea1();
 	this->initWidgetArea2();
-	//this->initWidgetArea4();
+	this->initWidgetArea3();
+	this->initWidgetArea4();
 	this->initWidgetArea5();
-	this->initWidgetArea6();
-	this->initWidgetArea7();
-	//this->initWidgetArea8();
 }
 
 void DeviceMaintainPage_Axe_Setting::setConnection()

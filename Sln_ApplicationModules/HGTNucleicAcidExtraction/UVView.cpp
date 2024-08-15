@@ -3,6 +3,7 @@
 
 UVView::UVView(QWidget *parent) :BasePageContent(parent)
 {
+	deviceService = Utility::ins().deviceHandle;
 	btGroup = new QButtonGroup(this);
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
 
@@ -36,23 +37,15 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 	layoutHour->setSpacing(20);
 	layoutHour->setAlignment(Qt::AlignCenter);
 
-	QPushButton* btAddHour = getNewBtCommon();
-	btAddHour->setObjectName("KitEditorAddStage");
-	btAddHour->setFixedSize(widgetHour->height(), widgetHour->height());
-	btGroup->addButton(btAddHour, BtType::AddHour);
-	layoutHour->addWidget(btAddHour);
-
-	lbSetHour = getNewLbCommon();
-	lbSetHour->setText(GetLang("1708430049").arg(setHour));
-	lbSetHour->setFixedWidth(90);
-	lbSetHour->setAlignment(Qt::AlignCenter);
-	layoutHour->addWidget(lbSetHour);
-
 	QPushButton* btReduceHour = getNewBtCommon();
-	btReduceHour->setObjectName("KitEditorSubtractStage");
-	btReduceHour->setFixedSize(widgetHour->height(), widgetHour->height());
+	btReduceHour->setText(GetLang("1708430061").arg("1"));
 	btGroup->addButton(btReduceHour, BtType::ReduceHour);
 	layoutHour->addWidget(btReduceHour);
+
+	QPushButton* btAddHour = getNewBtCommon();
+	btAddHour->setText(GetLang("1708430060").arg("1"));
+	btGroup->addButton(btAddHour, BtType::AddHour);
+	layoutHour->addWidget(btAddHour);
 
 	QWidget* widgetMin = getNewWidgetCommon();
 	widgetMin->setFixedSize(getContentWidth(), 35);
@@ -62,23 +55,15 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 	layoutMin->setAlignment(Qt::AlignCenter);
 	layoutMin->setSpacing(20);
 
-	QPushButton* btAddMin = getNewBtCommon();
-	btAddMin->setObjectName("KitEditorAddStage");
-	btAddMin->setFixedSize(widgetMin->height(), widgetMin->height());
-	btGroup->addButton(btAddMin, BtType::AddMinute);
-	layoutMin->addWidget(btAddMin);
-
-	lbSetMin = getNewLbCommon();
-	lbSetMin->setText(GetLang("1708430045").arg(setMinute));
-	lbSetMin->setFixedWidth(90);
-	lbSetMin->setAlignment(Qt::AlignCenter);
-	layoutMin->addWidget(lbSetMin);
-
 	QPushButton* btReduceMin = getNewBtCommon();
-	btReduceMin->setObjectName("KitEditorSubtractStage");
-	btReduceMin->setFixedSize(widgetMin->height(), widgetMin->height());
+	btReduceMin->setText(GetLang("1708430063").arg("10"));
 	btGroup->addButton(btReduceMin, BtType::ReduceMinute);
 	layoutMin->addWidget(btReduceMin);
+
+	QPushButton* btAddMin = getNewBtCommon();
+	btAddMin->setText(GetLang("1708430062").arg("10"));
+	btGroup->addButton(btAddMin, BtType::AddMinute);
+	layoutMin->addWidget(btAddMin);
 
 	btStart = getNewBtCommon("1708430050");
 	btGroup->addButton(btStart, BtType::Launch);
@@ -93,25 +78,21 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 
 void UVView::refreshTime()
 {
-	int _hour = second / 3600;
-	QString hourStr = QString::number(_hour).rightJustified(2, '0');
-	int _minute = second / 60;
-	QString minuteStr = QString::number(_minute).rightJustified(2, '0');
-	int _second = second % 60;
-	QString secondStr = QString::number(_second).rightJustified(2, '0');
-	editTime->setText(hourStr + ":" + minuteStr + ":" + secondStr);
+	QString str =
+		QString::number(countDownTime.hour()).rightJustified(2, '0') + ":" +
+		QString::number(countDownTime.minute()).rightJustified(2, '0') + ":" +
+		QString::number(countDownTime.second()).rightJustified(2, '0');
+	editTime->setText(str);
 }
 
 void UVView::countDown()
 {
-	if (second == 0)
+	if (countDownTime.msecsSinceStartOfDay() == 0)
 	{
-		countDownTimer->stop();
-		btStart->setVisible(!countDownTimer->isActive());
-		btStop->setVisible(countDownTimer->isActive());
+		slot_onclickBt(UVView::Stop);
 		return;
 	}
-	second--;
+	countDownTime = countDownTime.addSecs(-1);
 	refreshTime();
 }
 
@@ -121,44 +102,46 @@ void UVView::slot_onclickBt(int _index)
 	{
 	case UVView::AddHour:
 	{
-		setHour++;
-		lbSetHour->setText(GetLang("1708430049").arg(setHour));
+		countDownTime = countDownTime.addSecs(3600);
+		refreshTime();
 		break;
 	}
 	case UVView::ReduceHour:
 	{
-		if (setHour > 0)
-			setHour--;
-		lbSetHour->setText(GetLang("1708430049").arg(setHour));
+		countDownTime = countDownTime.addSecs(-3600);
+		refreshTime();
 		break;
 	}
 	case UVView::AddMinute:
 	{
-		setMinute++;
-		lbSetMin->setText(GetLang("1708430045").arg(setMinute));
+		countDownTime = countDownTime.addSecs(600);
+		refreshTime();
 		break;
 	}
 	case UVView::ReduceMinute:
 	{
-		if (setMinute > 0)
-			setMinute--;
-		lbSetMin->setText(GetLang("1708430045").arg(setMinute));
+		if (countDownTime.msecsSinceStartOfDay() <= 600000)
+			return;
+		countDownTime = countDownTime.addSecs(-600);
+		refreshTime();
 		break;
 	}
 	case UVView::Launch:
-		second = setHour * 3600 + setMinute * 60;
 		countDownTimer->start();
 		btStart->setVisible(!countDownTimer->isActive());
 		btStop->setVisible(countDownTimer->isActive());
+		if (deviceService.axeService != nullptr)
+			deviceService.axeService->startUV(axeNumber);
 		countDown();
 		break;
 	case UVView::Stop:
 		countDownTimer->stop();
 		btStart->setVisible(!countDownTimer->isActive());
 		btStop->setVisible(countDownTimer->isActive());
-		editTime->setText("00:00:00");
-		break;
-	default:
+		if (deviceService.axeService != nullptr)
+			deviceService.axeService->stopUV(axeNumber);
+		countDownTime = QTime(0, 30);
+		refreshTime();
 		break;
 	}
 }

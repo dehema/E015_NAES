@@ -69,48 +69,57 @@ DeviceMaintainPage_Axe_Equip::DeviceMaintainPage_Axe_Equip(QWidget * _parent, De
 	m_btnLightClose = getNewBtCommon("1708420296");
 	layoutLeft->addWidget(m_btnLightClose, 4, 1);
 
-
 	QWidget* widgetRight = getNewWidgetCommon();
 	widgetRight->setFixedSize(370, height());
 	layoutMain->addWidget(widgetRight);
 
-	QGridLayout *layoutRight = getNewGridLayout(widgetRight);
+	QVBoxLayout *layoutRight = getNewVBoxLayout(widgetRight);
 	layoutRight->setAlignment(Qt::AlignCenter);
-	layoutRight->setHorizontalSpacing(20);
-	layoutRight->setVerticalSpacing(25);
+	layoutRight->setSpacing(25);
 
 	//×ÏÍâµÆ
-	m_btnUVStart = getNewBtCommon("1708420291");
-	layoutRight->addWidget(m_btnUVStart, 0, 0);
-
-	m_btnUVStop = getNewBtCommon("1708420292");
-	layoutRight->addWidget(m_btnUVStop, 0, 1);
-
 	QWidget* widgetUVTime = getNewWidgetCommon(widgetRight);
 	widgetUVTime->setFixedSize(widgetRight->width(), 35);
-	layoutRight->addWidget(widgetUVTime, 1, 0, 1, 2, Qt::AlignCenter);
+	layoutRight->addWidget(widgetUVTime, Qt::AlignCenter);
 
 	QHBoxLayout* layoutUVTime = getNewHBoxLayout(widgetUVTime);
 	layoutUVTime->setSpacing(15);
 	layoutUVTime->setAlignment(Qt::AlignCenter);
 
 	QPushButton* btSubtractUVTime = getNewBtCommon();
-	btSubtractUVTime->setText("-10Min");
-	btSubtractUVTime->setFixedWidth(90);
+	btSubtractUVTime->setText(GetLang("1708430063").arg("10"));
+	btSubtractUVTime->setFixedWidth(120);
 	btGroup->addButton(btSubtractUVTime, BtType::SubtractUVTime);
 	layoutUVTime->addWidget(btSubtractUVTime);
 
 	editUVTime = getNewLineEdit();
-	editUVTime->setFixedWidth(120);
+	refreshEditUVTime();
+	editUVTime->setFixedWidth(100);
 	editUVTime->setAlignment(Qt::AlignCenter);
 	editUVTime->setEnabled(false);
 	layoutUVTime->addWidget(editUVTime);
 
 	QPushButton* btAddUVTime = getNewBtCommon();
-	btAddUVTime->setText("+10Min");
-	btAddUVTime->setFixedWidth(75);
+	btAddUVTime->setText(GetLang("1708430062").arg("10"));
+	btAddUVTime->setFixedWidth(120);
 	btGroup->addButton(btAddUVTime, BtType::AddUVTime);
 	layoutUVTime->addWidget(btAddUVTime);
+
+	QWidget* widgetStartUV = getNewWidgetCommon(widgetRight);
+	widgetStartUV->setFixedSize(widgetRight->width(), 35);
+	layoutRight->addWidget(widgetStartUV, Qt::AlignCenter);
+
+	QHBoxLayout* layoutStartUV = getNewHBoxLayout(widgetStartUV);
+	layoutStartUV->setSpacing(15);
+	layoutStartUV->setAlignment(Qt::AlignCenter);
+
+	m_btnUVStart = getNewBtCommon("1708420291");
+	layoutStartUV->addWidget(m_btnUVStart, 0, 0);
+
+	m_btnUVStop = getNewBtCommon("1708420292");
+	m_btnUVStop->setObjectName("bt_common_red");
+	m_btnUVStop->hide();
+	layoutStartUV->addWidget(m_btnUVStop);
 
 	this->setConnection();
 
@@ -135,11 +144,7 @@ void DeviceMaintainPage_Axe_Equip::setConnection()
 
 void DeviceMaintainPage_Axe_Equip::refreshEditUVTime()
 {
-	QString str =
-		QString::number(timeUV.hour()).rightJustified(2, '0') + ":" +
-		QString::number(timeUV.minute()).rightJustified(2, '0') + ":" +
-		QString::number(timeUV.second()).rightJustified(2, '0');
-	editUVTime->setText(str);
+	editUVTime->setText(timeUV.toString("hh:mm:ss"));
 }
 
 void DeviceMaintainPage_Axe_Equip::slot_btnLoadSleeveClicked()
@@ -209,24 +214,25 @@ void DeviceMaintainPage_Axe_Equip::slot_btnStopFanClicked()
 
 void DeviceMaintainPage_Axe_Equip::slot_btnStartUVClicked()
 {
-	if (axeService == nullptr)
+	if (axeService != nullptr)
+	{
+		int retCode = axeService->startUV(axeNumber);
+		if (retCode != 0)
+		{
+			QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
+			Log("DeviceMaintainPage_Axe_Equip start uv failed retCode = " + strErrorCode.toStdString());
+			return;
+		}
+	}
+	if (timerUV.isActive())
 		return;
-
-	//int retCode = axeService->startUV(axeNumber);
-	//if (retCode != 0)
-	//{
-	//	QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
-	//	Log("DeviceMaintainPage_Axe_Equip start uv failed retCode = " + strErrorCode.toStdString());
-	//	return;
-	//}
-	if (timerUV != nullptr&&timerUV->isActive())
-		timerUV->stop();
-	timerUV = new QTimer(this);
-	timerUV->start(1000);
-	connect(timerUV, &QTimer::timeout, this, [this]() {
+	m_btnUVStart->setVisible(false);
+	m_btnUVStop->setVisible(true);
+	timerUV.start(1000);
+	connect(&timerUV, &QTimer::timeout, this, [this]() {
 		timeUV = timeUV.addSecs(-1);
-		editUVTime->setText(timeUV.toString("hh:mm:ss"));
-		if (timeUV.second() <= 0)
+		refreshEditUVTime();
+		if (timeUV.msecsSinceStartOfDay() <= 0)
 		{
 			slot_btnStopUVClicked();
 		}
@@ -235,20 +241,21 @@ void DeviceMaintainPage_Axe_Equip::slot_btnStartUVClicked()
 
 void DeviceMaintainPage_Axe_Equip::slot_btnStopUVClicked()
 {
-	if (axeService == nullptr)
-		return;
-
-	int retCode = axeService->stopUV(axeNumber);
-	if (retCode != 0)
+	if (axeService != nullptr)
 	{
-		QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
-		Log("DeviceMaintainPage_Axe_Equip stop uv failed retCode = " + strErrorCode.toStdString());
+		int retCode = axeService->stopUV(axeNumber);
+		if (retCode != 0)
+		{
+			QString strErrorCode = QString("%1").arg(retCode, 4, 16, QLatin1Char('0'));
+			Log("DeviceMaintainPage_Axe_Equip stop uv failed retCode = " + strErrorCode.toStdString());
+		}
 	}
-
-	if (timerUV != nullptr&&timerUV->isActive())
-		timerUV->stop();
+	m_btnUVStart->setVisible(true);
+	m_btnUVStop->setVisible(false);
+	if (timerUV.isActive())
+		timerUV.stop();
 	timeUV = QTime(0, 30);
-	editUVTime->setText(timeUV.toString("hh:mm:ss"));
+	refreshEditUVTime();
 }
 
 void DeviceMaintainPage_Axe_Equip::slot_btnOpenDoorClicked()
@@ -309,13 +316,9 @@ void DeviceMaintainPage_Axe_Equip::slot_onclickBtGroup(int _index)
 	{
 	case DeviceMaintainPage_Axe_Equip::SubtractUVTime:
 	{
-		if (timerUV != nullptr&&timerUV->isActive())
+		if (timerUV.isActive())
 			return;
-		if (timeUV.hour() == 0 && timeUV.minute() < 10)
-		{
-			timeUV = QTime(0, 0);
-		}
-		else
+		if (timeUV.hour() > 0 || timeUV.minute() > 10)
 		{
 			timeUV = timeUV.addSecs(-600);
 		}
@@ -324,7 +327,7 @@ void DeviceMaintainPage_Axe_Equip::slot_onclickBtGroup(int _index)
 	}
 	case DeviceMaintainPage_Axe_Equip::AddUVTime:
 	{
-		if (timerUV != nullptr&&timerUV->isActive())
+		if (timerUV.isActive())
 			return;
 		timeUV = timeUV.addSecs(600);
 		refreshEditUVTime();

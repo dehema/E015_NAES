@@ -1,0 +1,59 @@
+{
+    "createDate": 1721896191,
+    "duration": 120,
+    "isPublish": true,
+    "processName": "16",
+    "stepCount": 3,
+    "stepsParamList": [
+        {
+            "adsorbPosition": 15,
+            "column": 1,
+            "heatStatus": 0,
+            "magnetSpeed": 3,
+            "magnetTime": 10,
+            "mixAmplitude": 50,
+            "mixPos": 50,
+            "mixSpeed": 1500,
+            "mixTime": 10,
+            "stepIndex": 1,
+            "stepName": "step1",
+            "targetTemp": 25,
+            "volume": 1000,
+            "waitTime": 10
+        },
+        {
+            "adsorbPosition": 15,
+            "column": 1,
+            "heatStatus": 0,
+            "magnetSpeed": 3,
+            "magnetTime": 10,
+            "mixAmplitude": 50,
+            "mixPos": 50,
+            "mixSpeed": 1500,
+            "mixTime": 10,
+            "stepIndex": 2,
+            "stepName": "step2",
+            "targetTemp": 25,
+            "volume": 1000,
+            "waitTime": 20
+        },
+        {
+            "adsorbPosition": 20,
+            "column": 1,
+            "heatStatus": 0,
+            "magnetSpeed": 3,
+            "magnetTime": 10,
+            "mixAmplitude": 50,
+            "mixPos": 50,
+            "mixSpeed": 1500,
+            "mixTime": 10,
+            "stepIndex": 3,
+            "stepName": "step3",
+            "targetTemp": 25,
+            "volume": 1000,
+            "waitTime": 30
+        }
+    ],
+    "volumeProteaseK": 0,
+    "volumeSample": 0
+}

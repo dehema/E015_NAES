@@ -58,7 +58,7 @@ private:
 
 	HLineEdit* editUVTime;
 	QTime timeUV = QTime(0, 30);
-	QTimer* timerUV;
+	QTimer timerUV;
 
 	/* ×ÏÍâµÆ¹Ø±Õ */
 	QPushButton *m_btnUVStop;

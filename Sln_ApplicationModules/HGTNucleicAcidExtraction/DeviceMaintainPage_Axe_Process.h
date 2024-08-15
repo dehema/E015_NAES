@@ -128,6 +128,7 @@ private:
 	//-------------------------field-------------------------
 	const int axeNumber = 1;
 	bool m_bOpen;
+	AXEParamsLimit paramsLimit;
 
 	//-------------------------function-------------------------
 protected:

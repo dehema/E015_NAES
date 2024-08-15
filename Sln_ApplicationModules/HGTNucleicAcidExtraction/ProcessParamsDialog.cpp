@@ -1,6 +1,5 @@
 #include "ProcessParamsDialog.h"
 
-
 ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData, AXEParamsType _paramsType) :
 	BaseDialog(parent), stepData(_stepData), paramsType(_paramsType)
 {
@@ -46,9 +45,14 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editMixSpeed = getNewLineEdit();
 		editMixSpeed->setText(QString::number((stepData.mixSpeed)));
-		editMixSpeed->setPlaceholderText("200-3000%");
+		editMixSpeed->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.mixSpeed.lower)).
+			arg(QString::number(paramsLimit.mixSpeed.upper)));
+		editMixSpeed->setValidator(new QIntValidator(
+			paramsLimit.mixSpeed.lower,
+			paramsLimit.mixSpeed.upper,
+			this));
 		editMixSpeed->setMaxLength(4);
-		editMixSpeed->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editMixSpeed, row++, 1);
 
 		//»ìºÏÕñ·ùµ×²¿Î»ÖÃ
@@ -58,9 +62,14 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editMixPos = getNewLineEdit();
 		editMixPos->setText(QString::number((stepData.mixPos)));
-		editMixPos->setPlaceholderText("0-50%");
+		editMixPos->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.mixBottomPos.lower)).
+			arg(QString::number(paramsLimit.mixBottomPos.upper)));
+		editMixPos->setValidator(new QIntValidator(
+			paramsLimit.mixBottomPos.lower,
+			paramsLimit.mixBottomPos.upper,
+			this));
 		editMixPos->setMaxLength(3);
-		editMixPos->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editMixPos, row++, 1);
 
 		//»ìºÏÕñ·ù¶¥²¿Î»ÖÃ
@@ -70,9 +79,14 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editMixAmplitude = getNewLineEdit();
 		editMixAmplitude->setText(QString::number((stepData.mixAmplitude)));
-		editMixAmplitude->setPlaceholderText("0-100%");
+		editMixAmplitude->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.mixTopPos.lower)).
+			arg(QString::number(paramsLimit.mixTopPos.upper)));
+		editMixAmplitude->setValidator(new QIntValidator(
+			paramsLimit.mixTopPos.lower,
+			paramsLimit.mixTopPos.upper,
+			this));
 		editMixAmplitude->setMaxLength(3);
-		editMixAmplitude->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editMixAmplitude, row++, 1);
 	}
 	else if (paramsType == AXEParamsType::Magnet)
@@ -103,9 +117,14 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editAdsorbPosition = getNewLineEdit();
 		editAdsorbPosition->setText(QString::number((stepData.adsorbPosition)));
-		editAdsorbPosition->setPlaceholderText("0-100%");
+		editAdsorbPosition->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.magnetPos.lower)).
+			arg(QString::number(paramsLimit.magnetPos.upper)));
+		editAdsorbPosition->setValidator(new QIntValidator(
+			paramsLimit.magnetPos.lower,
+			paramsLimit.magnetPos.upper,
+			this));
 		editAdsorbPosition->setMaxLength(3);
-		editAdsorbPosition->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editAdsorbPosition, row++, 1);
 	}
 	else if (paramsType == AXEParamsType::Wait)
@@ -136,9 +155,14 @@ ProcessParamsDialog::ProcessParamsDialog(QWidget* parent, AXEStepData& _stepData
 
 		editHeat = getNewLineEdit();
 		editHeat->setText(QString::number((stepData.targetTemp)));
-		editHeat->setPlaceholderText("25-120");
+		editHeat->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.temperature.lower)).
+			arg(QString::number(paramsLimit.temperature.upper)));
+		editHeat->setValidator(new QIntValidator(
+			paramsLimit.temperature.lower,
+			paramsLimit.temperature.upper,
+			this));
 		editHeat->setMaxLength(3);
-		editHeat->setValidator(UIUtility::ins().RegExpNumber);
 		layoutMain->addWidget(editHeat, row++, 1);
 	}
 
@@ -182,23 +206,36 @@ bool ProcessParamsDialog::checkProcessParams()
 	{
 		//»ìºÏËÙ¶È
 		int mixSpeed = editMixSpeed->text().toInt();
-		if (mixSpeed < 200 || mixSpeed > 3000)
+		if (mixSpeed < paramsLimit.mixSpeed.lower || mixSpeed > paramsLimit.mixSpeed.upper)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420413").arg(200).arg(3000), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708420413")
+				.arg(paramsLimit.mixSpeed.lower)
+				.arg(paramsLimit.mixSpeed.upper)
+				, QMessageBox::Yes);
 			return false;
 		}
 		//»ìºÏÕñ·ùµ×²¿Î»ÖÃ
 		int mixPos = editMixPos->text().toInt();
-		if (mixPos < 0 || mixPos > 50)
+		if (mixPos < paramsLimit.mixBottomPos.lower || mixPos > paramsLimit.mixBottomPos.upper)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420413").arg(0).arg(50), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708430056")
+				.arg(paramsLimit.mixBottomPos.lower)
+				.arg(paramsLimit.mixBottomPos.upper), QMessageBox::Yes);
 			return false;
 		}
 		//»ìºÏÕñ·ù¶¥²¿Î»ÖÃ
 		int mixAmplitude = editMixAmplitude->text().toInt();
-		if (mixPos < 0 || mixPos > 100)
+		if (mixAmplitude < paramsLimit.mixTopPos.lower || mixAmplitude > paramsLimit.mixTopPos.upper)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420413").arg(1).arg(100), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708430057")
+				.arg(paramsLimit.mixTopPos.lower)
+				.arg(paramsLimit.mixTopPos.upper)
+				, QMessageBox::Yes);
+			return false;
+		}
+		if (mixPos > mixAmplitude)
+		{
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708430064"), QMessageBox::Yes);
 			return false;
 		}
 	}
@@ -206,9 +243,12 @@ bool ProcessParamsDialog::checkProcessParams()
 	{
 		//Îü´ÅÎ»ÖÃ
 		int dsorbPosition = editAdsorbPosition->text().toInt();
-		if (dsorbPosition < 0 || dsorbPosition > 100)
+		if (dsorbPosition < paramsLimit.magnetPos.lower || dsorbPosition > paramsLimit.magnetPos.upper)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420415").arg(0).arg(100), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708420415")
+				.arg(paramsLimit.magnetPos.lower)
+				.arg(paramsLimit.magnetPos.upper)
+				, QMessageBox::Yes);
 			return false;
 		}
 	}
@@ -216,9 +256,12 @@ bool ProcessParamsDialog::checkProcessParams()
 	{
 		//ÎÂ¶È×´Ì¬
 		int targetTemp = editHeat->text().toInt();
-		if (targetTemp < 25 || targetTemp > 120)
+		if (targetTemp < paramsLimit.temperature.lower || targetTemp > paramsLimit.temperature.upper)
 		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708420416").arg(25).arg(120), QMessageBox::Yes);
+			HGT::Error(this, GetLang("1708419637"), GetLang("1708420416")
+				.arg(paramsLimit.temperature.lower)
+				.arg(paramsLimit.temperature.upper)
+				, QMessageBox::Yes);
 			return false;
 		}
 	}

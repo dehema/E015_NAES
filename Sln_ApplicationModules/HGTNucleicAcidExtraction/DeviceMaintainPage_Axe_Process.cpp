@@ -100,9 +100,14 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 	m_hblArea4->addWidget(m_lbVolume, 0, 4);
 
 	m_edtVolume = getNewLineEdit();
-	m_edtVolume->setText("500");
-	m_edtVolume->setValidator(new QIntValidator(1, 1000, this));
-	m_edtVolume->setPlaceholderText(QString::fromLocal8Bit("1-1000"));
+	m_edtVolume->setText(QString::number(paramsLimit.volume.defaultVal));
+	m_edtVolume->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.volume.lower)).
+		arg(QString::number(paramsLimit.volume.upper)));
+	m_edtVolume->setValidator(new QIntValidator(
+		paramsLimit.volume.lower,
+		paramsLimit.volume.upper,
+		this));
 	m_hblArea4->addWidget(m_edtVolume, 0, 5);
 
 	//列号
@@ -134,8 +139,13 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 
 	m_edtMixedSpeed = getNewLineEdit();
 	m_edtMixedSpeed->setText("1000");
-	m_edtMixedSpeed->setValidator(new QIntValidator(200, 3000, this));
-	m_edtMixedSpeed->setPlaceholderText(QString::fromLocal8Bit("200-3000"));
+	m_edtMixedSpeed->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.mixSpeed.lower)).
+		arg(QString::number(paramsLimit.mixSpeed.upper)));
+	m_edtMixedSpeed->setValidator(new QIntValidator(
+		paramsLimit.mixSpeed.lower,
+		paramsLimit.mixSpeed.upper,
+		this));
 	m_hblArea4->addWidget(m_edtMixedSpeed, 1, 3);
 
 	//混合底部位置
@@ -145,8 +155,13 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 
 	m_edtMixPosition = getNewLineEdit();
 	m_edtMixPosition->setText("10");
-	m_edtMixPosition->setValidator(new QIntValidator(0, 50, this));
-	m_edtMixPosition->setPlaceholderText(QString::fromLocal8Bit("0-50"));
+	m_edtMixPosition->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.mixBottomPos.lower)).
+		arg(QString::number(paramsLimit.mixBottomPos.upper)));
+	m_edtMixPosition->setValidator(new QIntValidator(
+		paramsLimit.mixBottomPos.lower,
+		paramsLimit.mixBottomPos.upper,
+		this));
 	m_hblArea4->addWidget(m_edtMixPosition, 1, 5);
 
 	//混合顶部位置
@@ -156,8 +171,13 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 
 	m_edtMixAmplitude = getNewLineEdit();
 	m_edtMixAmplitude->setText("10");
-	m_edtMixAmplitude->setValidator(new QIntValidator(0, 100, this));
-	m_edtMixAmplitude->setPlaceholderText(QString::fromLocal8Bit("0-100"));
+	m_edtMixAmplitude->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.mixTopPos.lower)).
+		arg(QString::number(paramsLimit.mixTopPos.upper)));
+	m_edtMixAmplitude->setValidator(new QIntValidator(
+		paramsLimit.mixTopPos.lower,
+		paramsLimit.mixTopPos.upper,
+		this));
 	m_hblArea4->addWidget(m_edtMixAmplitude, 1, 7);
 
 	//吸磁时间
@@ -187,8 +207,13 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea4()
 
 	m_edtAdsorbPosition = getNewLineEdit();
 	m_edtAdsorbPosition->setText("10");
-	m_edtAdsorbPosition->setValidator(new QIntValidator(0, 100, this));
-	m_edtAdsorbPosition->setPlaceholderText(QString::fromLocal8Bit("0-100"));
+	m_edtAdsorbPosition->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.magnetPos.lower)).
+		arg(QString::number(paramsLimit.magnetPos.upper)));
+	m_edtAdsorbPosition->setValidator(new QIntValidator(
+		paramsLimit.magnetPos.lower,
+		paramsLimit.magnetPos.upper,
+		this));
 	m_hblArea4->addWidget(m_edtAdsorbPosition, 2, 5);
 
 	//等待时间
@@ -234,8 +259,13 @@ void DeviceMaintainPage_Axe_Process::initWidgetArea6()
 	m_hblArea6->addWidget(m_lbAimDegree, 1, 0);
 
 	m_edtAimDegree = getNewLineEdit();
-	m_edtAimDegree->setValidator(new QIntValidator(25, 120, this));
-	m_edtAimDegree->setPlaceholderText(QString::fromLocal8Bit("25-120"));
+	m_edtAimDegree->setPlaceholderText(QString("%1%-%2%").
+		arg(QString::number(paramsLimit.temperature.lower)).
+		arg(QString::number(paramsLimit.temperature.upper)));
+	m_edtAimDegree->setValidator(new QIntValidator(
+		paramsLimit.temperature.lower,
+		paramsLimit.temperature.upper,
+		this));
 	m_hblArea6->addWidget(m_edtAimDegree, 1, 1);
 
 	m_lbIsHeat = getNewLbCommon("1708420339");

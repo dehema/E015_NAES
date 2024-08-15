@@ -15,6 +15,7 @@ private:
 		NewStep,
 		DelStep,
 		Save,
+		ImportProcess,
 	};
 
 public:
@@ -39,6 +40,7 @@ public:
 	QList<QList<QWidget*>> widgetTableItems;
 	//当前选中流程
 	AXEProcessData currProcessData;
+	AXEParamsLimit paramsLimit = AXEMgr::ins().axeParamsLimit;
 	//--------------------function--------------------
 	void refreshTbProcess();
 	QWidget* getWidgetTableItem(int _rowIndex, int _colIndex);
@@ -55,6 +57,7 @@ public:
 	void newStep();
 	void delStep();
 	void save();
+	void importProcess();
 
 	public slots:
 	void slot_onclickBt(int);

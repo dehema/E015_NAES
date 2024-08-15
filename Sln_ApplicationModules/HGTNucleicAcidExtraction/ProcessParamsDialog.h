@@ -39,6 +39,7 @@ private:
 	const int widgetWidth = 120;
 	AXEStepData& stepData;
 	AXEParamsType paramsType;
+	AXEParamsLimit paramsLimit = AXEMgr::ins().axeParamsLimit;
 	//----------------------function----------------------
 	QLabel* getNewLbCommon(QString _langID = nullptr) override;
 	HLineEdit* getNewLineEdit() override;

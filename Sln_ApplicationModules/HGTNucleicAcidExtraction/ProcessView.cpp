@@ -39,7 +39,11 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	btGroup->addButton(btNewProcess, BtType::NewProcess);
 	layoutOperate->addWidget(btNewProcess);
 
-	QPushButton* btNewStep = getNewBtCommon("1708420109");
+	QPushButton* btImport = getNewBtCommon("1708420075");
+	btGroup->addButton(btImport, BtType::ImportProcess);
+	layoutOperate->addWidget(btImport);
+
+	QPushButton* btNewStep = getNewBtCommon("1708420077");
 	btGroup->addButton(btNewStep, BtType::NewStep);
 	layoutOperate->addWidget(btNewStep);
 
@@ -169,8 +173,13 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		editDosage->setAlignment(Qt::AlignCenter);
 		editDosage->setFixedSize(tbProcess->columnWidth(col + 1), UI_TableView_RowHeight);
 		editDosage->setStyleSheet(UIUtility::ins().editTableStyle);
-		editDosage->setPlaceholderText("1-1000");
-		editDosage->setValidator(UIUtility::ins().RegExpNumber);
+		editDosage->setPlaceholderText(QString("%1%-%2%").
+			arg(QString::number(paramsLimit.mixSpeed.lower)).
+			arg(QString::number(paramsLimit.mixSpeed.upper)));
+		editDosage->setValidator(new QIntValidator(
+			paramsLimit.mixSpeed.lower,
+			paramsLimit.mixSpeed.upper,
+			this));
 		widgetTableItems[_row][col] = editDosage;
 		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), editDosage);
 	}
@@ -315,6 +324,12 @@ void ProcessView::newStep()
 		return;
 	}
 	AXEStepData data = AXEStepData();
+	data.volume = paramsLimit.volume.defaultVal;
+	data.mixSpeed = paramsLimit.mixSpeed.defaultVal;
+	data.mixPos = paramsLimit.mixBottomPos.defaultVal;
+	data.mixAmplitude = paramsLimit.mixTopPos.defaultVal;
+	data.adsorbPosition = paramsLimit.magnetPos.defaultVal;
+	data.targetTemp = paramsLimit.temperature.defaultVal;
 	data.stepName = "step" + QString::number(currProcessData.stepCount + 1);
 	currProcessData.stepsList.append(data);
 	currProcessData.stepCount = currProcessData.stepsList.count();
@@ -334,11 +349,6 @@ void ProcessView::delStep()
 
 void ProcessView::save()
 {
-	if (!isLegalSelRowIndexProcess())
-	{
-		HGT::warning(this, GetLang("1708419699"), GetLang("1708420106"), QMessageBox::Yes);
-		return;
-	}
 	AXEProcessData processModel = getPublishProcessModel();
 	if (processModel.processName.isEmpty())
 	{
@@ -460,10 +470,40 @@ void ProcessView::slot_onclickBt(int index)
 	case ProcessView::Save:
 		save();
 		break;
+	case ProcessView::ImportProcess:
+		importProcess();
+		break;
 	}
 }
 
 void ProcessView::slot_onTbProcessSelectRow(const QModelIndex &current, const QModelIndex &previous)
 {
 	selRowIndexProcess = current.row();
+}
+
+void ProcessView::importProcess()
+{
+	QString sourcePath = QFileDialog::getOpenFileName(this, GetLang("1708420114"), QString(), QStringLiteral("(*json);"));
+	if (sourcePath.isEmpty())
+	{
+		return;
+	}
+	QFile sourceFile(sourcePath);
+	QFileInfo fileInfo(sourcePath);
+	QString copyPath = AXEMgr::ins().configFolderPath + fileInfo.fileName();
+	QFile copyFile(copyPath);
+	if (copyFile.exists())
+	{
+		int res = HGT::warning(this, GetLang("1708419699"), GetLang("1708419696"), QMessageBox::Yes | QMessageBox::No);
+		if (res == QMessageBox::No)
+		{
+			return;
+		}
+	}
+
+	if (sourceFile.copy(copyPath))
+	{
+		refreshTbProcess();
+	}
+	loadProcess(fileInfo.baseName());
 }

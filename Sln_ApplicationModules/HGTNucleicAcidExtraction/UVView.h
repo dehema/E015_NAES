@@ -20,17 +20,15 @@ public:
 
 	//--------------------UI--------------------
 	HLineEdit* editTime;
-	QLabel* lbSetHour;
-	QLabel* lbSetMin;
 	QPushButton* btStart;
 	QPushButton* btStop;
 
 	//--------------------field--------------------
 	QButtonGroup* btGroup;
-	int second;
-	int setHour = 0;
-	int setMinute = 15;
 	QTimer* countDownTimer;
+	QTime countDownTime = QTime(0, 30);
+	const int axeNumber = 1;
+	DeviceControlService deviceService;
 
 	//--------------------function--------------------
 	void refreshTime();
