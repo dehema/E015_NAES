@@ -214,6 +214,12 @@
     <ClCompile Include="release\moc_AxeThread.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="PrepareView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_PrepareView.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainWindow.h">
@@ -331,6 +337,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AxeThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrepareView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

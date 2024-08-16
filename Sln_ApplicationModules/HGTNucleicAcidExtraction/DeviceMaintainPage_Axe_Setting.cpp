@@ -208,7 +208,7 @@ void DeviceMaintainPage_Axe_Setting::initWidgetArea5()
 void DeviceMaintainPage_Axe_Setting::initAreas()
 {
 	this->initWidgetArea1();
-	this->initWidgetArea2();
+	//this->initWidgetArea2();
 	this->initWidgetArea3();
 	this->initWidgetArea4();
 	this->initWidgetArea5();

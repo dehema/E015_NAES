@@ -16,73 +16,69 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 	layoutMain->setSpacing(25);
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 
-	QLabel* lb1 = getNewLbCommon();
-	lb1->setFixedSize(getContentWidth(), 35);
+	QLabel* lb1 = getNewLbTitle();
+	lb1->setFixedSize(getContentWidth(), 45);
 	lb1->setText(GetLang("1708430046"));
 	lb1->setAlignment(Qt::AlignCenter);
 	layoutMain->addWidget(lb1);
 
-	editTime = getNewLineEdit();
-	editTime->setFixedSize(180, 35);
+	editTime = getNewLineEditLarge();
 	editTime->setAlignment(Qt::AlignCenter);
 	editTime->setEnabled(false);
-	editTime->setText("00:00:00");
 	layoutMain->addWidget(editTime, 0, Qt::AlignCenter);
 
 	QWidget* widgetHour = getNewWidgetCommon();
-	widgetHour->setFixedSize(getContentWidth(), 35);
+	widgetHour->setFixedSize(getContentWidth(), 55);
 	layoutMain->addWidget(widgetHour);
 
 	QHBoxLayout* layoutHour = getNewHBoxLayout(widgetHour);
 	layoutHour->setSpacing(20);
 	layoutHour->setAlignment(Qt::AlignCenter);
 
-	QPushButton* btReduceHour = getNewBtCommon();
+	QPushButton* btReduceHour = getNewBtLarge();
 	btReduceHour->setText(GetLang("1708430061").arg("1"));
 	btGroup->addButton(btReduceHour, BtType::ReduceHour);
 	layoutHour->addWidget(btReduceHour);
 
-	QPushButton* btAddHour = getNewBtCommon();
+	QPushButton* btAddHour = getNewBtLarge();
 	btAddHour->setText(GetLang("1708430060").arg("1"));
 	btGroup->addButton(btAddHour, BtType::AddHour);
 	layoutHour->addWidget(btAddHour);
 
 	QWidget* widgetMin = getNewWidgetCommon();
-	widgetMin->setFixedSize(getContentWidth(), 35);
+	widgetMin->setFixedSize(getContentWidth(), 55);
 	layoutMain->addWidget(widgetMin);
 
 	QHBoxLayout* layoutMin = getNewHBoxLayout(widgetMin);
 	layoutMin->setAlignment(Qt::AlignCenter);
 	layoutMin->setSpacing(20);
 
-	QPushButton* btReduceMin = getNewBtCommon();
+	QPushButton* btReduceMin = getNewBtLarge();
 	btReduceMin->setText(GetLang("1708430063").arg("10"));
 	btGroup->addButton(btReduceMin, BtType::ReduceMinute);
 	layoutMin->addWidget(btReduceMin);
 
-	QPushButton* btAddMin = getNewBtCommon();
+	QPushButton* btAddMin = getNewBtLarge();
 	btAddMin->setText(GetLang("1708430062").arg("10"));
 	btGroup->addButton(btAddMin, BtType::AddMinute);
 	layoutMin->addWidget(btAddMin);
 
-	btStart = getNewBtCommon("1708430050");
+	btStart = getNewBtLarge("1708430050");
 	btGroup->addButton(btStart, BtType::Launch);
 	layoutMain->addWidget(btStart, 0, Qt::AlignCenter);
 
-	btStop = getNewBtCommon("1708420348");
+	btStop = getNewBtLarge("1708420348");
 	btStop->setObjectName("bt_common_red");
 	btStop->setVisible(countDownTimer->isActive());
 	btGroup->addButton(btStop, BtType::Stop);
 	layoutMain->addWidget(btStop, 0, Qt::AlignCenter);
+
+	refreshTime();
 }
 
 void UVView::refreshTime()
 {
-	QString str =
-		QString::number(countDownTime.hour()).rightJustified(2, '0') + ":" +
-		QString::number(countDownTime.minute()).rightJustified(2, '0') + ":" +
-		QString::number(countDownTime.second()).rightJustified(2, '0');
-	editTime->setText(str);
+	editTime->setText(countDownTime.toString("hh:mm:ss"));
 }
 
 void UVView::countDown()
@@ -108,6 +104,8 @@ void UVView::slot_onclickBt(int _index)
 	}
 	case UVView::ReduceHour:
 	{
+		if (countDownTime.msecsSinceStartOfDay() <= 3600000)
+			return;
 		countDownTime = countDownTime.addSecs(-3600);
 		refreshTime();
 		break;

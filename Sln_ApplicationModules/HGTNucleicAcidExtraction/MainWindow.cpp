@@ -15,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent) : BaseUI()
 	widgetMenu->setFixedSize(size().width(), size().height()* 0.1);
 	//widgetMenu->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	widgetMenu->move(0, 0);
+
 	QHBoxLayout* layoutMenu = getNewHBoxLayout(widgetMenu);
 	layoutMenu->setSpacing(widgetMenu->size().width()*0.05);
+	layoutMenu->setContentsMargins(0, 0, 20, 0);
 
 	//logo
 	QLabel* lb = getNewLbCommon();
@@ -31,6 +33,10 @@ MainWindow::MainWindow(QWidget *parent) : BaseUI()
 	btPlay = getBtMenu("img/play_white.svg", "img/play_blue.svg");
 	bgMenu->addButton(btPlay, PageType::PagePlay);
 	layoutMenu->addWidget(btPlay);
+
+	btPrePare = getBtMenu("img/prepare_white.svg", "img/prepare_blue.svg");
+	bgMenu->addButton(btPrePare, PageType::PagePrepare);
+	layoutMenu->addWidget(btPrePare);
 
 	btProcess = getBtMenu("img/process_white.svg", "img/process_blue.svg");
 	bgMenu->addButton(btProcess, PageType::PageProcess);
@@ -73,6 +79,7 @@ void MainWindow::showPage(PageType _pageType)
 	if (currPageType == _pageType)
 		return;
 	btPlay->showNormalIcon();
+	btPrePare->showNormalIcon();
 	btProcess->showNormalIcon();
 	btUV->showNormalIcon();
 	btSetting->showNormalIcon();
@@ -99,6 +106,16 @@ void MainWindow::showPage(PageType _pageType)
 			}
 			widgetPage = playView;
 		}
+		break;
+	}
+	case PageType::PagePrepare:
+	{
+		btPrePare->showHoverIcon();
+		if (prepareView == nullptr)
+		{
+			prepareView = new PrepareView(widgetPageParent);
+		}
+		widgetPage = prepareView;
 		break;
 	}
 	case PageType::PageProcess:
@@ -184,6 +201,9 @@ void MainWindow::slot_onclickBt(int _index)
 	{
 	case BtType::Play:
 		showPage(PageType::PagePlay);
+		break;
+	case BtType::Prepare:
+		showPage(PageType::PagePrepare);
 		break;
 	case BtType::Process:
 		showPage(PageType::PageProcess);

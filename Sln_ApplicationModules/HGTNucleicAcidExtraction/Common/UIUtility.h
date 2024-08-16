@@ -112,9 +112,6 @@ public:
 	QComboBox* getNewComboxBox(QStringList _list = {});
 	void setNewComboxBox(QComboBox* _comboBox);
 
-	QComboBox* getNewComboxBoxLarge(QStringList _list = {});
-	void setNewComboxBoxLarge(QComboBox* _comboBox);
-
 	HTableView* getNewTableView();
 	void setNewTableView(HTableView* _tableView);
 

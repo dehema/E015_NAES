@@ -188,6 +188,7 @@
     <ClCompile Include="Common/HLineEdit.cpp" />
     <ClCompile Include="Common/BasePageContent.cpp" />
     <ClCompile Include="PlayView.cpp" />
+    <ClCompile Include="PrepareView.cpp" />
     <ClCompile Include="ProcessParamsDialog.cpp" />
     <ClCompile Include="ProcessView.cpp" />
     <ClCompile Include="release\moc_AXERuningView.cpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="release\moc_IFSoftKeyboardService.cpp" />
     <ClCompile Include="release\moc_MainWindow.cpp" />
     <ClCompile Include="release\moc_PlayView.cpp" />
+    <ClCompile Include="release\moc_PrepareView.cpp" />
     <ClCompile Include="release\moc_ProcessParamsDialog.cpp" />
     <ClCompile Include="release\moc_ProcessView.cpp" />
     <ClCompile Include="release\moc_qcustomplot.cpp" />
@@ -254,6 +256,7 @@
     <ClInclude Include="Common/HLineEdit.h" />
     <ClInclude Include="Common/BasePageContent.h" />
     <ClInclude Include="PlayView.h" />
+    <ClInclude Include="PrepareView.h" />
     <ClInclude Include="ProcessParamsDialog.h" />
     <ClInclude Include="ProcessView.h" />
     <ClInclude Include="SettingView.h" />

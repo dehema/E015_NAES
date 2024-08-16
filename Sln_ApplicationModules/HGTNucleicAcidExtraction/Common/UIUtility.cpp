@@ -288,18 +288,6 @@ void UIUtility::setNewComboxBox(QComboBox * _comboBox)
 	_comboBox->setObjectName("comboxBox_common");
 }
 
-QComboBox* UIUtility::getNewComboxBoxLarge(QStringList _list)
-{
-	QComboBox* box = getNewComboxBox(_list);
-	box->setObjectName("cb_large");
-	return box;
-}
-
-void UIUtility::setNewComboxBoxLarge(QComboBox * _comboBox)
-{
-	_comboBox->setObjectName("cb_large");
-}
-
 HTableView* UIUtility::getNewTableView()
 {
 	HTableView* tableView = new HTableView();

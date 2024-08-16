@@ -5,6 +5,7 @@
 #include "Common/UIUtility.h"
 #include "Common/BaseUI.h"
 #include "PlayView.h"
+#include "PrepareView.h"
 #include "ProcessView.h"
 #include "UVView.h"
 #include "SettingView.h"
@@ -15,6 +16,7 @@ class MainWindow :public QDialog, public BaseUI
 private:
 	enum BtType {
 		Play,
+		Prepare,
 		Process,
 		UV,
 		Setting,
@@ -22,6 +24,7 @@ private:
 	enum PageType
 	{
 		PagePlay,
+		PagePrepare,
 		PageProcess,
 		PageUV,
 		PageSetting,
@@ -33,6 +36,7 @@ public:
 	//-----------------------UI-----------------------
 	QWidget* widgetMenu;
 	HButtonIcon* btPlay;
+	HButtonIcon* btPrePare;
 	HButtonIcon* btProcess;
 	HButtonIcon* btUV;
 	HButtonIcon* btSetting;
@@ -45,6 +49,7 @@ public:
 	//运行界面
 	AXERuningView* axeRuningView;
 	PlayView* playView;
+	PrepareView* prepareView;
 	ProcessView* processView;
 	UVView* uvView;
 	SettingView* settingView;

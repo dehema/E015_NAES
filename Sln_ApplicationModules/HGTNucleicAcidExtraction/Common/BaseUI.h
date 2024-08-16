@@ -119,6 +119,13 @@ public:
 		return	UIUtility::ins().getNewLineEdit();
 	};
 
+	virtual HLineEdit* getNewLineEditLarge() {
+		HLineEdit* edit = UIUtility::ins().getNewLineEdit();
+		edit->setObjectName("lineEdit_large");
+		edit->setFixedSize(220, UI_Bt_Height_Large);
+		return edit;
+	};
+
 	void setNewLineEdit(HLineEdit * _lineEdit)
 	{
 		UIUtility::ins().setNewLineEdit(_lineEdit);
@@ -154,7 +161,9 @@ public:
 	}
 
 	virtual QComboBox* getNewComboxBoxLarge(QStringList _langIDs = {}) {
-		QComboBox* cb = UIUtility::ins().getNewComboxBoxLarge(_langIDs);
+		QComboBox* cb = UIUtility::ins().getNewComboxBox(_langIDs);
+		cb->setFixedSize(UI_Bt_Width_Large, UI_Bt_Height_Large);
+		cb->setObjectName("cb_large");
 		QListView *ListView = new QListView;
 		cb->setView(ListView);
 		if (_langIDs.count() != 0)
@@ -165,11 +174,6 @@ public:
 		}
 		return cb;
 	};
-
-	void setNewComboxBoxLarge(QComboBox * _comboBox)
-	{
-		UIUtility::ins().setNewComboxBoxLarge(_comboBox);
-	}
 
 	HTableView* getNewTableView() {
 		return	UIUtility::ins().getNewTableView();

@@ -16,6 +16,7 @@ QCheckBox#logView_checkBox {
 }
 
 QPushButton#bt_common {
+    font-size:16px;
     border: 1px solid #298DFF; /* QPushButton边框的宽度、样式和颜色 */
 	border-radius: 10px; /* 边框圆角 */
 	background-color: #298DFF; /* 背景颜色 */
@@ -49,35 +50,37 @@ QPushButton#bt_common:disabled { /* QPushButton禁用时的状态 */
 }
 
 QPushButton#bt_large {
-    font-size:18px;
+    font-weight:bold;
+    font-size:20px;
     border: 1px solid #298DFF; /* QPushButton边框的宽度、样式和颜色 */
 	border-radius: 8px; /* 边框圆角 */
-	background-color: #F2F2F2; /* 背景颜色 */
+	background-color: #FFFFFF; /* 背景颜色 */
 	color: #298DFF; /* 文本颜色 */
-	font-family: "Microsoft YaHei"; /* 文本字体族 */
 }
 
 QPushButton#bt_large:hover{/* 鼠标悬浮在QPushButton上时的状态 */
     background-color: #298DFF;
-	color: #F2F2F2;
+	color: #FFFFFF;
 }
 
 QPushButton#bt_large:pressed { /* 鼠标按压在QPushButton上时的状态 */
-	background-color: #257FE6;
+    background-color: #F2F2F2;
+	color: #298DFF;
 }
 
 QPushButton#bt_large:checked { /* 鼠标按压在QPushButton上时的状态 */
-	background-color: #026ee9;
-	color: #F2F2F2;
+	color: #298DFF;
+	background-color: #F2F2F2;
 }
 
 QPushButton#bt_large:checked:pressed { /* 鼠标按压在QPushButton上时的状态 */
-	background-color: #257FE6;
+	background-color: #298DFF;
+    color: #FFFFFF
 }
 
 QPushButton#bt_large:disabled { /* QPushButton禁用时的状态 */
-	border: 1px solid #CDCDCD;
-	background-color: #CDCDCD;
+	border: 1px solid #B4B4B4;
+	background-color: #FFFFFF;
 	color: #B4B4B4;
 }
 
@@ -108,6 +111,20 @@ QLineEdit#lineEdit_common {
 }
 
 QLineEdit#lineEdit_common:hover {
+    border: 1px solid 49, 141, 247#257FE6;
+}
+
+QLineEdit#lineEdit_large {
+    font-size: 22px;
+    padding:0px 10px 0px 10px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    border-radius:4px;
+    border-style:outset;
+    border: 1px solid rgb(41, 141, 255);
+}
+
+QLineEdit#lineEdit_large:hover {
     border: 1px solid 49, 141, 247#257FE6;
 }
 
@@ -518,34 +535,50 @@ QComboBox#comboxBox_common::down-arrow:on {
 }
 
 QComboBox#cb_large {
-    font-size: 16px;
-    padding-left:5px;
+    font-weight:bold;
+    font-size: 20px;
+    padding-left:20px;
     color:#298DFF;
     background-color:rgba(255, 255, 255, 0);
     text-align:center;
-    border-radius:3px;
+    border-radius:8px;
     border:1px solid #298DFF;
 }
 QComboBox#cb_large::drop-down {
     subcontrol-origin: padding;
     subcontrol-position: top right;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-left-width: 0px;
     border-left-color: darkgray;
     border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 QComboBox#cb_large QAbstractItemView{
-    font-size: 14px;
+    font-size: 16px;
 }
 QComboBox#cb_large QAbstractItemView::item {
-	height:30px;
+	height:35px;
+}
+
+/* 下拉箭头样式 */
+QComboBox#cb_large::down-arrow {
+    width: 30px;
+    height: 30px;
+    color: rgb(158, 158, 158);
+    background: transparent;
+    padding: 11px 5px 0px 0px;
+    image:url(img/arrow_down.png);
+}
+
+/* 点击下拉箭头 */
+QComboBox#cb_large::down-arrow:on {
+    image:url(img/arrow_up.png);
 }
 
 QLabel#lb_common_title {
-    font-size: 18px;
+    font-size: 22px;
     color:rgb(0, 0, 0);
     background-color: rgb(40, 43, 51, 0);
     font-weight:bold;

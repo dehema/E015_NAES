@@ -9,6 +9,7 @@ AXERuningView::AXERuningView(QWidget *parent) :BasePageContent(parent)
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
 	connect(axeThread, SIGNAL(signal_onAxeStepLaunch(AXEStepData)), this, SLOT(slot_onAxeStepLaunch(AXEStepData)));
 	connect(axeThread, SIGNAL(signal_onAxeProcessFinish(AXEProcessData)), this, SLOT(slot_onAxeProcessFinish(AXEProcessData)));
+	connect(&launchTimer, &QTimer::timeout, this, [this]() {refreshStatus(); AXERuningView::launchTimeCountDown(); });
 
 	//UI
 	layoutMain = getNewVBoxLayout(this);
