@@ -5,6 +5,7 @@ PlayView::PlayView(QWidget * parent) :BasePageContent(parent)
 	selProcessData.processName = "";
 	btGroup = new QButtonGroup(this);
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
+	connect(&selectionModelProcess, SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(slot_onTbProcessSelectRow(QModelIndex, QModelIndex)));
 
 	processIconGroup = new QButtonGroup(this);
 	connect(processIconGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickProcessIcon(int)));
@@ -120,38 +121,45 @@ void PlayView::showTbProcess()
 		tbProcess->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 		tbProcess->horizontalHeader()->setFixedHeight(40);
 		layoutMain->insertWidget(0, tbProcess);
-		tmProcess = new HTableViewItemModel(this);
-		QStringList headertbAxeProcess; headertbAxeProcess
-			<< GetLang("1708420155")			//名称
-			<< GetLang("1708420083")			//步骤数量
-			<< GetLang("1708420084") + "(Min)"	//预计时长
-			<< GetLang("1708419632")			//创建时间
-			;
-		tmProcess->setHorizontalHeaderLabels(headertbAxeProcess);
-		tmProcess->setColumnCount(headertbAxeProcess.count());
-		tbProcess->setModel(tmProcess);
-		UIUtility::ins().setTableRowHeight(tbProcess);
-		QItemSelectionModel* selectionModelProcess = new QItemSelectionModel(tmProcess);
-		tbProcess->setSelectionModel(selectionModelProcess);
-		connect(selectionModelProcess, SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(slot_onTbProcessSelectRow(QModelIndex, QModelIndex)));
+		tbProcess->setModel(&tmProcess);
+		//UIUtility::ins().setTableRowHeight(tbProcess);
+		selectionModelProcess.setModel(&tmProcess);
+		tbProcess->setSelectionModel(&selectionModelProcess);
 	}
-	tmProcess->removeRows(0, tmProcess->rowCount());
+	tmProcess.clear();
+	QStringList headertbAxeProcess; headertbAxeProcess
+		<< GetLang("1708420155")			//名称
+		<< GetLang("1708420083")			//步骤数量
+		<< GetLang("1708420084") + "(Min)"	//预计时长
+		<< GetLang("1708419632")			//创建时间
+		;
+	tmProcess.setHorizontalHeaderLabels(headertbAxeProcess);
+	tmProcess.setColumnCount(headertbAxeProcess.count());
 	processList = AXEMgr().ins().getAllProcess();
-	tmProcess->setRowCount(processList.count());
+	tmProcess.setRowCount(processList.count());
+	int selIndex = -1;
 	for (int i = 0; i < processList.count(); i++)
 	{
 		AXEProcessData processData = processList[i];
+		if (processData.processName == selProcessData.processName)
+		{
+			selIndex = i;
+		}
 		//名称
-		tmProcess->setData(tmProcess->index(i, 0), processData.processName);
+		tmProcess.setData(tmProcess.index(i, 0), processData.processName);
 		//步骤数量
-		tmProcess->setData(tmProcess->index(i, 1), QString::number(processData.stepCount));
+		tmProcess.setData(tmProcess.index(i, 1), QString::number(processData.stepCount));
 		//预计时长
-		tmProcess->setData(tmProcess->index(i, 2), qCeil(processData.getEstimatedTime() / 60));
+		tmProcess.setData(tmProcess.index(i, 2), qCeil(processData.getEstimatedTime() / 60));
 		//创建时间
-		tmProcess->setData(tmProcess->index(i, 3), QDateTime::fromSecsSinceEpoch(processData.createDate).toString("yyyy-MM-dd hh:mm:ss"));
+		tmProcess.setData(tmProcess.index(i, 3), QDateTime::fromSecsSinceEpoch(processData.createDate).toString("yyyy-MM-dd hh:mm:ss"));
 	}
-	tbProcess->setModel(tmProcess);
+	tbProcess->setModel(&tmProcess);
 	UIUtility::ins().setTableRowHeight(tbProcess);
+	if (selIndex != -1)
+	{
+		tbProcess->selectRow(selIndex);
+	}
 
 	widgetGrid->hide();
 	tbProcess->show();

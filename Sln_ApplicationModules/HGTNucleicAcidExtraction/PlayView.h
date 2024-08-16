@@ -27,7 +27,8 @@ public:
 	QScrollArea* scrollProcess;
 	//列表
 	HTableView* tbProcess;
-	HTableViewItemModel* tmProcess;
+	HTableViewItemModel tmProcess;
+	QItemSelectionModel selectionModelProcess;
 
 	//表格模式
 	QPushButton* btGridMode;

@@ -12,10 +12,11 @@ private:
 	enum BtType {
 		OpenProcess,
 		NewProcess,
+		ImportProcess,
+		DelProcess,
 		NewStep,
 		DelStep,
 		Save,
-		ImportProcess,
 	};
 
 public:
@@ -48,7 +49,7 @@ public:
 	void fillWidgetTableItems();
 	void setWidgetTableItemVisible(int _row, bool _visible);
 	bool isLegalSelRowIndexProcess();
-	AXEProcessData getPublishProcessModel();
+	AXEProcessData getSaveProcessModel();
 	void loadProcess(QString _processName);
 	void showEvent(QShowEvent *event) override;
 
@@ -58,6 +59,7 @@ public:
 	void delStep();
 	void save();
 	void importProcess();
+	void delProcess();
 
 	public slots:
 	void slot_onclickBt(int);

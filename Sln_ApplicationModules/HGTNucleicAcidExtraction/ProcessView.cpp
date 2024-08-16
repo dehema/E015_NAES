@@ -4,6 +4,7 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 {
 	btGroup = new QButtonGroup();
 	connect(btGroup, SIGNAL(buttonClicked(int)), this, SLOT(slot_onclickBt(int)));
+	currProcessData.processName = "";
 
 	//UI
 	layoutMain = getNewVBoxLayout(this);
@@ -51,9 +52,14 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	btGroup->addButton(btRemoveStep, BtType::DelStep);
 	layoutOperate->addWidget(btRemoveStep);
 
-	QPushButton* btSave = getNewBtCommon("1708419677");
+	QPushButton* btSave = getNewBtCommon("1708420929");
 	btGroup->addButton(btSave, BtType::Save);
 	layoutOperate->addWidget(btSave);
+
+	QPushButton* btDelProcess = getNewBtCommon("1708420191");
+	btDelProcess->setObjectName("bt_common_red");
+	btGroup->addButton(btDelProcess, (int)BtType::DelProcess);
+	layoutOperate->addWidget(btDelProcess);
 
 	tbProcess = getNewTableView();
 	tbModelProcess = new QStandardItemModel(this);
@@ -298,14 +304,6 @@ void ProcessView::openProcess()
 
 void ProcessView::newProcess()
 {
-	if (selectionModelProcess->currentIndex().row() != -1 && isLegalSelRowIndexProcess() && !currProcessData.isPublish)
-	{
-		int res = HGT::warning(this, GetLang("1708419699"), GetLang("1708420139"), QMessageBox::Yes | QMessageBox::No);
-		if (res == QMessageBox::No)
-		{
-			return;
-		}
-	}
 	editProcessName->clear();
 	currProcessData = AXEProcessData();
 	refreshTbProcess();
@@ -349,7 +347,7 @@ void ProcessView::delStep()
 
 void ProcessView::save()
 {
-	AXEProcessData processModel = getPublishProcessModel();
+	AXEProcessData processModel = getSaveProcessModel();
 	if (processModel.processName.isEmpty())
 	{
 		HGT::warning(this, GetLang("1708419699"), GetLang("1708420481"), QMessageBox::Yes);
@@ -385,7 +383,7 @@ void ProcessView::save()
 	tbProcess->selectRow(selRowIndexProcess);
 }
 
-AXEProcessData ProcessView::getPublishProcessModel()
+AXEProcessData ProcessView::getSaveProcessModel()
 {
 	AXEProcessData processData;
 	processData.processName = editProcessName->text();
@@ -455,23 +453,26 @@ void ProcessView::slot_onclickBt(int index)
 {
 	switch (index)
 	{
-	case ProcessView::OpenProcess:
+	case BtType::OpenProcess:
 		openProcess();
 		break;
-	case ProcessView::NewProcess:
+	case BtType::NewProcess:
 		newProcess();
 		break;
-	case ProcessView::NewStep:
+	case BtType::ImportProcess:
+		importProcess();
+		break;
+	case BtType::DelProcess:
+		delProcess();
+		break;
+	case BtType::NewStep:
 		newStep();
 		break;
-	case ProcessView::DelStep:
+	case BtType::DelStep:
 		delStep();
 		break;
-	case ProcessView::Save:
+	case BtType::Save:
 		save();
-		break;
-	case ProcessView::ImportProcess:
-		importProcess();
 		break;
 	}
 }
@@ -506,4 +507,24 @@ void ProcessView::importProcess()
 		refreshTbProcess();
 	}
 	loadProcess(fileInfo.baseName());
+}
+
+void ProcessView::delProcess()
+{
+	if (currProcessData.processName.isEmpty())
+		return;
+	int res = HGT::warning(this, GetLang("1708419699"), GetLang("1708420151"), QMessageBox::Yes | QMessageBox::No);
+	if (res != QMessageBox::Yes)
+	{
+		return;
+	}
+	QString path = AXEMgr::ins().configFolderPath + currProcessData.processName + ".json";
+	QFile file(path);
+	if (file.exists())
+	{
+		file.remove();
+	}
+	currProcessData = AXEProcessData();
+	refreshTbProcess();
+	editProcessName->clear();
 }
