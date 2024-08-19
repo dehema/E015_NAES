@@ -6,7 +6,7 @@ AXEProcessItem::AXEProcessItem(QWidget *parent) :BaseView(parent)
 	QVBoxLayout* mainLayout = getNewVBoxLayout(this);
 	mainLayout->setSpacing(10);
 
-	icon = new AXEProcessItem_Icon("img/testTube_white.svg", "img/testTube_blue.svg");
+	icon = new AXEProcessItem_Icon("img/testTube_blue.svg","img/testTube_white.svg");
 	icon->setObjectName("AXEProcessItem_Icon");
 	//int size = this->size().width()*0.6f;
 	int size = this->size().width()*0.6f;

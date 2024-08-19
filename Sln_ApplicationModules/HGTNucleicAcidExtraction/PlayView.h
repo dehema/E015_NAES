@@ -49,6 +49,8 @@ public:
 	void showGridProcess();
 	//初始化列表模式
 	void showTbProcess();
+	//选择的是否可行
+	bool isSelItemLegal();
 protected:
 	void showEvent(QShowEvent *event) override;
 

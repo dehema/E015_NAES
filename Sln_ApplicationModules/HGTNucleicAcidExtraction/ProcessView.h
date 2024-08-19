@@ -28,7 +28,7 @@ public:
 	HLineEdit* editProcessName;
 
 	HTableView* tbProcess;
-	QStandardItemModel* tbModelProcess;
+	QStandardItemModel* tmProcess;
 	QItemSelectionModel* selectionModelProcess;
 	int processDetailItemWidth;
 	//--------------------field--------------------
@@ -51,14 +51,17 @@ public:
 	bool isLegalSelRowIndexProcess();
 	AXEProcessData getSaveProcessModel();
 	void loadProcess(QString _processName);
+	void initTbProcess();
+	void clearTbProcess();
+	void delAllWidgetTableItems();
 	void showEvent(QShowEvent *event) override;
 
 	void openProcess();
+	void importProcess();
 	void newProcess();
 	void newStep();
 	void delStep();
 	void save();
-	void importProcess();
 	void delProcess();
 
 	public slots:

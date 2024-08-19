@@ -32,8 +32,8 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 	layoutMain->addWidget(widgetHour);
 
 	QHBoxLayout* layoutHour = getNewHBoxLayout(widgetHour);
-	layoutHour->setSpacing(20);
 	layoutHour->setAlignment(Qt::AlignCenter);
+	layoutHour->setSpacing(30);
 
 	QPushButton* btReduceHour = getNewBtLarge();
 	btReduceHour->setText(GetLang("1708430061").arg("1"));
@@ -51,7 +51,7 @@ UVView::UVView(QWidget *parent) :BasePageContent(parent)
 
 	QHBoxLayout* layoutMin = getNewHBoxLayout(widgetMin);
 	layoutMin->setAlignment(Qt::AlignCenter);
-	layoutMin->setSpacing(20);
+	layoutMin->setSpacing(30);
 
 	QPushButton* btReduceMin = getNewBtLarge();
 	btReduceMin->setText(GetLang("1708430063").arg("10"));

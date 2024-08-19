@@ -3,6 +3,7 @@
 AXEMgr::AXEMgr()
 {
 	configFolderPath = QCoreApplication::applicationDirPath() + "/Solution/AXE/ProcessInfo/";
+	loadAXEParamsLimit();
 	magnetSpeedStr.append(GetLang("1708420098"));
 	magnetSpeedStr.append(GetLang("1708420097"));
 	magnetSpeedStr.append(GetLang("1708420096"));
@@ -184,6 +185,39 @@ QList<AXEProcessData> AXEMgr::getAllProcess()
 		}
 	}
 	return dataList;
+}
+
+void AXEMgr::loadAXEParamsLimit()
+{
+	QString path = QCoreApplication::applicationDirPath() + "/Solution/AXE/AXEParamsLimit.ini";
+	if (!QFile(path).exists())
+		return;
+	QSettings* settings = new QSettings(path, QSettings::IniFormat);
+	axeParamsLimit.volume = ValRange(
+		settings->value("volume/lower").toInt(),
+		settings->value("volume/upper").toInt(),
+		settings->value("volume/default").toInt());
+	axeParamsLimit.mixSpeed = ValRange(
+		settings->value("mixSpeed/lower").toInt(),
+		settings->value("mixSpeed/upper").toInt(),
+		settings->value("mixSpeed/default").toInt());
+	axeParamsLimit.mixBottomPos = ValRange(
+		settings->value("mixBottomPos/lower").toInt(),
+		settings->value("mixBottomPos/upper").toInt(),
+		settings->value("mixBottomPos/default").toInt());
+	axeParamsLimit.mixTopPos = ValRange(
+		settings->value("mixTopPos/lower").toInt(),
+		settings->value("mixTopPos/upper").toInt(),
+		settings->value("mixTopPos/default").toInt());
+	axeParamsLimit.magnetPos = ValRange(
+		settings->value("magnetPos/lower").toInt(),
+		settings->value("magnetPos/upper").toInt(),
+		settings->value("magnetPos/default").toInt());
+	axeParamsLimit.temperature = ValRange(
+		settings->value("temperature/lower").toInt(),
+		settings->value("temperature/upper").toInt(),
+		settings->value("temperature/default").toInt());
+	delete settings;
 }
 
 QList<QString> AXEMgr::getAllProcessNames()

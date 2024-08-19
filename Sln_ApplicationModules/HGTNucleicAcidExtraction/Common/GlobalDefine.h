@@ -37,17 +37,17 @@ const class AXEParamsLimit
 {
 public:
 	//体系容量
-	const ValRange volume = ValRange(1, 1000, 800);
+	ValRange volume = ValRange(1, 1000, 800);
 	//混合速度
-	const ValRange mixSpeed = ValRange(200, 3000, 1000);
+	ValRange mixSpeed = ValRange(200, 3000, 1000);
 	//混合底部位置
-	const ValRange mixBottomPos = ValRange(0, 50, 10);
+	ValRange mixBottomPos = ValRange(0, 50, 10);
 	//混合顶部位置
-	const ValRange mixTopPos = ValRange(0, 100, 50);
+	ValRange mixTopPos = ValRange(0, 100, 50);
 	//吸磁位置
-	const ValRange magnetPos = ValRange(0, 100, 10);
+	ValRange magnetPos = ValRange(0, 100, 10);
 	//温度
-	const ValRange temperature = ValRange(25, 120, 50);
+	ValRange temperature = ValRange(25, 120, 50);
 };
 
 

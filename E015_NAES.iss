@@ -1,6 +1,6 @@
 #define MyAppName "E015_NAES"
 ; Version
-#define MyAppVersion "0.03"
+#define MyAppVersion "0.07"
 #define MyAppPublisher "HGT"
 #define MyAppURL "https://www.example.com/"
 #define MyAppExeName "NAES.exe"
@@ -25,7 +25,7 @@ UsePreviousAppDir=no
 
 OutputDir=C:\Users\Administrator\Desktop
 ; output file name
-OutputBaseFilename=E015_NAES-0.03
+OutputBaseFilename=E015_NAES-0.07
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern

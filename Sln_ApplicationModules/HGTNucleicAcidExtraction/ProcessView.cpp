@@ -62,8 +62,16 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	layoutOperate->addWidget(btDelProcess);
 
 	tbProcess = getNewTableView();
-	tbModelProcess = new QStandardItemModel(this);
-	tbModelProcess->setRowCount(stepCountMax);
+	tmProcess = new QStandardItemModel(this);
+	initTbProcess();
+
+	//data
+	fillWidgetTableItems();
+	refreshTbProcess();
+}
+
+void ProcessView::initTbProcess()
+{
 	QStringList headerProcessDetail;
 	headerProcessDetail
 		<< GetLang("1708419680")	//序号
@@ -74,13 +82,14 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 		<< GetLang("1708430054")	//吸磁
 		<< GetLang("1708430055")	//等待
 		;
-	tbModelProcess->setHorizontalHeaderLabels(headerProcessDetail);
-	selectionModelProcess = new QItemSelectionModel(tbModelProcess);
+	tmProcess->setHorizontalHeaderLabels(headerProcessDetail);
+	tmProcess->setRowCount(stepCountMax);
+	selectionModelProcess = new QItemSelectionModel(tmProcess);
 	connect(selectionModelProcess, SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(slot_onTbProcessSelectRow(QModelIndex, QModelIndex)));
 	tbProcess->setFixedSize(getContentWidth() - Page_Dialog_Padding_Left * 2, 382);
 	tbProcess->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 	tbProcess->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-	tbProcess->setModel(tbModelProcess);
+	tbProcess->setModel(tmProcess);
 	tbProcess->setSelectionModel(selectionModelProcess);
 	tbProcess->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 	layoutMain->addWidget(tbProcess, 0, Qt::AlignTop | Qt::AlignHCenter);
@@ -93,9 +102,13 @@ ProcessView::ProcessView(QWidget *parent) :BasePageContent(parent)
 	tbProcess->setColumnWidth(4, columnWidth + 40);
 	tbProcess->setColumnWidth(5, columnWidth + 40);
 	tbProcess->setColumnWidth(6, columnWidth + 40);
+}
 
-	//data
-	fillWidgetTableItems();
+void ProcessView::clearTbProcess()
+{
+	editProcessName->clear();
+	tmProcess->removeRow(tmProcess->rowCount());
+	currProcessData = AXEProcessData();
 	refreshTbProcess();
 }
 
@@ -106,11 +119,9 @@ void ProcessView::refreshTbProcess()
 		AXEStepData data = currProcessData.stepsList[_row];
 		addRowTbProcess(_row, data);
 	}
-	tbProcess->setModel(tbModelProcess);
-	//清空数据
 	for (int _row = currProcessData.stepsList.count(); _row < stepCountMax; _row++)
 	{
-		tbModelProcess->setData(tbModelProcess->index(_row, 0), "");
+		tmProcess->setData(tmProcess->index(_row, 0), "");
 		setWidgetTableItemVisible(_row, false);
 	}
 }
@@ -121,17 +132,30 @@ void ProcessView::fillWidgetTableItems()
 	for (int i = 0; i < stepCountMax; i++)
 	{
 		QList<QWidget*> list = QList<QWidget*>();
-		for (int i = 0; i < tbModelProcess->columnCount() - 1; i++)
+		for (int i = 0; i < tmProcess->columnCount() - 1; i++)
 			list.append(nullptr);
 		widgetTableItems.append(list);
+	}
+}
+
+
+void ProcessView::delAllWidgetTableItems()
+{
+	for (int i = 0; i < widgetTableItems.count(); i++)
+	{
+		for (int j = 0; j < widgetTableItems[i].count(); j++)
+		{
+			delete widgetTableItems[i][j];
+			widgetTableItems[i][j] = nullptr;
+		}
 	}
 }
 
 void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 {
 	//编号
-	tbModelProcess->setData(tbModelProcess->index(_row, 0), QString::number(_row + 1));
-	tbModelProcess->setData(tbModelProcess->index(_row, 0), Qt::AlignCenter, Qt::TextAlignmentRole);
+	tmProcess->setData(tmProcess->index(_row, 0), QString::number(_row + 1));
+	tmProcess->setData(tmProcess->index(_row, 0), Qt::AlignCenter, Qt::TextAlignmentRole);
 	setWidgetTableItemVisible(_row, true);
 	int col = -1;
 	//孔位
@@ -146,7 +170,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		cbSlotID->setStyleSheet(UIUtility::ins().comboxTableStyle);
 		cbSlotID->addItems({ "1","2","3","4","5","6" });
 		widgetTableItems[_row][col] = cbSlotID;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), cbSlotID);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), cbSlotID);
 	}
 	else
 	{
@@ -163,7 +187,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 		editStepName->setFixedSize(tbProcess->columnWidth(col + 1) - 2, UI_TableView_RowHeight);
 		editStepName->setStyleSheet(UIUtility::ins().editTableStyle);
 		widgetTableItems[_row][col] = editStepName;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), editStepName);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), editStepName);
 	}
 	else
 	{
@@ -187,7 +211,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 			paramsLimit.mixSpeed.upper,
 			this));
 		widgetTableItems[_row][col] = editDosage;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), editDosage);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), editDosage);
 	}
 	else
 	{
@@ -208,7 +232,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 			btMix->setText(AXEMgr::ins().getMixBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btMix;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btMix);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), btMix);
 	}
 	else
 	{
@@ -229,7 +253,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 			btMagnet->setText(AXEMgr::ins().getMagnetBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btMagnet;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btMagnet);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), btMagnet);
 	}
 	else
 	{
@@ -250,7 +274,7 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 			btWait->setText(AXEMgr::ins().getWaitBtStr(currProcessData.stepsList[_row]));
 		});
 		widgetTableItems[_row][col] = btWait;
-		tbProcess->setIndexWidget(tbModelProcess->index(_row, col + 1), btWait);
+		tbProcess->setIndexWidget(tmProcess->index(_row, col + 1), btWait);
 	}
 	else
 	{
@@ -259,8 +283,6 @@ void ProcessView::addRowTbProcess(int _row, AXEStepData _data)
 	btWait->setText(AXEMgr::ins().getWaitBtStr(currProcessData.stepsList[_row]));
 }
 
-
-
 QWidget* ProcessView::getWidgetTableItem(int _rowIndex, int _colIndex)
 {
 	return widgetTableItems[_rowIndex][_colIndex];
@@ -268,7 +290,7 @@ QWidget* ProcessView::getWidgetTableItem(int _rowIndex, int _colIndex)
 
 void ProcessView::setWidgetTableItemVisible(int _row, bool _visible)
 {
-	for (int _col = 0; _col < tbModelProcess->columnCount() - 1; _col++)
+	for (int _col = 0; _col < tmProcess->columnCount() - 1; _col++)
 	{
 		QWidget* widget = getWidgetTableItem(_row, _col);
 		if (widget != nullptr)
@@ -296,7 +318,7 @@ void ProcessView::openProcess()
 	ChooseItemListDialog* dialog = new ChooseItemListDialog(this, strList);
 	dialog->setTitle(GetLang("1708420113"));
 	int res = dialog->exec();
-	if (res == -1)
+	if (res < 0)
 		return;
 	QString name = strList[res];
 	loadProcess(name);
@@ -304,9 +326,11 @@ void ProcessView::openProcess()
 
 void ProcessView::newProcess()
 {
-	editProcessName->clear();
-	currProcessData = AXEProcessData();
+	clearTbProcess();
+	initTbProcess();
 	refreshTbProcess();
+	editProcessName->setText(currProcessData.processName);
+	newStep();
 }
 
 void ProcessView::newStep()
@@ -372,15 +396,35 @@ void ProcessView::save()
 	{
 		file.write(ch);
 		file.close();
-		HGT::information(this, GetLang("1708419621"), GetLang("1708419697"), QMessageBox::Yes);
+		HGT::information(this, GetLang("1708419621"), GetLang("1708430065"), QMessageBox::Yes);
 		Log(QString::fromLocal8Bit("发布至%1").arg(publicPath));
 	}
 	else {
-		HGT::Error(this, GetLang("1708419637"), GetLang("1708419698"), QMessageBox::Yes);
+		HGT::Error(this, GetLang("1708419637"), GetLang("1708420138"), QMessageBox::Yes);
 		qDebug() << QString::fromLocal8Bit("发布失败");
 	}
 	refreshTbProcess();
 	tbProcess->selectRow(selRowIndexProcess);
+}
+
+void ProcessView::delProcess()
+{
+	if (currProcessData.processName.isEmpty())
+		return;
+	int res = HGT::warning(this, GetLang("1708419699"), GetLang("1708420151"), QMessageBox::Yes | QMessageBox::No);
+	if (res != QMessageBox::Yes)
+	{
+		return;
+	}
+	QString path = AXEMgr::ins().configFolderPath + currProcessData.processName + ".json";
+	QFile file(path);
+	if (file.exists())
+	{
+		file.remove();
+	}
+	clearTbProcess();
+	initTbProcess();
+	refreshTbProcess();
 }
 
 AXEProcessData ProcessView::getSaveProcessModel()
@@ -418,35 +462,6 @@ void ProcessView::loadProcess(QString _processName)
 	currProcessData = AXEMgr::ins().getProcessByName(_processName);
 	editProcessName->setText(_processName);
 	refreshTbProcess();
-}
-
-void ProcessView::showEvent(QShowEvent * event)
-{
-	if (tbProcess != nullptr)
-	{
-		QStringList headerProcessDetail;
-		headerProcessDetail
-			<< GetLang("1708419680")	//序号
-			<< GetLang("1708420088")	//孔位
-			<< GetLang("1708420155")	//名称
-			<< GetLang("1708420156")	//体系容量
-			<< GetLang("1708420379")	//混合
-										//<< GetLang("1708420091") + "(Sec)"	//混合时间
-										//<< GetLang("1708420093") + "(PRM)"	//混合速度
-										//<< GetLang("1708420334") + "(%)"	//混合振幅底部位置
-										//<< GetLang("1708420335") + "(%)"	//混合振幅顶部位置
-			<< GetLang("1708430054")	//吸磁
-										//<< GetLang("1708420092") + "(Sec)"	//吸磁时间
-										//<< GetLang("1708420332")	//吸磁速度
-										//<< GetLang("1708420336") + "(%)"	//吸磁位置
-			<< GetLang("1708430055")	//等待
-										//<< GetLang("1708420090") + "(Sec)"	//等待时间
-										//<< GetLang("1708420339")	//是否加热
-			;
-		tbModelProcess->setHorizontalHeaderLabels(headerProcessDetail);
-		tbProcess->setModel(tbModelProcess);
-		BasePageContent::showEvent(event);
-	}
 }
 
 void ProcessView::slot_onclickBt(int index)
@@ -509,22 +524,12 @@ void ProcessView::importProcess()
 	loadProcess(fileInfo.baseName());
 }
 
-void ProcessView::delProcess()
+void ProcessView::showEvent(QShowEvent *event)
 {
-	if (currProcessData.processName.isEmpty())
-		return;
-	int res = HGT::warning(this, GetLang("1708419699"), GetLang("1708420151"), QMessageBox::Yes | QMessageBox::No);
-	if (res != QMessageBox::Yes)
+	BasePageContent::showEvent(event);
+	for (int _row = currProcessData.stepsList.count(); _row < stepCountMax; _row++)
 	{
-		return;
+		tmProcess->setData(tmProcess->index(_row, 0), "");
+		setWidgetTableItemVisible(_row, false);
 	}
-	QString path = AXEMgr::ins().configFolderPath + currProcessData.processName + ".json";
-	QFile file(path);
-	if (file.exists())
-	{
-		file.remove();
-	}
-	currProcessData = AXEProcessData();
-	refreshTbProcess();
-	editProcessName->clear();
 }

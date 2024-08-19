@@ -265,6 +265,7 @@ bool ProcessParamsDialog::checkProcessParams()
 			return false;
 		}
 	}
+	return true;
 }
 
 void ProcessParamsDialog::slot_onclickSure()

@@ -69,7 +69,7 @@ void PlayView::showGridProcess()
 		scrollProcess->setWidget(widgetGridParent);
 
 		gridProcess = getNewGridLayout(widgetGridParent);
-		gridProcess->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+		gridProcess->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 		gridSpacing = getContentWidth() / 21;
 		gridProcess->setHorizontalSpacing(gridSpacing);
 		gridProcess->setVerticalSpacing(20);
@@ -186,21 +186,15 @@ void PlayView::slot_onclickBt(int _index)
 	{
 	case PlayView::Launch:
 	{
-		if (selProcessData.processName.isEmpty())
-		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708430058"), QMessageBox::Yes);
+		if (!isSelItemLegal())
 			return;
-		}
 		emit signal_runProcess(selProcessData.processName);
 		break;
 	}
 	case PlayView::Preview:
 	{
-		if (selProcessData.processName.isEmpty())
-		{
-			HGT::Error(this, GetLang("1708419637"), GetLang("1708430058"), QMessageBox::Yes);
+		if (!isSelItemLegal())
 			return;
-		}
 		emit signal_previewProcess(selProcessData.processName);
 		break;
 	}
@@ -215,6 +209,18 @@ void PlayView::slot_onclickBt(int _index)
 		break;
 	}
 	}
+}
+
+bool PlayView::isSelItemLegal()
+{
+	if (selProcessData.processName.isEmpty() ||
+		!QFile(AXEMgr::ins().configFolderPath + selProcessData.processName + ".json").exists() ||
+		selProcessData.processName.isEmpty())
+	{
+		HGT::Error(this, GetLang("1708419637"), GetLang("1708430058"), QMessageBox::Yes);
+		return false;
+	}
+	return true;
 }
 
 void PlayView::slot_onclickProcessIcon(int _index)

@@ -184,7 +184,7 @@ public:
 	QList<QString> magnetSpeedStr = {};
 	QString configFolderPath;
 	//获取所有流程的名称
-	QList<QString> AXEMgr::getAllProcessNames();
+	QList<QString> getAllProcessNames();
 	AXEParamsLimit axeParamsLimit;
 
 	//---------------function---------------
@@ -198,9 +198,9 @@ public:
 	QString getMagnetSpeedStr(int _speed);
 	//读取所有流程文件
 	QList<AXEProcessData> getAllProcess();
+	void loadAXEParamsLimit();
 
 	QString getMixBtStr(AXEStepData _data);
 	QString getMagnetBtStr(AXEStepData _data);
 	QString getWaitBtStr(AXEStepData _data);
 };
-

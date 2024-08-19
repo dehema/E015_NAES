@@ -868,15 +868,15 @@ QPushButton#bt_common_red:hover{/* 鼠标悬浮在QPushButton上时的状态 */
 }
 
 QPushButton#AXEProcessItem_Icon {
-    background-color:#298dff;
+    background-color:#ffffff;
     border: 1px solid #298DFF; /* QPushButton边框的宽度、样式和颜色 */
 	border-radius: 10px; /* 边框圆角 */
 }
 
 QPushButton#AXEProcessItem_Icon:hover {
-    background-color:#f2f2f2;
+    background-color:#298dff;
 }
 
 QPushButton#AXEProcessItem_Icon:checked {
-    background-color:#ffffff;
+    background-color:#298DFF;
 }
