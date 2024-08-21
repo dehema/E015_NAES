@@ -2,7 +2,7 @@
 ; Version
 #define MyAppVersion "0.07"
 #define MyAppPublisher "HGT"
-#define MyAppURL "https://www.example.com/"
+#define MyAppURL "https://www.E015_NAES.com/"
 #define MyAppExeName "NAES.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
